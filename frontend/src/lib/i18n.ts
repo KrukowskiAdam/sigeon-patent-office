@@ -38,6 +38,10 @@ export const navigationTranslations: Record<Language, {
   contact: string
   about: string
   services: string
+  patentAttorneys: string
+  legalServices: string
+  businessConsulting: string
+  biomed: string
 }> = {
   pl: {
     home: 'Strona główna',
@@ -46,6 +50,10 @@ export const navigationTranslations: Record<Language, {
     contact: 'Kontakt',
     about: 'O nas',
     services: 'Usługi',
+    patentAttorneys: 'Rzecznicy patentowi',
+    legalServices: 'Usługi prawne',
+    businessConsulting: 'Doradztwo biznesowe IP',
+    biomed: 'BioMed',
   },
   en: {
     home: 'Home',
@@ -54,6 +62,10 @@ export const navigationTranslations: Record<Language, {
     contact: 'Contact',
     about: 'About Us',
     services: 'Services',
+    patentAttorneys: 'Patent Attorneys',
+    legalServices: 'Legal Services',
+    businessConsulting: 'IP Business Consulting',
+    biomed: 'BioMed',
   },
   de: {
     home: 'Startseite',
@@ -62,6 +74,10 @@ export const navigationTranslations: Record<Language, {
     contact: 'Kontakt',
     about: 'Über uns',
     services: 'Dienstleistungen',
+    patentAttorneys: 'Patentanwälte',
+    legalServices: 'Rechtsdienstleistungen',
+    businessConsulting: 'IP-Unternehmensberatung',
+    biomed: 'BioMed',
   },
   zh: {
     home: '首页',
@@ -70,6 +86,10 @@ export const navigationTranslations: Record<Language, {
     contact: '联系',
     about: '关于我们',
     services: '服务',
+    patentAttorneys: '专利代理人',
+    legalServices: '法律服务',
+    businessConsulting: '知识产权商业咨询',
+    biomed: '生物医学',
   },
   ko: {
     home: '홈',
@@ -78,6 +98,10 @@ export const navigationTranslations: Record<Language, {
     contact: '연락처',
     about: '회사 소개',
     services: '서비스',
+    patentAttorneys: '특허 변리사',
+    legalServices: '법률 서비스',
+    businessConsulting: 'IP 비즈니스 컨설팅',
+    biomed: '바이오메드',
   },
   ja: {
     home: 'ホーム',
@@ -86,6 +110,10 @@ export const navigationTranslations: Record<Language, {
     contact: '連絡先',
     about: '会社概要',
     services: 'サービス',
+    patentAttorneys: '弁理士',
+    legalServices: '法的サービス',
+    businessConsulting: 'IP ビジネスコンサルティング',
+    biomed: 'バイオメド',
   },
   ru: {
     home: 'Главная',
@@ -94,5 +122,9 @@ export const navigationTranslations: Record<Language, {
     contact: 'Контакты',
     about: 'О нас',
     services: 'Услуги',
+    patentAttorneys: 'Патентные поверенные',
+    legalServices: 'Юридические услуги',
+    businessConsulting: 'Бизнес-консалтинг по ИС',
+    biomed: 'БиоМед',
   },
 }

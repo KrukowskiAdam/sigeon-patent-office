@@ -20,9 +20,21 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-6">
             <Link href="/" className="hover:text-blue-200 transition-colors font-medium">
               {nav.home}
+            </Link>
+            <Link href="/rzecznicy-patentowi" className="hover:text-blue-200 transition-colors font-medium">
+              {nav.patentAttorneys}
+            </Link>
+            <Link href="/uslugi-prawne" className="hover:text-blue-200 transition-colors font-medium">
+              {nav.legalServices}
+            </Link>
+            <Link href="/doradztwo-biznesowe-ip" className="hover:text-blue-200 transition-colors font-medium">
+              {nav.businessConsulting}
+            </Link>
+            <Link href="/biomed" className="hover:text-blue-200 transition-colors font-medium">
+              {nav.biomed}
             </Link>
             <Link href="/team" className="hover:text-blue-200 transition-colors font-medium">
               {nav.team}
