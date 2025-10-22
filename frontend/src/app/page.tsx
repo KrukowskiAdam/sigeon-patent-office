@@ -22,22 +22,34 @@ export default function Home() {
   useEffect(() => {
     const loadData = async () => {
       try {
+        console.log('🔄 Starting data load...')
+        console.log('🌍 Environment:', process.env.NODE_ENV)
+        console.log('🔑 Token present:', !!process.env.NEXT_PUBLIC_SANITY_TOKEN)
+        console.log('🔑 Token length:', process.env.NEXT_PUBLIC_SANITY_TOKEN?.length)
+        console.log('🔑 Token start:', process.env.NEXT_PUBLIC_SANITY_TOKEN?.slice(0, 8))
+        console.log('🏢 Project ID: pofl8c47')
+        console.log('📊 Dataset: production')
+        
         // Test najprostszego zapytania
-        console.log('Testing connection...')
-        const testResult = await client.fetch('*[0..1]')
-        console.log('Connection test result:', testResult)
+        console.log('🧪 Testing simple query...')
+        const testResult = await client.fetch('*[_type == "page"][0..1]')
+        console.log('✅ Simple query result:', testResult?.length || 0, 'items')
         
-        const [newsData, teamData] = await Promise.all([
-          getFeaturedNews(),
-          getTeamMembers()
-        ])
-        console.log('News data:', newsData)
-        console.log('Team data:', teamData)
+        console.log('📰 Loading news...')
+        const newsData = await getFeaturedNews()
+        console.log('✅ News loaded:', newsData?.length || 0, 'articles')
         
+        console.log('👥 Loading team...')
+        const teamData = await getTeamMembers()
+        console.log('✅ Team loaded:', teamData?.length || 0, 'members')
+        
+        console.log('📝 Setting state...')
         setFeaturedNews(newsData)
         setTeam(teamData)
+        console.log('✅ State updated successfully')
       } catch (error) {
-        console.error('Error loading data:', error)
+        console.error('❌ Error loading data:', error)
+        console.error('❌ Error details:', error instanceof Error ? error.message : 'Unknown error')
       } finally {
         setLoading(false)
       }
