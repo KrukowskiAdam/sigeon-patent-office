@@ -2,6 +2,9 @@
 import {localizedString, localizedText, localizedRichText} from './locale'
 import {seoFields} from './seo'
 
+// Content blocks
+import {textBlock, textImageBlock, heroBlock, servicesBlock} from './blocks'
+
 // Document types
 import {news} from './post'
 import {page} from './page'
@@ -13,6 +16,12 @@ export const schemaTypes = [
   localizedText, 
   localizedRichText,
   seoFields,
+  
+  // Content blocks
+  textBlock,
+  textImageBlock,
+  heroBlock,
+  servicesBlock,
   
   // Document types
   news,

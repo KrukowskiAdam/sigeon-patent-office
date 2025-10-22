@@ -62,15 +62,88 @@ export interface NewsArticle {
   seo?: SEO
 }
 
+export interface Service {
+  title: LocalizedString
+  description: LocalizedText
+}
+
+// Content Blocks
+export interface TextBlock {
+  _type: 'textBlock'
+  _key: string
+  title?: LocalizedString
+  content: LocalizedRichText
+  alignment?: 'left' | 'center' | 'right'
+}
+
+export interface TextImageBlock {
+  _type: 'textImageBlock'
+  _key: string
+  title?: LocalizedString
+  content: LocalizedRichText
+  image: {
+    asset: {
+      _ref: string
+      _type: 'reference'
+    }
+  }
+  imageAlt?: LocalizedString
+  layout: 'text-left' | 'image-left'
+  imageSize?: 'small' | 'medium' | 'large'
+}
+
+export interface HeroBlock {
+  _type: 'heroBlock'
+  _key: string
+  title: LocalizedString
+  subtitle?: LocalizedString
+  content?: LocalizedRichText
+  backgroundImage?: {
+    asset: {
+      _ref: string
+      _type: 'reference'
+    }
+  }
+  backgroundColor?: 'blue' | 'green' | 'purple' | 'teal' | 'red' | 'orange' | 'gray' | 'white'
+  textColor?: 'white' | 'black' | 'gray'
+  height?: 'small' | 'medium' | 'large' | 'full'
+}
+
+export interface ServiceItem {
+  title: LocalizedString
+  description?: LocalizedRichText
+  icon?: {
+    asset: {
+      _ref: string
+      _type: 'reference'
+    }
+  }
+  link?: string
+}
+
+export interface ServicesBlock {
+  _type: 'servicesBlock'
+  _key: string
+  title?: LocalizedString
+  subtitle?: LocalizedString
+  services: ServiceItem[]
+  layout?: 'grid-2' | 'grid-3' | 'grid-4' | 'list'
+}
+
+export type ContentBlock = TextBlock | TextImageBlock | HeroBlock | ServicesBlock
+
 export interface Page {
   _id: string
   title: LocalizedString
   slug: {
     current: string
   }
-  pageType: 'about' | 'services' | 'contact' | 'team' | 'patents' | 'trademarks' | 'design' | 'other'
-  content?: LocalizedRichText
+  pageType: 'about' | 'contact' | 'team' | 'patent-attorneys' | 'legal-services' | 'business-consulting' | 'biomed' | 'services' | 'other'
+  content?: ContentBlock[]
+  subtitle?: LocalizedString
   excerpt?: LocalizedText
+  services?: Service[]
+  heroColor?: 'blue' | 'green' | 'purple' | 'teal' | 'red' | 'orange'
   featuredImage?: {
     asset: {
       _ref: string

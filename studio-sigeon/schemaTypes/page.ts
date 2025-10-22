@@ -28,12 +28,13 @@ export const page = defineType({
       options: {
         list: [
           {title: 'About Us', value: 'about'},
-          {title: 'Services', value: 'services'},
           {title: 'Contact', value: 'contact'},
           {title: 'Team', value: 'team'},
-          {title: 'Patents', value: 'patents'},
-          {title: 'Trademarks', value: 'trademarks'},
-          {title: 'Industrial Design', value: 'design'},
+          {title: 'Patent Attorneys', value: 'patent-attorneys'},
+          {title: 'Legal Services', value: 'legal-services'},
+          {title: 'IP Business Consulting', value: 'business-consulting'},
+          {title: 'BioMed', value: 'biomed'},
+          {title: 'Services Overview', value: 'services'},
           {title: 'Other', value: 'other'},
         ],
       },
@@ -42,7 +43,59 @@ export const page = defineType({
     defineField({
       name: 'content',
       title: 'Page Content',
-      type: 'localizedRichText',
+      type: 'array',
+      of: [
+        {type: 'heroBlock'},
+        {type: 'textBlock'},
+        {type: 'textImageBlock'},
+        {type: 'servicesBlock'},
+      ],
+      description: 'Build your page with content blocks',
+    }),
+    defineField({
+      name: 'subtitle',
+      title: 'Page Subtitle',
+      type: 'localizedString',
+      description: 'Subtitle displayed under the main title',
+    }),
+    defineField({
+      name: 'services',
+      title: 'Services List',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Service Title',
+              type: 'localizedString',
+            },
+            {
+              name: 'description', 
+              title: 'Service Description',
+              type: 'localizedText',
+            },
+          ],
+        },
+      ],
+      hidden: ({document}) => !['patent-attorneys', 'legal-services', 'business-consulting', 'biomed'].includes(document?.pageType as string),
+    }),
+    defineField({
+      name: 'heroColor',
+      title: 'Hero Section Color',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Blue', value: 'blue'},
+          {title: 'Green', value: 'green'},
+          {title: 'Purple', value: 'purple'},
+          {title: 'Teal', value: 'teal'},
+          {title: 'Red', value: 'red'},
+          {title: 'Orange', value: 'orange'},
+        ],
+      },
+      initialValue: 'blue',
     }),
     defineField({
       name: 'excerpt',
