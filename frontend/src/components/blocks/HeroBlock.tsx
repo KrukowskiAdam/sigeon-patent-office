@@ -14,19 +14,16 @@ interface HeroBlockProps {
 
 export function HeroBlock({ block, language }: HeroBlockProps) {
   const backgroundColorClasses = {
-    blue: 'bg-gradient-to-r from-blue-600 to-blue-800',
-    green: 'bg-gradient-to-r from-green-600 to-green-800',
-    purple: 'bg-gradient-to-r from-purple-600 to-purple-800',
-    teal: 'bg-gradient-to-r from-teal-600 to-teal-800',
-    red: 'bg-gradient-to-r from-red-600 to-red-800',
-    orange: 'bg-gradient-to-r from-orange-600 to-orange-800',
-    gray: 'bg-gradient-to-r from-gray-600 to-gray-800',
+    primary: 'bg-gradient-to-r from-[#0abaee] to-[#0891b2]',
+    dark: 'bg-gradient-to-r from-[#0891b2] to-[#065f7a]',
+    light: 'bg-gradient-to-r from-[#38bdf8] to-[#0abaee]',
+    gray: 'bg-gradient-to-r from-gray-500 to-gray-700',
     white: 'bg-white'
-  }[block.backgroundColor || 'blue']
+  }[block.backgroundColor || 'primary']
 
   const textColorClasses = {
     white: 'text-white',
-    black: 'text-black',
+    dark: 'text-gray-700',
     gray: 'text-gray-600'
   }[block.textColor || 'white']
 
@@ -54,12 +51,12 @@ export function HeroBlock({ block, language }: HeroBlockProps) {
 
       {/* Content */}
       <div className="relative max-w-6xl mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">
+        <h1 className="text-4xl md:text-6xl font-semibold mb-6 tracking-tight">
           {getLocalizedText(block.title, language as Language)}
         </h1>
         
         {block.subtitle && (
-          <p className="text-xl md:text-2xl mb-8 opacity-90">
+          <p className="text-xl md:text-2xl mb-8 opacity-90 font-normal leading-relaxed">
             {getLocalizedText(block.subtitle, language as Language)}
           </p>
         )}

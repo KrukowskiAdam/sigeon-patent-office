@@ -10,7 +10,7 @@ export default async function TeamPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-blue-900 text-white">
+      <header className="bg-gradient-to-r from-[#0abaee] to-[#0891b2] text-white">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Link href="/" className="text-2xl font-bold">
@@ -70,7 +70,7 @@ export default async function TeamPage() {
                           {member.specializations.map((spec, index) => (
                             <span 
                               key={index}
-                              className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded"
+                              className="text-xs bg-[#0abaee]/10 text-[#0891b2] px-2 py-1 rounded"
                             >
                               {spec}
                             </span>
