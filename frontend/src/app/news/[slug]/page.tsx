@@ -7,9 +7,9 @@ import { PortableText } from '@portabletext/react'
 import { notFound } from 'next/navigation'
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateStaticParams() {

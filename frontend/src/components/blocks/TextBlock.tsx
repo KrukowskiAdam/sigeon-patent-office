@@ -28,7 +28,7 @@ export function TextBlock({ block, language }: TextBlockProps) {
           )}
           <div className="text-gray-700">
             <PortableText 
-              value={getLocalizedPortableText(block.content, language)}
+              value={getLocalizedPortableText(block.content, language as Language)}
             />
           </div>
         </div>

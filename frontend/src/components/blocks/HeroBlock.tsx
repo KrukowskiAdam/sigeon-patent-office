@@ -64,7 +64,7 @@ export function HeroBlock({ block, language }: HeroBlockProps) {
         {block.content && (
           <div className="prose prose-lg mx-auto text-inherit">
             <PortableText 
-              value={getLocalizedPortableText(block.content, language)}
+              value={getLocalizedPortableText(block.content, language as Language)}
             />
           </div>
         )}

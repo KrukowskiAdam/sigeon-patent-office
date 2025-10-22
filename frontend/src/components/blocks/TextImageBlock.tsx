@@ -41,7 +41,7 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
             )}
             <div className="prose text-gray-700">
               <PortableText 
-                value={getLocalizedPortableText(block.content, language)}
+                value={getLocalizedPortableText(block.content, language as Language)}
               />
             </div>
           </div>

@@ -63,7 +63,7 @@ export function ServicesBlock({ block, language }: ServicesBlockProps) {
                 <CardContent>
                   <div className="text-gray-600 prose prose-sm">
                     <PortableText 
-                      value={getLocalizedPortableText(service.description, language)}
+                      value={getLocalizedPortableText(service.description, language as Language)}
                     />
                   </div>
                 </CardContent>

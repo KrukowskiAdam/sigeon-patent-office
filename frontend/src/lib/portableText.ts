@@ -4,7 +4,7 @@ import { Language } from '@/context/LanguageContext'
 
 export function getLocalizedPortableText(
   content: LocalizedRichText,
-  language: string
+  language: Language
 ): TypedObject[] {
   const lang = language as keyof LocalizedRichText
   const text = content[lang] || content.pl

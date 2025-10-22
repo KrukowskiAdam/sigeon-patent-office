@@ -30,7 +30,7 @@ function TextBlock({ block, language }: { block: TextBlockType; language: string
             </h2>
           )}
           <div className="text-gray-700">
-            <PortableText value={getLocalizedPortableText(block.content, language)} />
+            <PortableText value={getLocalizedPortableText(block.content, language as Language)} />
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@ function TextImageBlock({ block, language }: { block: TextImageBlockType; langua
               </h2>
             )}
             <div className="prose text-gray-600">
-              <PortableText value={getLocalizedPortableText(block.content, language)} />
+              <PortableText value={getLocalizedPortableText(block.content, language as Language)} />
             </div>
           </div>
 
@@ -135,7 +135,7 @@ function HeroBlock({ block, language }: { block: HeroBlockType; language: string
         )}
         {block.content && (
           <div className="prose prose-lg mx-auto text-inherit">
-            <PortableText value={getLocalizedPortableText(block.content, language)} />
+            <PortableText value={getLocalizedPortableText(block.content, language as Language)} />
           </div>
         )}
       </div>
