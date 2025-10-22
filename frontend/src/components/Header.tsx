@@ -21,28 +21,25 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-6">
-            <Link href="/" className="hover:text-white/90 transition-colors text-sm font-medium">
-              {nav.home}
-            </Link>
-            <Link href="/rzecznicy-patentowi" className="hover:text-white/90 transition-colors text-sm font-medium">
+            <Link href="/rzecznicy-patentowi" className="hover:text-white/90 transition-colors font-medium" style={{fontSize: '0.8rem'}}>
               {nav.patentAttorneys}
             </Link>
-            <Link href="/uslugi-prawne" className="hover:text-white/90 transition-colors text-sm font-medium">
+            <Link href="/uslugi-prawne" className="hover:text-white/90 transition-colors font-medium" style={{fontSize: '0.8rem'}}>
               {nav.legalServices}
             </Link>
-            <Link href="/doradztwo-biznesowe-ip" className="hover:text-white/90 transition-colors text-sm font-medium">
+            <Link href="/doradztwo-biznesowe-ip" className="hover:text-white/90 transition-colors font-medium" style={{fontSize: '0.8rem'}}>
               {nav.businessConsulting}
             </Link>
-            <Link href="/biomed" className="hover:text-white/90 transition-colors text-sm font-medium">
+            <Link href="/biomed" className="hover:text-white/90 transition-colors font-medium" style={{fontSize: '0.8rem'}}>
               {nav.biomed}
             </Link>
-            <Link href="/team" className="hover:text-white/90 transition-colors text-sm font-medium">
+            <Link href="/team" className="hover:text-white/90 transition-colors font-medium" style={{fontSize: '0.8rem'}}>
               {nav.team}
             </Link>
-            <Link href="/news" className="hover:text-white/90 transition-colors text-sm font-medium">
+            <Link href="/news" className="hover:text-white/90 transition-colors font-medium" style={{fontSize: '0.8rem'}}>
               {nav.news}
             </Link>
-            <Link href="/contact" className="hover:text-white/90 transition-colors text-sm font-medium">
+            <Link href="/contact" className="hover:text-white/90 transition-colors font-medium" style={{fontSize: '0.8rem'}}>
               {nav.contact}
             </Link>
           </nav>

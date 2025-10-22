@@ -73,10 +73,10 @@ export default function DynamicPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="pt-20">
+      <main className="pt-20 flex-grow">
         {/* Hero Section */}
         <section className={`bg-gradient-to-r ${getHeroColorClasses(page.heroColor || 'blue')} text-white py-20`}>
           <div className="max-w-6xl mx-auto px-4 text-center">
@@ -136,22 +136,23 @@ export default function DynamicPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* CTA Section */}
-        <section className="bg-gray-900 text-white py-16">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-6">
-              {currentLanguage === 'en' ? 'Contact us' : 
-               currentLanguage === 'de' ? 'Kontaktieren Sie uns' : 'Skontaktuj się z nami'}
-            </h2>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/kontakt">
-                {currentLanguage === 'en' ? 'Get in touch' : 
-                 currentLanguage === 'de' ? 'Kontakt aufnehmen' : 'Napisz do nas'}
-              </Link>
-            </Button>
-          </div>
-        </section>
       </main>
+
+      {/* Footer CTA Section */}
+      <footer className="bg-gray-900 text-white py-16 mt-auto">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-6">
+            {currentLanguage === 'en' ? 'Contact us' : 
+             currentLanguage === 'de' ? 'Kontaktieren Sie uns' : 'Skontaktuj się z nami'}
+          </h2>
+          <Button size="lg" variant="outline" asChild>
+            <Link href="/kontakt">
+              {currentLanguage === 'en' ? 'Get in touch' : 
+               currentLanguage === 'de' ? 'Kontakt aufnehmen' : 'Napisz do nas'}
+            </Link>
+          </Button>
+        </div>
+      </footer>
     </div>
   )
 }
