@@ -104,7 +104,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="bg-gray-50 py-16">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-semibold text-gray-800 mb-4 leading-tight tracking-tight">
             {currentTexts.title}
           </h1>
           <p className="text-xl text-gray-600 mb-8">

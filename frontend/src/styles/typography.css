@@ -1,0 +1,70 @@
+/* Typography styles for professional legal website */
+
+/* Headings - elegant and readable */
+.typography-h1 {
+  @apply text-4xl md:text-5xl font-semibold text-gray-800 leading-tight tracking-tight;
+}
+
+.typography-h2 {
+  @apply text-3xl md:text-4xl font-semibold text-gray-800 leading-tight;
+}
+
+.typography-h3 {
+  @apply text-2xl md:text-3xl font-medium text-gray-800 leading-snug;
+}
+
+.typography-h4 {
+  @apply text-xl md:text-2xl font-medium text-gray-700 leading-snug;
+}
+
+/* Hero styles */
+.typography-hero {
+  @apply text-4xl md:text-6xl font-semibold leading-tight tracking-tight;
+}
+
+.typography-hero-subtitle {
+  @apply text-xl md:text-2xl font-normal leading-relaxed opacity-90;
+}
+
+/* Body text */
+.typography-body {
+  @apply text-base leading-relaxed text-gray-600;
+}
+
+.typography-body-large {
+  @apply text-lg leading-relaxed text-gray-600;
+}
+
+/* Menu and navigation */
+.typography-nav {
+  @apply text-sm font-medium;
+}
+
+.typography-logo {
+  @apply text-xl font-semibold tracking-tight;
+}
+
+/* Legal content specific */
+.typography-legal {
+  @apply text-base leading-7 text-gray-700;
+}
+
+.typography-legal h2 {
+  @apply text-2xl font-semibold text-gray-800 mt-8 mb-4;
+}
+
+.typography-legal h3 {
+  @apply text-xl font-medium text-gray-800 mt-6 mb-3;
+}
+
+.typography-legal p {
+  @apply mb-4;
+}
+
+.typography-legal ul {
+  @apply mb-4 pl-6;
+}
+
+.typography-legal li {
+  @apply mb-2;
+}

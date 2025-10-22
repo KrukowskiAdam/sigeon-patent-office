@@ -25,7 +25,7 @@ function TextBlock({ block, language }: { block: TextBlockType; language: string
       <div className="max-w-4xl mx-auto px-4">
         <div className={`prose max-w-none ${alignmentClass}`}>
           {block.title && (
-            <h2 className="text-3xl font-bold mb-8">
+            <h2 className="text-3xl font-semibold mb-8 text-gray-800 leading-tight">
               {getLocalizedText(block.title, language as Language)}
             </h2>
           )}
@@ -62,7 +62,7 @@ function TextImageBlock({ block, language }: { block: TextImageBlockType; langua
           {/* Text Content */}
           <div className={`${textSizeClasses} space-y-6`}>
             {block.title && (
-              <h2 className="text-3xl font-bold text-gray-800">
+              <h2 className="text-3xl font-semibold text-gray-800 leading-tight">
                 {getLocalizedText(block.title, language as Language)}
               </h2>
             )}
@@ -125,11 +125,11 @@ function HeroBlock({ block, language }: { block: HeroBlockType; language: string
         </div>
       )}
       <div className="relative max-w-6xl mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">
+        <h1 className="text-4xl md:text-6xl font-semibold mb-6 tracking-tight">
           {getLocalizedText(block.title, language as Language)}
         </h1>
         {block.subtitle && (
-          <p className="text-xl md:text-2xl mb-8 opacity-90">
+          <p className="text-xl md:text-2xl mb-8 opacity-90 font-normal leading-relaxed">
             {getLocalizedText(block.subtitle, language as Language)}
           </p>
         )}

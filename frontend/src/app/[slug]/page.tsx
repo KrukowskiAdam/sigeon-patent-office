@@ -80,7 +80,7 @@ export default function DynamicPage({ params }: PageProps) {
         {/* Hero Section */}
         <section className={`bg-gradient-to-r ${getHeroColorClasses(page.heroColor || 'blue')} text-white py-20`}>
           <div className="max-w-6xl mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-semibold mb-6 leading-tight tracking-tight">
               {getLocalizedText(page.title, currentLanguage)}
             </h1>
             {page.subtitle && (
