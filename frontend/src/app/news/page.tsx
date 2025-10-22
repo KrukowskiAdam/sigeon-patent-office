@@ -92,6 +92,7 @@ export default function NewsPage() {
                         src={urlFor(article.featuredImage).width(400).height(200).url()}
                         alt={getLocalizedText(article.title, currentLanguage)}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover"
                       />
                     </div>
@@ -145,19 +146,45 @@ export default function NewsPage() {
         </div>
       </main>
 
-      {/* Footer CTA Section */}
-      <footer className="bg-gray-900 text-white py-16 mt-auto">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">
-            {currentLanguage === 'en' ? 'Contact us' : 
-             currentLanguage === 'de' ? 'Kontaktieren Sie uns' : 'Skontaktuj się z nami'}
-          </h2>
-          <Button size="lg" variant="outline" asChild>
-            <Link href="/kontakt">
-              {currentLanguage === 'en' ? 'Get in touch' : 
-               currentLanguage === 'de' ? 'Kontakt aufnehmen' : 'Napisz do nas'}
-            </Link>
-          </Button>
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12 mt-auto">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4">Patent Office</h3>
+              <p className="text-gray-300">
+                Profesjonalna obsługa w zakresie ochrony własności intelektualnej.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Usługi</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li>Patenty</li>
+                <li>Znaki towarowe</li>
+                <li>Wzory przemysłowe</li>
+                <li>Prawo autorskie</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Firma</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li><Link href="/about" className="hover:text-white">O nas</Link></li>
+                <li><Link href="/team" className="hover:text-white">Zespół</Link></li>
+                <li><Link href="/news" className="hover:text-white">Aktualności</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Kontakt</h4>
+              <p className="text-gray-300">
+                ul. Przykładowa 123<br />
+                00-001 Warszawa<br />
+                Tel: +48 123 456 789
+              </p>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2024 Patent Office. Wszystkie prawa zastrzeżone.</p>
+          </div>
         </div>
       </footer>
     </div>

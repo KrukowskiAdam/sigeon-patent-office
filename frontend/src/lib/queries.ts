@@ -96,6 +96,7 @@ export async function getPage(slug: string): Promise<Page | null> {
       subtitle,
       excerpt,
       services,
+      showHeroSection,
       heroColor,
       featuredImage,
       showInNavigation,

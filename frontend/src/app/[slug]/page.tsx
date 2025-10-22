@@ -7,7 +7,6 @@ import { Page } from '@/types/sanity'
 import { Header } from '@/components/Header'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { getLocalizedText } from '@/lib/i18n'
 import { ContentBlock } from '@/components/blocks'
 import Link from 'next/link'
@@ -72,13 +71,17 @@ export default function DynamicPage({ params }: PageProps) {
     return colors[color as keyof typeof colors] || colors.primary
   }
 
+  // Check if hero section should be shown (either by explicit setting or auto-detection)
+  const showHeroSection = page.showHeroSection !== false && !(page.content && page.content[0]?._type === 'bannerBlock')
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="pt-20 flex-grow">
-        {/* Hero Section */}
-        <section className={`bg-gradient-to-r ${getHeroColorClasses(page.heroColor || 'blue')} text-white py-20`}>
+      <main className={`${showHeroSection ? 'pt-20' : 'pt-0'} flex-grow`}>
+        {/* Hero Section - can be controlled via CMS or auto-hidden if first block is banner */}
+        {showHeroSection && (
+          <section className={`bg-gradient-to-r ${getHeroColorClasses(page.heroColor || 'blue')} text-white py-20`}>
           <div className="max-w-6xl mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-semibold mb-6 leading-tight tracking-tight">
               {getLocalizedText(page.title, currentLanguage)}
@@ -94,7 +97,8 @@ export default function DynamicPage({ params }: PageProps) {
               </p>
             )}
           </div>
-        </section>
+          </section>
+        )}
 
         {/* Services Section - only for service pages */}
         {page.services && page.services.length > 0 && (
@@ -138,19 +142,45 @@ export default function DynamicPage({ params }: PageProps) {
 
       </main>
 
-      {/* Footer CTA Section */}
-      <footer className="bg-gray-900 text-white py-16 mt-auto">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">
-            {currentLanguage === 'en' ? 'Contact us' : 
-             currentLanguage === 'de' ? 'Kontaktieren Sie uns' : 'Skontaktuj się z nami'}
-          </h2>
-          <Button size="lg" variant="outline" asChild>
-            <Link href="/kontakt">
-              {currentLanguage === 'en' ? 'Get in touch' : 
-               currentLanguage === 'de' ? 'Kontakt aufnehmen' : 'Napisz do nas'}
-            </Link>
-          </Button>
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12 mt-auto">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4">Patent Office</h3>
+              <p className="text-gray-300">
+                Profesjonalna obsługa w zakresie ochrony własności intelektualnej.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Usługi</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li>Patenty</li>
+                <li>Znaki towarowe</li>
+                <li>Wzory przemysłowe</li>
+                <li>Prawo autorskie</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Firma</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li><Link href="/about" className="hover:text-white">O nas</Link></li>
+                <li><Link href="/team" className="hover:text-white">Zespół</Link></li>
+                <li><Link href="/news" className="hover:text-white">Aktualności</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Kontakt</h4>
+              <p className="text-gray-300">
+                ul. Przykładowa 123<br />
+                00-001 Warszawa<br />
+                Tel: +48 123 456 789
+              </p>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2024 Patent Office. Wszystkie prawa zastrzeżone.</p>
+          </div>
         </div>
       </footer>
     </div>

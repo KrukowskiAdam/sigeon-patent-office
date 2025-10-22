@@ -1,5 +1,6 @@
 import React from 'react'
-import { ContentBlock as ContentBlockType, TextBlock as TextBlockType, TextImageBlock as TextImageBlockType, HeroBlock as HeroBlockType } from '@/types/sanity'
+import { ContentBlock as ContentBlockType, TextBlock as TextBlockType, TextImageBlock as TextImageBlockType, HeroBlock as HeroBlockType, BannerBlock as BannerBlockType } from '@/types/sanity'
+import { BannerBlock } from './BannerBlock'
 import { getLocalizedText } from '@/lib/i18n'
 import { PortableText } from '@portabletext/react'
 import { Language } from '@/context/LanguageContext'
@@ -78,6 +79,7 @@ function TextImageBlock({ block, language }: { block: TextImageBlockType; langua
                 src={urlFor(block.image).width(800).height(450).url()}
                 alt={block.imageAlt ? getLocalizedText(block.imageAlt, language as Language) : ''}
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>
@@ -119,6 +121,7 @@ function HeroBlock({ block, language }: { block: HeroBlockType; language: string
             src={urlFor(block.backgroundImage).width(1920).height(1080).url()}
             alt=""
             fill
+            sizes="100vw"
             className="object-cover"
           />
           <div className="absolute inset-0 bg-black/50" />
@@ -157,6 +160,8 @@ export function ContentBlock({ block, language }: ContentBlockProps) {
           <p>Component &quot;servicesBlock&quot; not yet implemented</p>
         </div>
       )
+    case 'bannerBlock':
+      return <BannerBlock {...(block as BannerBlockType)} />
     default:
       console.warn(`Unknown block type`)
       return null

@@ -19,7 +19,9 @@ const config = {
     },
     extend: {
       fontFamily: {
-        'sans': ['var(--font-montserrat)', 'Montserrat', 'system-ui', '-apple-system', 'sans-serif'],
+        'sans': ['var(--font-nunito)', 'var(--font-work)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        'nunito': ['var(--font-nunito)', 'system-ui', 'sans-serif'],
+        'work': ['var(--font-work)', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

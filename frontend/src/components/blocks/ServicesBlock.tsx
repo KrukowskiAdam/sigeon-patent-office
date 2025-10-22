@@ -50,6 +50,7 @@ export function ServicesBlock({ block, language }: ServicesBlockProps) {
                         src={urlFor(service.icon).width(48).height(48).url()}
                         alt=""
                         fill
+                        sizes="48px"
                         className="object-contain"
                       />
                     </div>

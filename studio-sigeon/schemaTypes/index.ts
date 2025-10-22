@@ -4,6 +4,7 @@ import {seoFields} from './seo'
 
 // Content blocks
 import {textBlock, textImageBlock, heroBlock, servicesBlock} from './blocks'
+import {bannerBlock} from './blocks/bannerBlock'
 
 // Document types
 import {news} from './post'
@@ -22,6 +23,7 @@ export const schemaTypes = [
   textImageBlock,
   heroBlock,
   servicesBlock,
+  bannerBlock,
   
   // Document types
   news,

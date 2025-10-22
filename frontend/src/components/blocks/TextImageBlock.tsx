@@ -53,6 +53,7 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
                 src={urlFor(block.image).width(800).height(450).url()}
                 alt={block.imageAlt ? getLocalizedText(block.imageAlt, language as Language) : ''}
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>

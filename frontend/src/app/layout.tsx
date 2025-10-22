@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from '@/context/LanguageContext';
+import { Nunito_Sans, Work_Sans } from 'next/font/google';
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
+const nunitoSans = Nunito_Sans({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-nunito',
+});
+
+const workSans = Work_Sans({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-work',
 });
 
 export const metadata: Metadata = {
@@ -21,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body
-        className={`${montserrat.variable} font-sans antialiased`}
+        className={`${nunitoSans.variable} ${workSans.variable} font-sans antialiased`}
       >
         <LanguageProvider>
           {children}

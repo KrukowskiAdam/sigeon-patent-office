@@ -49,6 +49,7 @@ export const page = defineType({
         {type: 'textBlock'},
         {type: 'textImageBlock'},
         {type: 'servicesBlock'},
+        {type: 'bannerBlock'},
       ],
       description: 'Build your page with content blocks',
     }),
@@ -82,6 +83,13 @@ export const page = defineType({
       hidden: ({document}) => !['patent-attorneys', 'legal-services', 'business-consulting', 'biomed'].includes(document?.pageType as string),
     }),
     defineField({
+      name: 'showHeroSection',
+      title: 'Show Hero Section with Page Title',
+      type: 'boolean',
+      initialValue: true,
+      description: 'Uncheck to hide the hero section (useful when first content block is a banner)',
+    }),
+    defineField({
       name: 'heroColor',
       title: 'Hero Section Color',
       type: 'string',
@@ -94,6 +102,7 @@ export const page = defineType({
         ],
       },
       initialValue: 'primary',
+      hidden: ({document}) => !document?.showHeroSection,
     }),
     defineField({
       name: 'excerpt',

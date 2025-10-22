@@ -144,6 +144,7 @@ export default function Home() {
                         src={urlFor(article.featuredImage).width(400).height(200).url()}
                         alt={article.title.pl}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover"
                       />
                     </div>
@@ -225,6 +226,7 @@ export default function Home() {
                           src={urlFor(member.photo).width(300).height(200).url()}
                           alt={member.name}
                           fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                           className="object-cover rounded-t-lg"
                         />
                       </div>

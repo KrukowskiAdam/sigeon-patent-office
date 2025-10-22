@@ -43,6 +43,8 @@ export function HeroBlock({ block, language }: HeroBlockProps) {
             src={urlFor(block.backgroundImage).width(1920).height(1080).url()}
             alt=""
             fill
+            sizes="100vw"
+            priority
             className="object-cover"
           />
           <div className="absolute inset-0 bg-black/50" />

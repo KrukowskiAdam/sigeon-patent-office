@@ -1,5 +1,5 @@
 import { getNewsArticle, getNews } from '@/lib/queries'
-
+import { Header } from '@/components/Header'
 import Link from 'next/link'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
@@ -28,22 +28,8 @@ export default async function NewsArticlePage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-[#0abaee] to-[#0891b2] text-white">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold">
-              Patent Office
-            </Link>
-            <nav className="hidden md:flex space-x-6">
-              <Link href="/" className="hover:text-blue-200">Home</Link>
-              <Link href="/news" className="hover:text-blue-200">News</Link>
-              <Link href="/team" className="hover:text-blue-200">Team</Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col">
+      <Header />
 
       {/* Breadcrumbs */}
       <div className="bg-gray-50 py-4">
@@ -105,6 +91,8 @@ export default async function NewsArticlePage({ params }: Props) {
                   src={urlFor(article.featuredImage).width(800).height(450).url()}
                   alt={article.title.pl}
                   fill
+                  sizes="(max-width: 768px) 100vw, 800px"
+                  priority
                   className="object-cover"
                 />
               </div>
@@ -148,9 +136,44 @@ export default async function NewsArticlePage({ params }: Props) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 mt-16">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <p>&copy; 2024 Patent Office. Wszystkie prawa zastrzeżone.</p>
+      <footer className="bg-gray-900 text-white py-12 mt-auto">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4">Patent Office</h3>
+              <p className="text-gray-300">
+                Profesjonalna obsługa w zakresie ochrony własności intelektualnej.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Usługi</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li>Patenty</li>
+                <li>Znaki towarowe</li>
+                <li>Wzory przemysłowe</li>
+                <li>Prawo autorskie</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Firma</h4>
+              <ul className="space-y-2 text-gray-300">
+                <li><Link href="/about" className="hover:text-white">O nas</Link></li>
+                <li><Link href="/team" className="hover:text-white">Zespół</Link></li>
+                <li><Link href="/news" className="hover:text-white">Aktualności</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Kontakt</h4>
+              <p className="text-gray-300">
+                ul. Przykładowa 123<br />
+                00-001 Warszawa<br />
+                Tel: +48 123 456 789
+              </p>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2024 Patent Office. Wszystkie prawa zastrzeżone.</p>
+          </div>
         </div>
       </footer>
     </div>

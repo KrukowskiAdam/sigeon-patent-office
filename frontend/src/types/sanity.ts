@@ -130,7 +130,32 @@ export interface ServicesBlock {
   layout?: 'grid-2' | 'grid-3' | 'grid-4' | 'list'
 }
 
-export type ContentBlock = TextBlock | TextImageBlock | HeroBlock | ServicesBlock
+export interface BannerItem {
+  _key: string
+  image?: {
+    asset: {
+      _ref: string
+      _type: 'reference'
+    }
+    alt?: string
+  }
+  title?: LocalizedString
+  content?: LocalizedRichText
+  buttonText?: LocalizedString
+  buttonLink?: string
+  overlay?: boolean
+}
+
+export interface BannerBlock {
+  _type: 'bannerBlock'
+  _key: string
+  items: BannerItem[]
+  autoplay?: boolean
+  showIndicators?: boolean
+  height?: 'small' | 'medium' | 'large' | 'full'
+}
+
+export type ContentBlock = TextBlock | TextImageBlock | HeroBlock | ServicesBlock | BannerBlock
 
 export interface Page {
   _id: string
@@ -143,6 +168,7 @@ export interface Page {
   subtitle?: LocalizedString
   excerpt?: LocalizedText
   services?: Service[]
+  showHeroSection?: boolean
   heroColor?: 'primary' | 'dark' | 'light' | 'gray'
   featuredImage?: {
     asset: {
