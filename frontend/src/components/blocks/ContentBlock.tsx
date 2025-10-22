@@ -1,12 +1,11 @@
 import React from 'react'
-import { ContentBlock as ContentBlockType, TextBlock as TextBlockType, TextImageBlock as TextImageBlockType, HeroBlock as HeroBlockType, ServicesBlock as ServicesBlockType } from '@/types/sanity'
+import { ContentBlock as ContentBlockType, TextBlock as TextBlockType, TextImageBlock as TextImageBlockType, HeroBlock as HeroBlockType } from '@/types/sanity'
 import { getLocalizedText } from '@/lib/i18n'
 import { PortableText } from '@portabletext/react'
 import { Language } from '@/context/LanguageContext'
 import { getLocalizedPortableText } from '@/lib/portableText'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface ContentBlockProps {
   block: ContentBlockType
@@ -63,11 +62,11 @@ function TextImageBlock({ block, language }: { block: TextImageBlockType; langua
           {/* Text Content */}
           <div className={`${textSizeClasses} space-y-6`}>
             {block.title && (
-              <h2 className="text-3xl font-bold text-gray-900">
+              <h2 className="text-3xl font-bold text-gray-800">
                 {getLocalizedText(block.title, language as Language)}
               </h2>
             )}
-            <div className="prose text-gray-700">
+            <div className="prose text-gray-600">
               <PortableText value={getLocalizedPortableText(block.content, language)} />
             </div>
           </div>
@@ -92,19 +91,16 @@ function TextImageBlock({ block, language }: { block: TextImageBlockType; langua
 // Inline HeroBlock component
 function HeroBlock({ block, language }: { block: HeroBlockType; language: string }) {
   const backgroundColorClasses = {
-    blue: 'bg-gradient-to-r from-blue-600 to-blue-800',
-    green: 'bg-gradient-to-r from-green-600 to-green-800',
-    purple: 'bg-gradient-to-r from-purple-600 to-purple-800',
-    teal: 'bg-gradient-to-r from-teal-600 to-teal-800',
-    red: 'bg-gradient-to-r from-red-600 to-red-800',
-    orange: 'bg-gradient-to-r from-orange-600 to-orange-800',
-    gray: 'bg-gradient-to-r from-gray-600 to-gray-800',
+    primary: 'bg-gradient-to-r from-[#0abaee] to-[#0891b2]',
+    dark: 'bg-gradient-to-r from-[#0891b2] to-[#065f7a]',
+    light: 'bg-gradient-to-r from-[#38bdf8] to-[#0abaee]',
+    gray: 'bg-gradient-to-r from-gray-500 to-gray-700',
     white: 'bg-white'
-  }[block.backgroundColor || 'blue']
+  }[block.backgroundColor || 'primary']
 
   const textColorClasses = {
     white: 'text-white',
-    black: 'text-black',
+    dark: 'text-gray-700',
     gray: 'text-gray-600'
   }[block.textColor || 'white']
 

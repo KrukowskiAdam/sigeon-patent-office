@@ -11,38 +11,38 @@ export function Header() {
   const nav = navigationTranslations[currentLanguage]
 
   return (
-    <header className="bg-blue-900 text-white sticky top-0 z-50 shadow-lg">
+    <header className="bg-gradient-to-r from-[#0abaee] to-[#0891b2] text-white sticky top-0 z-50 shadow-lg">
       <div className="max-w-6xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold hover:text-blue-200 transition-colors">
+          <Link href="/" className="text-2xl font-bold hover:text-white/90 transition-colors">
             Sigeon IP
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-6">
-            <Link href="/" className="hover:text-blue-200 transition-colors font-medium">
+            <Link href="/" className="hover:text-white/90 transition-colors font-medium">
               {nav.home}
             </Link>
-            <Link href="/rzecznicy-patentowi" className="hover:text-blue-200 transition-colors font-medium">
+            <Link href="/rzecznicy-patentowi" className="hover:text-white/90 transition-colors font-medium">
               {nav.patentAttorneys}
             </Link>
-            <Link href="/uslugi-prawne" className="hover:text-blue-200 transition-colors font-medium">
+            <Link href="/uslugi-prawne" className="hover:text-white/90 transition-colors font-medium">
               {nav.legalServices}
             </Link>
-            <Link href="/doradztwo-biznesowe-ip" className="hover:text-blue-200 transition-colors font-medium">
+            <Link href="/doradztwo-biznesowe-ip" className="hover:text-white/90 transition-colors font-medium">
               {nav.businessConsulting}
             </Link>
-            <Link href="/biomed" className="hover:text-blue-200 transition-colors font-medium">
+            <Link href="/biomed" className="hover:text-white/90 transition-colors font-medium">
               {nav.biomed}
             </Link>
-            <Link href="/team" className="hover:text-blue-200 transition-colors font-medium">
+            <Link href="/team" className="hover:text-white/90 transition-colors font-medium">
               {nav.team}
             </Link>
-            <Link href="/news" className="hover:text-blue-200 transition-colors font-medium">
+            <Link href="/news" className="hover:text-white/90 transition-colors font-medium">
               {nav.news}
             </Link>
-            <Link href="/contact" className="hover:text-blue-200 transition-colors font-medium">
+            <Link href="/contact" className="hover:text-white/90 transition-colors font-medium">
               {nav.contact}
             </Link>
           </nav>
@@ -54,7 +54,7 @@ export function Header() {
             {/* Mobile menu button - można dodać później */}
             <Button 
               variant="ghost" 
-              className="lg:hidden text-white hover:text-blue-200"
+              className="lg:hidden text-white hover:text-white/90"
               size="sm"
             >
               Menu

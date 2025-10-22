@@ -104,8 +104,8 @@ export interface HeroBlock {
       _type: 'reference'
     }
   }
-  backgroundColor?: 'blue' | 'green' | 'purple' | 'teal' | 'red' | 'orange' | 'gray' | 'white'
-  textColor?: 'white' | 'black' | 'gray'
+  backgroundColor?: 'primary' | 'dark' | 'light' | 'gray' | 'white'
+  textColor?: 'white' | 'dark' | 'gray'
   height?: 'small' | 'medium' | 'large' | 'full'
 }
 
@@ -143,7 +143,7 @@ export interface Page {
   subtitle?: LocalizedString
   excerpt?: LocalizedText
   services?: Service[]
-  heroColor?: 'blue' | 'green' | 'purple' | 'teal' | 'red' | 'orange'
+  heroColor?: 'primary' | 'dark' | 'light' | 'gray'
   featuredImage?: {
     asset: {
       _ref: string

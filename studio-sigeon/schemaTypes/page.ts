@@ -87,15 +87,13 @@ export const page = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Blue', value: 'blue'},
-          {title: 'Green', value: 'green'},
-          {title: 'Purple', value: 'purple'},
-          {title: 'Teal', value: 'teal'},
-          {title: 'Red', value: 'red'},
-          {title: 'Orange', value: 'orange'},
+          {title: 'Primary Blue (#0abaee)', value: 'primary'},
+          {title: 'Dark Blue', value: 'dark'},
+          {title: 'Light Blue', value: 'light'},
+          {title: 'Gray', value: 'gray'},
         ],
       },
-      initialValue: 'blue',
+      initialValue: 'primary',
     }),
     defineField({
       name: 'excerpt',

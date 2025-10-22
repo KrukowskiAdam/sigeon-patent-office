@@ -64,14 +64,12 @@ export default function DynamicPage({ params }: PageProps) {
 
   const getHeroColorClasses = (color: string) => {
     const colors = {
-      blue: 'from-blue-600 to-blue-800',
-      green: 'from-green-600 to-green-800', 
-      purple: 'from-purple-600 to-purple-800',
-      teal: 'from-teal-600 to-teal-800',
-      red: 'from-red-600 to-red-800',
-      orange: 'from-orange-600 to-orange-800',
+      primary: 'from-[#0abaee] to-[#0891b2]',
+      dark: 'from-[#0891b2] to-[#065f7a]', 
+      light: 'from-[#38bdf8] to-[#0abaee]',
+      gray: 'from-gray-500 to-gray-700',
     }
-    return colors[color as keyof typeof colors] || colors.blue
+    return colors[color as keyof typeof colors] || colors.primary
   }
 
   return (

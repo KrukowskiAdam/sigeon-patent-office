@@ -35,17 +35,14 @@ export const heroBlock = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Blue', value: 'blue'},
-          {title: 'Green', value: 'green'},
-          {title: 'Purple', value: 'purple'},
-          {title: 'Teal', value: 'teal'},
-          {title: 'Red', value: 'red'},
-          {title: 'Orange', value: 'orange'},
+          {title: 'Primary Blue (#0abaee)', value: 'primary'},
+          {title: 'Dark Blue', value: 'dark'},
+          {title: 'Light Blue', value: 'light'},
           {title: 'Gray', value: 'gray'},
           {title: 'White', value: 'white'},
         ],
       },
-      initialValue: 'blue',
+      initialValue: 'primary',
     }),
     defineField({
       name: 'textColor',
@@ -54,7 +51,7 @@ export const heroBlock = defineType({
       options: {
         list: [
           {title: 'White', value: 'white'},
-          {title: 'Black', value: 'black'},
+          {title: 'Dark Gray', value: 'dark'},
           {title: 'Gray', value: 'gray'},
         ],
       },
