@@ -61,46 +61,11 @@ export default function DynamicPage({ params }: PageProps) {
     return notFound()
   }
 
-  const getHeroColorClasses = (color: string) => {
-    const colors = {
-      primary: 'from-[#0abaee] to-[#0891b2]',
-      dark: 'from-[#0891b2] to-[#065f7a]', 
-      light: 'from-[#38bdf8] to-[#0abaee]',
-      gray: 'from-gray-500 to-gray-700',
-    }
-    return colors[color as keyof typeof colors] || colors.primary
-  }
-
-  // Check if hero section should be shown (either by explicit setting or auto-detection)
-  const showHeroSection = page.showHeroSection !== false && !(page.content && page.content[0]?._type === 'bannerBlock')
-
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className={`${showHeroSection ? 'pt-20' : 'pt-0'} flex-grow`}>
-        {/* Hero Section - can be controlled via CMS or auto-hidden if first block is banner */}
-        {showHeroSection && (
-          <section className={`bg-gradient-to-r ${getHeroColorClasses(page.heroColor || 'blue')} text-white py-20`}>
-          <div className="max-w-6xl mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-semibold mb-6 leading-tight tracking-tight">
-              {getLocalizedText(page.title, currentLanguage)}
-            </h1>
-            {page.subtitle && (
-              <p className="text-xl md:text-2xl mb-8 opacity-90">
-                {getLocalizedText(page.subtitle, currentLanguage)}
-              </p>
-            )}
-            {page.excerpt && (
-              <p className="text-lg max-w-3xl mx-auto">
-                {getLocalizedText(page.excerpt, currentLanguage)}
-              </p>
-            )}
-          </div>
-          </section>
-        )}
-
-        {/* Services Section - only for service pages */}
+      <main className="pt-0 flex-grow">        {/* Services Section - only for service pages */}
         {page.services && page.services.length > 0 && (
           <section className="py-16">
             <div className="max-w-6xl mx-auto px-4">

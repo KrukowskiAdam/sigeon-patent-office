@@ -1,5 +1,20 @@
 import {client} from './sanity'
-import {NewsArticle, Page, TeamMember} from '@/types/sanity'
+import {NewsArticle, Page, TeamMember, Homepage} from '@/types/sanity'
+
+// Get homepage content
+export async function getHomepage(): Promise<Homepage | null> {
+  return client.fetch(`
+    *[_type == "homepage" && _id == "homepage"][0] {
+      _id,
+      heroSection,
+      content,
+      featuredServices,
+      newsSection,
+      teamSection,
+      seo
+    }
+  `)
+}
 
 // Get all news articles
 export async function getNews(): Promise<NewsArticle[]> {
@@ -60,10 +75,9 @@ export async function getPages(): Promise<Page[]> {
   return client.fetch(`
     *[_type == "page" && defined(slug.current)] | order(navigationOrder asc) {
       _id,
-      title,
+      internalTitle,
       slug,
       pageType,
-      excerpt,
       featuredImage,
       showInNavigation,
       navigationOrder
@@ -76,7 +90,7 @@ export async function getNavigationPages(): Promise<Page[]> {
   return client.fetch(`
     *[_type == "page" && showInNavigation == true && defined(slug.current)] | order(navigationOrder asc) {
       _id,
-      title,
+      internalTitle,
       slug,
       pageType,
       navigationOrder
@@ -89,15 +103,11 @@ export async function getPage(slug: string): Promise<Page | null> {
   return client.fetch(`
     *[_type == "page" && slug.current == $slug][0] {
       _id,
-      title,
+      internalTitle,
       slug,
       pageType,
       content,
-      subtitle,
-      excerpt,
       services,
-      showHeroSection,
-      heroColor,
       featuredImage,
       showInNavigation,
       navigationOrder,

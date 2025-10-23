@@ -85,11 +85,11 @@ export default function NewsPage() {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {news.map((article: NewsArticle) => (
-                <Card key={article._id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <Card key={article._id} className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow bg-slate-800 text-white border-slate-700">
                   {article.featuredImage && (
-                    <div className="h-48 relative">
+                    <div className="relative aspect-video">
                       <Image
-                        src={urlFor(article.featuredImage).width(400).height(200).url()}
+                        src={urlFor(article.featuredImage).width(400).height(225).url()}
                         alt={getLocalizedText(article.title, currentLanguage)}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -97,31 +97,26 @@ export default function NewsPage() {
                       />
                     </div>
                   )}
-                  <CardHeader>
-                    <div className="flex items-center gap-2 mb-2">
-                      {article.category && (
-                        <Badge variant="secondary">
-                          {article.category}
-                        </Badge>
-                      )}
-                      {article.featured && (
-                        <Badge variant="default">Wyróżnione</Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-xl">
+                  <CardHeader className="text-white">
+                    {article.featured && (
+                      <div className="mb-2">
+                        <Badge variant="default" className="text-xs">Wyróżnione</Badge>
+                      </div>
+                    )}
+                    <CardTitle className="text-lg text-white">
                       {getLocalizedText(article.title, currentLanguage)}
                     </CardTitle>
-                    <CardDescription className="text-sm text-muted-foreground">
+                    <CardDescription className="text-xs text-slate-300">
                       {new Date(article.publishedAt).toLocaleDateString('pl-PL')}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="text-white">
                     {article.excerpt && (
-                      <p className="text-muted-foreground mb-4">
+                      <p className="text-slate-300 mb-4 text-sm">
                         {getLocalizedText(article.excerpt, currentLanguage)}
                       </p>
                     )}
-                    <Button variant="ghost" asChild>
+                    <Button variant="outline" className="bg-transparent border-slate-600 text-white hover:bg-slate-700 hover:text-white" asChild>
                       <Link href={`/news/${article.slug.current}`}>
                         Czytaj więcej →
                       </Link>

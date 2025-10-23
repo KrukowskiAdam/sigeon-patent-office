@@ -86,7 +86,7 @@ export default async function NewsArticlePage({ params }: Props) {
           {/* Featured Image */}
           {article.featuredImage && (
             <div className="mb-8">
-              <div className="relative aspect-video rounded-lg overflow-hidden">
+              <div className="relative aspect-video overflow-hidden">
                 <Image
                   src={urlFor(article.featuredImage).width(800).height(450).url()}
                   alt={article.title.pl}
@@ -128,7 +128,7 @@ export default async function NewsArticlePage({ params }: Props) {
         <div className="max-w-4xl mx-auto px-4 mt-12 pt-8 border-t border-gray-200">
           <Link 
             href="/news"
-            className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
+            className="inline-flex items-center text-slate-700 hover:text-slate-900 font-medium"
           >
             ← Powrót do aktualności
           </Link>

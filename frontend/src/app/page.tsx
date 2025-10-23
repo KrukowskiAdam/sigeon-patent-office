@@ -1,10 +1,10 @@
 'use client'
 
-import { getFeaturedNews, getTeamMembers } from '@/lib/queries'
-import { NewsArticle, TeamMember } from '@/types/sanity'
+import { getFeaturedNews, getTeamMembers, getHomepage } from '@/lib/queries'
+import { NewsArticle, TeamMember, Homepage } from '@/types/sanity'
 import Link from 'next/link'
 import Image from 'next/image'
-import { urlFor, client } from '@/lib/sanity'
+import { urlFor } from '@/lib/sanity'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -12,28 +12,24 @@ import { Header } from '@/components/Header'
 import { useLanguage } from '@/context/LanguageContext'
 import { getLocalizedText } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
+import { ContentBlock } from '@/components/blocks/ContentBlock'
 
 export default function Home() {
   const { currentLanguage } = useLanguage()
   const [featuredNews, setFeaturedNews] = useState<NewsArticle[]>([])
   const [team, setTeam] = useState<TeamMember[]>([])
+  const [homepage, setHomepage] = useState<Homepage | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const loadData = async () => {
       try {
         console.log('🔄 Starting data load...')
-        console.log('🌍 Environment:', process.env.NODE_ENV)
-        console.log('🔑 Token present:', !!process.env.NEXT_PUBLIC_SANITY_TOKEN)
-        console.log('🔑 Token length:', process.env.NEXT_PUBLIC_SANITY_TOKEN?.length)
-        console.log('🔑 Token start:', process.env.NEXT_PUBLIC_SANITY_TOKEN?.slice(0, 8))
-        console.log('🏢 Project ID: pofl8c47')
-        console.log('📊 Dataset: production')
         
-        // Test najprostszego zapytania
-        console.log('🧪 Testing simple query...')
-        const testResult = await client.fetch('*[_type == "page"][0..1]')
-        console.log('✅ Simple query result:', testResult?.length || 0, 'items')
+        // Load homepage data
+        console.log('� Loading homepage...')
+        const homepageData = await getHomepage()
+        console.log('✅ Homepage loaded:', homepageData ? 'Found' : 'Not found')
         
         console.log('📰 Loading news...')
         const newsData = await getFeaturedNews()
@@ -44,6 +40,7 @@ export default function Home() {
         console.log('✅ Team loaded:', teamData?.length || 0, 'members')
         
         console.log('📝 Setting state...')
+        setHomepage(homepageData)
         setFeaturedNews(newsData)
         setTeam(teamData)
         console.log('✅ State updated successfully')
@@ -58,45 +55,7 @@ export default function Home() {
     loadData()
   }, [])
 
-  const heroTexts = {
-    pl: {
-      title: 'Profesjonalna Kancelaria Patentowa',
-      subtitle: 'Kompleksowa ochrona własności intelektualnej - patenty, znaki towarowe, wzory przemysłowe',
-      cta: 'Skontaktuj się z nami'
-    },
-    en: {
-      title: 'Professional Patent Office',
-      subtitle: 'Comprehensive intellectual property protection - patents, trademarks, industrial designs',
-      cta: 'Contact Us'
-    },
-    de: {
-      title: 'Professionelles Patentbüro',
-      subtitle: 'Umfassender Schutz des geistigen Eigentums - Patente, Marken, Industriedesigns',
-      cta: 'Kontaktieren Sie uns'
-    },
-    zh: {
-      title: '专业专利事务所',
-      subtitle: '全面的知识产权保护 - 专利、商标、工业设计',
-      cta: '联系我们'
-    },
-    ko: {
-      title: '전문 특허 사무소',
-      subtitle: '포괄적인 지식재산권 보호 - 특허, 상표, 산업디자인',
-      cta: '문의하기'
-    },
-    ja: {
-      title: 'プロフェッショナル特許事務所',
-      subtitle: '包括的な知的財産保護 - 特許、商標、工業デザイン',
-      cta: 'お問い合わせ'
-    },
-    ru: {
-      title: 'Профессиональное патентное бюро',
-      subtitle: 'Комплексная защита интеллектуальной собственности - патенты, товарные знаки, промышленные образцы',
-      cta: 'Свяжитесь с нами'
-    }
-  }
 
-  const currentTexts = heroTexts[currentLanguage] || heroTexts.pl
 
   if (loading) {
     return (
@@ -113,35 +72,36 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      {/* Hero Section */}
-      <section className="bg-gray-50 py-16">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <h1 className="text-4xl font-semibold text-gray-800 mb-4 leading-tight tracking-tight">
-            {currentTexts.title}
-          </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            {currentTexts.subtitle}
-          </p>
-          <Button asChild size="lg" className="text-lg">
-            <Link href="/contact">
-              {currentTexts.cta}
-            </Link>
-          </Button>
-        </div>
-      </section>
+      {/* Content Blocks from CMS */}
+      {homepage?.content && homepage.content.length > 0 && (
+        <>
+          {homepage.content.map((block, index) => (
+            <ContentBlock 
+              key={block._key || index} 
+              block={block} 
+              language={currentLanguage} 
+            />
+          ))}
+        </>
+      )}
 
       {/* Featured News */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Najważniejsze aktualności</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">
+            {homepage?.newsSection?.title ? 
+              getLocalizedText(homepage.newsSection.title, currentLanguage) : 
+              'Najważniejsze aktualności'
+            }
+          </h2>
           {featuredNews.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredNews.slice(0, 3).map((article: NewsArticle) => (
-                <Card key={article._id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <Card key={article._id} className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow bg-slate-800 text-white border-slate-700">
                   {article.featuredImage && (
-                    <div className="h-48 relative">
+                    <div className="relative aspect-video">
                       <Image
-                        src={urlFor(article.featuredImage).width(400).height(200).url()}
+                        src={urlFor(article.featuredImage).width(400).height(225).url()}
                         alt={article.title.pl}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -149,29 +109,26 @@ export default function Home() {
                       />
                     </div>
                   )}
-                  <CardHeader>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge variant="secondary">
-                        {article.category || 'News'}
-                      </Badge>
-                      {article.featured && (
-                        <Badge variant="default">Wyróżnione</Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-xl">
+                  <CardHeader className="text-white">
+                    {article.featured && (
+                      <div className="mb-2">
+                        <Badge variant="default" className="text-xs">Wyróżnione</Badge>
+                      </div>
+                    )}
+                    <CardTitle className="text-lg text-white">
                       {getLocalizedText(article.title, currentLanguage)}
                     </CardTitle>
-                    <CardDescription className="text-sm text-muted-foreground">
+                    <CardDescription className="text-xs text-slate-300">
                       {new Date(article.publishedAt).toLocaleDateString('pl-PL')}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="text-white">
                     {article.excerpt && (
-                      <p className="text-muted-foreground mb-4">
+                      <p className="text-slate-300 mb-4 text-sm">
                         {getLocalizedText(article.excerpt, currentLanguage)}
                       </p>
                     )}
-                    <Button variant="ghost" asChild>
+                    <Button variant="outline" className="bg-transparent border-slate-600 text-white hover:bg-slate-700 hover:text-white" asChild>
                       <Link href={`/news/${article.slug.current}`}>
                         Czytaj więcej →
                       </Link>
@@ -202,7 +159,7 @@ export default function Home() {
             <div className="text-center mt-8">
               <Link 
                 href="/news"
-                className="text-blue-600 hover:text-blue-800 font-medium"
+                className="text-slate-700 hover:text-slate-900 font-medium"
               >
                 Zobacz wszystkie aktualności →
               </Link>
@@ -212,14 +169,25 @@ export default function Home() {
       </section>
 
       {/* Team Preview */}
-      <section className="bg-gray-50 py-16">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Nasz zespół</h2>
-          {team.length > 0 ? (
-            <>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {team.slice(0, 4).map((member: TeamMember) => (
-                  <Card key={member._id} className="text-center hover:shadow-lg transition-shadow">
+      {(!homepage?.teamSection || homepage.teamSection.showTeam !== false) && (
+        <section className="bg-gray-50 py-16">
+          <div className="max-w-6xl mx-auto px-4">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+              {homepage?.teamSection?.title ? 
+                getLocalizedText(homepage.teamSection.title, currentLanguage) : 
+                'Nasz zespół'
+              }
+            </h2>
+            {homepage?.teamSection?.subtitle && (
+              <p className="text-xl text-gray-600 mb-12 text-center max-w-3xl mx-auto">
+                {getLocalizedText(homepage.teamSection.subtitle, currentLanguage)}
+              </p>
+            )}
+            {team.length > 0 ? (
+              <>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                  {team.slice(0, homepage?.teamSection?.maxMembers || 4).map((member: TeamMember) => (
+                    <Card key={member._id} className="text-center hover:shadow-lg transition-shadow">
                     {member.photo && (
                       <div className="h-48 relative">
                         <Image
@@ -227,7 +195,7 @@ export default function Home() {
                           alt={member.name}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                          className="object-cover rounded-t-lg"
+                          className="object-cover"
                         />
                       </div>
                     )}
@@ -256,7 +224,7 @@ export default function Home() {
               <div className="text-center mt-8">
                 <Link 
                   href="/team"
-                  className="text-blue-600 hover:text-blue-800 font-medium"
+                  className="text-slate-700 hover:text-slate-900 font-medium"
                 >
                   Poznaj cały zespół →
                 </Link>
@@ -282,6 +250,7 @@ export default function Home() {
           )}
         </div>
       </section>
+      )}
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 mt-auto">

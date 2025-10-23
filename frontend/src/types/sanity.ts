@@ -159,17 +159,13 @@ export type ContentBlock = TextBlock | TextImageBlock | HeroBlock | ServicesBloc
 
 export interface Page {
   _id: string
-  title: LocalizedString
+  internalTitle: string
   slug: {
     current: string
   }
-  pageType: 'about' | 'contact' | 'team' | 'patent-attorneys' | 'legal-services' | 'business-consulting' | 'biomed' | 'services' | 'other'
+  pageType: 'homepage' | 'about' | 'contact' | 'team' | 'patent-attorneys' | 'legal-services' | 'business-consulting' | 'biomed' | 'services' | 'other'
   content?: ContentBlock[]
-  subtitle?: LocalizedString
-  excerpt?: LocalizedText
   services?: Service[]
-  showHeroSection?: boolean
-  heroColor?: 'primary' | 'dark' | 'light' | 'gray'
   featuredImage?: {
     asset: {
       _ref: string
@@ -204,4 +200,28 @@ export interface TeamMember {
   languages?: string[]
   displayOrder?: number
   showOnWebsite?: boolean
+}
+
+export interface Homepage {
+  _id: string
+  content?: ContentBlock[]
+  featuredServices?: Array<{
+    title: LocalizedString
+    description: LocalizedText
+    icon?: string
+    link?: string
+  }>
+  newsSection?: {
+    title?: LocalizedString
+    subtitle?: LocalizedString
+    showFeaturedNews?: boolean
+    maxArticles?: number
+  }
+  teamSection?: {
+    title?: LocalizedString
+    subtitle?: LocalizedString
+    showTeam?: boolean
+    maxMembers?: number
+  }
+  seo?: SEO
 }

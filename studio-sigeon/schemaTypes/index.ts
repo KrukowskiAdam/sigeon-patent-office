@@ -7,6 +7,7 @@ import {textBlock, textImageBlock, heroBlock, servicesBlock} from './blocks'
 import {bannerBlock} from './blocks/bannerBlock'
 
 // Document types
+import {homepage} from './homepage'
 import {news} from './post'
 import {page} from './page'
 import {teamMember} from './teamMember'
@@ -26,6 +27,7 @@ export const schemaTypes = [
   bannerBlock,
   
   // Document types
+  homepage,
   news,
   page,
   teamMember,

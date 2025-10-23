@@ -74,7 +74,7 @@ function TextImageBlock({ block, language }: { block: TextImageBlockType; langua
 
           {/* Image */}
           <div className={`${sizeClasses}`}>
-            <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
+            <div className="relative aspect-video overflow-hidden">
               <Image
                 src={urlFor(block.image).width(800).height(450).url()}
                 alt={block.imageAlt ? getLocalizedText(block.imageAlt, language as Language) : ''}

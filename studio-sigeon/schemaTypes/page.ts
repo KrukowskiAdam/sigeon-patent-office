@@ -6,9 +6,10 @@ export const page = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Page Title',
-      type: 'localizedString',
+      name: 'internalTitle',
+      title: 'Internal Title (for CMS navigation only)',
+      type: 'string',
+      description: 'This title is only visible in CMS, not on the website. Use Hero Section or Banner for page titles.',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -16,7 +17,7 @@ export const page = defineType({
       title: 'Slug',
       type: 'slug',
       options: {
-        source: 'title.pl',
+        source: 'internalTitle',
         maxLength: 96,
       },
       validation: (Rule) => Rule.required(),
@@ -27,6 +28,7 @@ export const page = defineType({
       type: 'string',
       options: {
         list: [
+          {title: 'Homepage', value: 'homepage'},
           {title: 'About Us', value: 'about'},
           {title: 'Contact', value: 'contact'},
           {title: 'Team', value: 'team'},
@@ -54,12 +56,6 @@ export const page = defineType({
       description: 'Build your page with content blocks',
     }),
     defineField({
-      name: 'subtitle',
-      title: 'Page Subtitle',
-      type: 'localizedString',
-      description: 'Subtitle displayed under the main title',
-    }),
-    defineField({
       name: 'services',
       title: 'Services List',
       type: 'array',
@@ -82,34 +78,8 @@ export const page = defineType({
       ],
       hidden: ({document}) => !['patent-attorneys', 'legal-services', 'business-consulting', 'biomed'].includes(document?.pageType as string),
     }),
-    defineField({
-      name: 'showHeroSection',
-      title: 'Show Hero Section with Page Title',
-      type: 'boolean',
-      initialValue: true,
-      description: 'Uncheck to hide the hero section (useful when first content block is a banner)',
-    }),
-    defineField({
-      name: 'heroColor',
-      title: 'Hero Section Color',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Primary Blue (#0abaee)', value: 'primary'},
-          {title: 'Dark Blue', value: 'dark'},
-          {title: 'Light Blue', value: 'light'},
-          {title: 'Gray', value: 'gray'},
-        ],
-      },
-      initialValue: 'primary',
-      hidden: ({document}) => !document?.showHeroSection,
-    }),
-    defineField({
-      name: 'excerpt',
-      title: 'Page Excerpt',
-      type: 'localizedText',
-      description: 'Short description for navigation or previews',
-    }),
+
+
     defineField({
       name: 'featuredImage',
       title: 'Featured Image',
@@ -138,7 +108,7 @@ export const page = defineType({
   ],
   preview: {
     select: {
-      title: 'title.pl',
+      title: 'internalTitle',
       subtitle: 'pageType',
       media: 'featuredImage',
     },
