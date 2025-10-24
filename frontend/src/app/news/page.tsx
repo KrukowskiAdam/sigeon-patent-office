@@ -52,12 +52,10 @@ export default function NewsPage() {
       <section className="bg-gradient-to-r from-[#0abaee] to-[#0891b2] text-white py-20">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-semibold mb-6 leading-tight tracking-tight">
-            {currentLanguage === 'en' ? 'News' : 
-             currentLanguage === 'de' ? 'Nachrichten' : 'Aktualności'}
+            {currentLanguage === 'en' ? 'News' : 'Aktualności'}
           </h1>
           <p className="text-xl md:text-2xl mb-8 opacity-90">
-            {currentLanguage === 'en' ? 'Latest updates from our patent office' : 
-             currentLanguage === 'de' ? 'Neueste Updates aus unserem Patentbüro' : 'Najnowsze informacje z naszej kancelarii patentowej'}
+            {currentLanguage === 'en' ? 'Latest updates from our patent office' : 'Najnowsze informacje z naszej kancelarii patentowej'}
           </p>
         </div>
       </section>

@@ -67,18 +67,6 @@ export const navigationTranslations: Record<Language, {
     businessConsulting: 'IP Business Consulting',
     biomed: 'BioMed',
   },
-  de: {
-    home: 'Startseite',
-    team: 'Team',
-    news: 'Nachrichten',
-    contact: 'Kontakt',
-    about: 'Über uns',
-    services: 'Dienstleistungen',
-    patentAttorneys: 'Patentanwälte',
-    legalServices: 'Rechtsdienstleistungen',
-    businessConsulting: 'IP-Unternehmensberatung',
-    biomed: 'BioMed',
-  },
   zh: {
     home: '首页',
     team: '团队',

@@ -1,4 +1,5 @@
 import { defineType } from 'sanity'
+import {linkField} from '../objects/linkField'
 
 export const bannerBlock = defineType({
   name: 'bannerBlock',
@@ -43,11 +44,10 @@ export const bannerBlock = defineType({
               title: 'Tekst przycisku',
               type: 'localizedString'
             },
-            {
+            linkField({
               name: 'buttonLink',
               title: 'Link przycisku',
-              type: 'url'
-            },
+            }),
             {
               name: 'overlay',
               title: 'Ciemna nakładka',

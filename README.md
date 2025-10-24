@@ -1,4 +1,5 @@
 # Sigeon - Patent Office Website
+cd /Users/adamkrukowski/Desktop/WEB/sigeon/frontend && npm run dev & cd /Users/adamkrukowski/Desktop/WEB/sigeon/studio-sigeon && npm run dev
 
 Multi-language website for a patent office built with Next.js and Sanity CMS.
 
@@ -7,7 +8,7 @@ Multi-language website for a patent office built with Next.js and Sanity CMS.
 - **Frontend**: Next.js 15.5.6 with TypeScript
 - **CMS**: Sanity v4.11.0 with React 19.1
 - **UI**: shadcn/ui components with Tailwind CSS v3
-- **Languages**: Polish (default), English, German, Chinese, Korean, Japanese, Russian
+- **Languages**: Polish (default), English, Chinese, Korean, Japanese, Russian
 
 ## 📁 Project Structure
 

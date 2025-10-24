@@ -15,6 +15,17 @@ export const structure = (S: StructureBuilder) =>
             .title('Homepage')
         ),
       
+      // Navigation - singleton document
+      S.listItem()
+        .title('Navigation')
+        .id('navigation')
+        .child(
+          S.document()
+            .schemaType('navigation')
+            .documentId('main-navigation')
+            .title('Main Navigation')
+        ),
+      
       // Divider
       S.divider(),
       

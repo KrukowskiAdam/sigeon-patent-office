@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {linkField} from '../objects/linkField'
 
 export const servicesBlock = defineType({
   name: 'servicesBlock',
@@ -42,12 +43,11 @@ export const servicesBlock = defineType({
                 hotspot: true,
               },
             },
-            {
+            linkField({
               name: 'link',
               title: 'Service Link',
-              type: 'url',
               description: 'Optional link to service page',
-            },
+            }),
           ],
           preview: {
             select: {

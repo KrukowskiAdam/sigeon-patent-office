@@ -1,7 +1,6 @@
 export interface LocalizedString {
   pl: string
   en?: string
-  de?: string
   zh?: string
   ko?: string
   ja?: string
@@ -11,7 +10,6 @@ export interface LocalizedString {
 export interface LocalizedText {
   pl: string
   en?: string
-  de?: string
   zh?: string
   ko?: string
   ja?: string
@@ -21,7 +19,6 @@ export interface LocalizedText {
 export interface LocalizedRichText {
   pl: unknown[]
   en?: unknown[]
-  de?: unknown[]
   zh?: unknown[]
   ko?: unknown[]
   ja?: unknown[]
@@ -74,6 +71,17 @@ export interface TextBlock {
   title?: LocalizedString
   content: LocalizedRichText
   alignment?: 'left' | 'center' | 'right'
+  link?: LinkField
+}
+
+export interface LinkField {
+  text?: LocalizedString
+  linkType?: 'internal' | 'external' | 'email' | 'phone'
+  internalPath?: string
+  externalUrl?: string
+  email?: string
+  phone?: string
+  openInNewTab?: boolean
 }
 
 export interface TextImageBlock {
@@ -90,6 +98,37 @@ export interface TextImageBlock {
   imageAlt?: LocalizedString
   layout: 'text-left' | 'image-left'
   imageSize?: 'small' | 'medium' | 'large'
+  link?: LinkField
+}
+
+export interface TextImageCarouselSlide {
+  _key: string
+  title?: LocalizedString
+  content: LocalizedRichText
+  image: {
+    asset: {
+      _ref: string
+      _type: 'reference'
+    }
+  }
+  imageAlt?: LocalizedString
+  layout: 'text-left' | 'image-left'
+  imageSize?: 'small' | 'medium' | 'large'
+  link?: LinkField
+}
+
+export interface TextImageCarouselBlock {
+  _type: 'textImageCarouselBlock'
+  _key: string
+  title?: LocalizedString
+  slides: TextImageCarouselSlide[]
+  carouselSettings?: {
+    autoplay?: boolean
+    autoplayDelay?: number
+    showPagination?: boolean
+    showNavigation?: boolean
+    loop?: boolean
+  }
 }
 
 export interface HeroBlock {
@@ -107,6 +146,7 @@ export interface HeroBlock {
   backgroundColor?: 'primary' | 'dark' | 'light' | 'gray' | 'white'
   textColor?: 'white' | 'dark' | 'gray'
   height?: 'small' | 'medium' | 'large' | 'full'
+  link?: LinkField
 }
 
 export interface ServiceItem {
@@ -155,7 +195,7 @@ export interface BannerBlock {
   height?: 'small' | 'medium' | 'large' | 'full'
 }
 
-export type ContentBlock = TextBlock | TextImageBlock | HeroBlock | ServicesBlock | BannerBlock
+export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | HeroBlock | ServicesBlock | BannerBlock
 
 export interface Page {
   _id: string
@@ -202,15 +242,35 @@ export interface TeamMember {
   showOnWebsite?: boolean
 }
 
+export interface MenuItem {
+  label: LocalizedString
+  link: string
+  isExternal?: boolean
+  showInNavigation?: boolean
+  order?: number
+  subItems?: Array<{
+    label: LocalizedString
+    link: string
+    isExternal?: boolean
+  }>
+}
+
+export interface Navigation {
+  _id: string
+  title: string
+  menuItems: MenuItem[]
+  secondaryMenuItems?: MenuItem[]
+  cta?: {
+    show?: boolean
+    text?: LocalizedString
+    link?: string
+    style?: 'primary' | 'secondary' | 'outline'
+  }
+}
+
 export interface Homepage {
   _id: string
   content?: ContentBlock[]
-  featuredServices?: Array<{
-    title: LocalizedString
-    description: LocalizedText
-    icon?: string
-    link?: string
-  }>
   newsSection?: {
     title?: LocalizedString
     subtitle?: LocalizedString

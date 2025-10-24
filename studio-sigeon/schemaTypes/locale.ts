@@ -4,7 +4,10 @@ import {defineField, defineType} from 'sanity'
 export const supportedLanguages = [
   {id: 'pl', title: 'Polski', isDefault: true},
   {id: 'en', title: 'English'},
-  {id: 'de', title: 'Deutsch'},
+  {id: 'zh', title: '中文'},
+  {id: 'ko', title: '한국어'},
+  {id: 'ja', title: '日本語'},
+  {id: 'ru', title: 'Русский'},
 ]
 
 // Base language list for language selector

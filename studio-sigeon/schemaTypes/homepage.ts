@@ -4,67 +4,49 @@ export const homepage = defineType({
   name: 'homepage',
   title: 'Homepage',
   type: 'document',
+  fieldsets: [
+    {
+      name: 'content',
+      title: '📄 Page Content',
+      options: {collapsible: true, collapsed: false}
+    },
+    {
+      name: 'newsSettings',
+      title: '📰 News Section Settings', 
+      options: {collapsible: true, collapsed: true}
+    },
+    {
+      name: 'teamSettings',
+      title: '👥 Team Section Settings',
+      options: {collapsible: true, collapsed: true}
+    },
+    {
+      name: 'seoSettings',
+      title: '🔍 SEO & Meta Settings',
+      options: {collapsible: true, collapsed: true}
+    }
+  ],
   fields: [
     defineField({
       name: 'content',
-      title: 'Page Content',
+      title: 'Content Blocks',
       type: 'array',
+      fieldset: 'content',
       of: [
         {type: 'heroBlock'},
         {type: 'textBlock'},
         {type: 'textImageBlock'},
+        {type: 'textImageCarouselBlock'},
         {type: 'servicesBlock'},
         {type: 'bannerBlock'},
       ],
       description: 'Build your homepage with content blocks',
     }),
     defineField({
-      name: 'featuredServices',
-      title: 'Featured Services',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'title',
-              title: 'Service Title',
-              type: 'localizedString',
-            },
-            {
-              name: 'description',
-              title: 'Service Description',
-              type: 'localizedText',
-            },
-            {
-              name: 'icon',
-              title: 'Service Icon',
-              type: 'string',
-              options: {
-                list: [
-                  {title: 'Patent', value: 'patent'},
-                  {title: 'Trademark', value: 'trademark'},
-                  {title: 'Design', value: 'design'},
-                  {title: 'Copyright', value: 'copyright'},
-                  {title: 'Legal', value: 'legal'},
-                  {title: 'Consulting', value: 'consulting'},
-                ],
-              },
-            },
-            {
-              name: 'link',
-              title: 'Service Link',
-              type: 'string',
-            },
-          ],
-        },
-      ],
-      description: 'Services to highlight on the homepage',
-    }),
-    defineField({
       name: 'newsSection',
-      title: 'News Section Settings',
+      title: 'News Section Configuration',
       type: 'object',
+      fieldset: 'newsSettings',
       fields: [
         {
           name: 'title',
@@ -72,8 +54,7 @@ export const homepage = defineType({
           type: 'localizedString',
           initialValue: {
             pl: 'Aktualności',
-            en: 'News',
-            de: 'Nachrichten'
+            en: 'News'
           }
         },
         {
@@ -97,8 +78,9 @@ export const homepage = defineType({
     }),
     defineField({
       name: 'teamSection',
-      title: 'Team Section Settings',
+      title: 'Team Section Configuration',
       type: 'object',
+      fieldset: 'teamSettings',
       fields: [
         {
           name: 'title',
@@ -106,8 +88,7 @@ export const homepage = defineType({
           type: 'localizedString',
           initialValue: {
             pl: 'Nasz zespół',
-            en: 'Our Team',
-            de: 'Unser Team'
+            en: 'Our Team'
           }
         },
         {
@@ -131,8 +112,9 @@ export const homepage = defineType({
     }),
     defineField({
       name: 'seo',
-      title: 'SEO Settings',
+      title: 'SEO & Meta Tags',
       type: 'seo',
+      fieldset: 'seoSettings',
     }),
   ],
   preview: {

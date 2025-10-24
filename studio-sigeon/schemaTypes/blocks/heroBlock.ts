@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {linkField} from '../objects/linkField'
 
 export const heroBlock = defineType({
   name: 'heroBlock',
@@ -70,6 +71,10 @@ export const heroBlock = defineType({
         ],
       },
       initialValue: 'medium',
+    }),
+    linkField({
+      title: 'Call to Action Link',
+      description: 'Optional button link for the hero section'
     }),
   ],
   preview: {

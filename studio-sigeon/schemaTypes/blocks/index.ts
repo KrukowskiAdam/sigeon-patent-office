@@ -1,4 +1,5 @@
 export { textBlock } from './textBlock'
 export { textImageBlock } from './textImageBlock'
+export { textImageCarouselBlock } from './textImageCarouselBlock'
 export { heroBlock } from './heroBlock'
 export { servicesBlock } from './servicesBlock'

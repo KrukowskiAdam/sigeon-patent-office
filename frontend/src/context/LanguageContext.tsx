@@ -2,12 +2,11 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react'
 
-export type Language = 'pl' | 'en' | 'de' | 'zh' | 'ko' | 'ja' | 'ru'
+export type Language = 'pl' | 'en' | 'zh' | 'ko' | 'ja' | 'ru'
 
 export const languages: Record<Language, { name: string; flag: string }> = {
   pl: { name: 'Polski', flag: '🇵🇱' },
   en: { name: 'English', flag: '🇺🇸' },
-  de: { name: 'Deutsch', flag: '🇩🇪' },
   zh: { name: '中文', flag: '🇨🇳' },
   ko: { name: '한국어', flag: '🇰🇷' },
   ja: { name: '日本語', flag: '🇯🇵' },

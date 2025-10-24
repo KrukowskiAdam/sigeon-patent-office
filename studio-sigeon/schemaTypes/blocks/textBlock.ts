@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {linkField} from '../objects/linkField'
 
 export const textBlock = defineType({
   name: 'textBlock',
@@ -29,6 +30,7 @@ export const textBlock = defineType({
       },
       initialValue: 'left',
     }),
+    linkField(),
   ],
   preview: {
     select: {

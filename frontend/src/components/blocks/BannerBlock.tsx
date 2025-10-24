@@ -84,35 +84,38 @@ export function BannerBlock(props: BannerBlockProps) {
           )}
           
           {/* Content */}
-          <div className="absolute inset-0 flex items-center justify-start">
-            <div className={`max-w-4xl ml-4 md:ml-8 lg:ml-16 xl:ml-24 px-4 text-left text-white transition-all duration-500 ${
+          <div className="absolute inset-0 flex items-end justify-start pb-16 md:pb-20">
+            <div className={`max-w-4xl ml-4 md:ml-8 lg:ml-16 xl:ml-24 transition-all duration-500 ${
               index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
             }`}>
-              {item.title && (
-                <h2 className="text-4xl md:text-6xl font-normal mb-6 leading-tight">
-                  {item.title[currentLanguage] || item.title.pl}
-                </h2>
-              )}
-              
-              {item.content && (
-                <div className="text-xl md:text-2xl mb-8 leading-relaxed max-w-3xl">
-                  <PortableText 
-                    value={item.content.pl as never} 
-                  />
-                </div>
-              )}
-              
-              {item.buttonText && item.buttonLink && (
-                <Button 
-                  size="lg" 
-                  className="bg-[#0abaee] hover:bg-[#0891b2] text-white text-lg px-8 py-3"
-                  asChild
-                >
-                  <a href={item.buttonLink}>
-                    {item.buttonText?.[currentLanguage] || item.buttonText?.pl}
-                  </a>
-                </Button>
-              )}
+              {/* Content Container with White Background */}
+              <div className="bg-white/80 backdrop-blur-sm p-6 md:p-8 shadow-2xl max-w-2xl">
+                {item.title && (
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight text-gray-800">
+                    {item.title[currentLanguage] || item.title.pl}
+                  </h2>
+                )}
+                
+                {item.content && (
+                  <div className="text-base md:text-lg mb-6 leading-relaxed text-gray-700">
+                    <PortableText 
+                      value={item.content.pl as never} 
+                    />
+                  </div>
+                )}
+                
+                {item.buttonText && item.buttonLink && (
+                  <Button 
+                    size="lg" 
+                    className="bg-[#0abaee] hover:bg-[#0891b2] text-white text-lg px-8 py-4 mt-4"
+                    asChild
+                  >
+                    <a href={item.buttonLink}>
+                      {item.buttonText?.[currentLanguage] || item.buttonText?.pl}
+                    </a>
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -124,7 +127,7 @@ export function BannerBlock(props: BannerBlockProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/30 bg-black/20 backdrop-blur-sm h-12 w-12 z-20"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/30 bg-black/20 backdrop-blur-sm h-12 w-12 z-20 !rounded-full"
             onClick={prevSlide}
           >
             <ChevronLeft className="h-6 w-6" />
@@ -133,7 +136,7 @@ export function BannerBlock(props: BannerBlockProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/30 bg-black/20 backdrop-blur-sm h-12 w-12 z-20"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/30 bg-black/20 backdrop-blur-sm h-12 w-12 z-20 !rounded-full"
             onClick={nextSlide}
           >
             <ChevronRight className="h-6 w-6" />
@@ -143,16 +146,16 @@ export function BannerBlock(props: BannerBlockProps) {
 
       </div>
       
-      {/* Indicators - positioned below banner, left-aligned */}
+      {/* Indicators - positioned below banner, center-aligned */}
       {showIndicators && items.length > 1 && (
-        <div className="mt-6 ml-4 md:ml-8 lg:ml-16 xl:ml-24 flex gap-3">
+        <div className="mt-6 flex justify-center gap-3">
           {items.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-4 h-4 rounded-full transition-all ${
+              className={`w-3 h-3 rounded-full transition-all ${
                 index === currentSlide 
-                  ? 'bg-slate-800 scale-110' 
+                  ? 'bg-slate-800 scale-125' 
                   : 'bg-slate-400 hover:bg-slate-600'
               }`}
               aria-label={`Przejdź do slajdu ${index + 1}`}

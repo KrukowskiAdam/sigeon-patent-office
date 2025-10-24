@@ -52,12 +52,10 @@ export default function TeamPage() {
       <section className="bg-gradient-to-r from-[#0abaee] to-[#0891b2] text-white py-20">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-semibold mb-6 leading-tight tracking-tight">
-            {currentLanguage === 'en' ? 'Our Team' : 
-             currentLanguage === 'de' ? 'Unser Team' : 'Nasz zespół'}
+            {currentLanguage === 'en' ? 'Our Team' : 'Nasz zespół'}
           </h1>
           <p className="text-xl md:text-2xl mb-8 opacity-90">
-            {currentLanguage === 'en' ? 'Meet our experienced intellectual property specialists' : 
-             currentLanguage === 'de' ? 'Lernen Sie unsere erfahrenen IP-Spezialisten kennen' : 'Poznaj doświadczonych specjalistów ds. własności intelektualnej'}
+            {currentLanguage === 'en' ? 'Meet our experienced intellectual property specialists' : 'Poznaj doświadczonych specjalistów ds. własności intelektualnej'}
           </p>
         </div>
       </section>

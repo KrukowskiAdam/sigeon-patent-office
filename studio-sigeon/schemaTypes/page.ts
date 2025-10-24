@@ -50,6 +50,7 @@ export const page = defineType({
         {type: 'heroBlock'},
         {type: 'textBlock'},
         {type: 'textImageBlock'},
+        {type: 'textImageCarouselBlock'},
         {type: 'servicesBlock'},
         {type: 'bannerBlock'},
       ],

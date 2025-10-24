@@ -1,13 +1,45 @@
 import {client} from './sanity'
-import {NewsArticle, Page, TeamMember, Homepage} from '@/types/sanity'
+import {NewsArticle, Page, TeamMember, Homepage, Navigation} from '@/types/sanity'
 
 // Get homepage content
+export async function getNavigation(): Promise<Navigation | null> {
+  return client.fetch(`
+    *[_type == "navigation"][0] {
+      _id,
+      title,
+      menuItems[] {
+        label,
+        link,
+        isExternal,
+        showInNavigation,
+        order,
+        subItems[] {
+          label,
+          link,
+          isExternal
+        }
+      },
+      secondaryMenuItems[] {
+        label,
+        link,
+        isExternal,
+        showInNavigation,
+        order
+      },
+      cta
+    }
+  `)
+}
+
 export async function getHomepage(): Promise<Homepage | null> {
   return client.fetch(`
-    *[_type == "homepage" && _id == "homepage"][0] {
+    *[_type == "homepage"][0] {
       _id,
-      heroSection,
-      content,
+      content[] {
+        _type,
+        _key,
+        ...
+      },
       featuredServices,
       newsSection,
       teamSection,
