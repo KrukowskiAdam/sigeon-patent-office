@@ -7,8 +7,6 @@ import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
 import { getLinkHref, shouldOpenInNewTab } from '@/utils/linkUtils'
 import { PortableText } from '../ui/PortableText'
-import { Button } from '@/components/ui/button'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect } from 'react'
 
 interface TextImageCarouselBlockProps {
@@ -29,21 +27,13 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
     }
   }, [settings.autoplay, settings.autoplayDelay, block.slides.length])
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % block.slides.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + block.slides.length) % block.slides.length)
-  }
-
   const goToSlide = (index: number) => {
     setCurrentSlide(index)
   }
 
   return (
     <section className="py-16">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4">
         {/* Section Title */}
         {block.title && (
           <div className="text-center mb-12">
@@ -60,7 +50,7 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
         <div className="relative">
           {/* Ghost slide to set container height */}
           <div className="opacity-0 pointer-events-none" aria-hidden="true">
-            <div className="flex flex-col md:flex-row items-center gap-12 p-8">
+            <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="md:w-1/2 space-y-6">
                 <div className="h-8"></div>
                 <div className="h-20"></div>
@@ -93,34 +83,34 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
                     index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
                   }`}
                 >
-                  <div className={`flex flex-col md:flex-row items-center gap-12 p-8 ${
+                  <div className={`flex flex-col md:flex-row items-start gap-12 ${
                     isImageLeft ? 'md:flex-row' : 'md:flex-row-reverse'
                   }`}>
                     {/* Text Content */}
-                    <div className={`${textSizeClasses} space-y-6 transition-all duration-500 ${
+                    <div className={`${textSizeClasses} space-y-4 transition-all duration-500 ${
                       index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                     }`}>
                       {slide.title && (
-                        <div className="flex items-center gap-4 mb-6">
+                        <div className="flex items-center gap-4 mb-4">
                           <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                          <h3 className="text-2xl font-bold text-gray-900">
+                          <h3 className="text-3xl font-bold text-gray-900 leading-tight">
                             {getLocalizedText(slide.title, language)}
                           </h3>
                         </div>
                       )}
-                      <div className="prose text-gray-700">
+                      <div className="prose prose-sm text-gray-700 leading-relaxed">
                         <PortableText 
                           value={getLocalizedPortableText(slide.content, language)}
                         />
                       </div>
                       
                       {slide.link && slide.link.text && (
-                        <div className="mt-6">
+                        <div className="mt-4">
                           <a
                             href={getLinkHref(slide.link)}
                             target={shouldOpenInNewTab(slide.link) ? '_blank' : '_self'}
                             rel={shouldOpenInNewTab(slide.link) ? 'noopener noreferrer' : undefined}
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
+                            className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
                           >
                             {getLocalizedText(slide.link.text, language)}
                             {shouldOpenInNewTab(slide.link) && (
@@ -162,38 +152,16 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
               )
             })}
 
-          {/* Navigation Arrows - inside relative container */}
-          {settings.showNavigation !== false && block.slides.length > 1 && (
-            <>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/30 bg-black/20 backdrop-blur-sm h-10 w-10 z-20 !rounded-full"
-                onClick={prevSlide}
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
-              
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/30 bg-black/20 backdrop-blur-sm h-10 w-10 z-20 !rounded-full"
-                onClick={nextSlide}
-              >
-                <ChevronRight className="h-5 w-5" />
-              </Button>
-            </>
-          )}
         </div>
       
       {/* Indicators - positioned below carousel, center-aligned like BannerBlock */}
       {settings.showPagination !== false && block.slides.length > 1 && (
-        <div className="mt-2 flex justify-center gap-3">
+        <div className="mt-6 flex justify-center gap-3">
           {block.slides.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
+              className={`w-3 h-3 rounded-full transition-all cursor-pointer z-20 relative ${
                 index === currentSlide 
                   ? 'bg-slate-800 scale-125' 
                   : 'bg-slate-400 hover:bg-slate-600'

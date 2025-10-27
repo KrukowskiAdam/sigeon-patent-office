@@ -29,7 +29,7 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
 
   return (
     <section className="py-16">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4">
         <div className={`flex flex-col md:flex-row items-center gap-12 ${
           isImageLeft ? 'md:flex-row' : 'md:flex-row-reverse'
         }`}>
@@ -43,7 +43,7 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
                 </h2>
               </div>
             )}
-            <div className="prose text-gray-700">
+            <div className="prose max-w-none text-gray-700">
               <PortableText 
                 value={getLocalizedPortableText(block.content, language as Language)}
               />
@@ -55,7 +55,7 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
                   href={getLinkHref(block.link)}
                   target={shouldOpenInNewTab(block.link) ? '_blank' : '_self'}
                   rel={shouldOpenInNewTab(block.link) ? 'noopener noreferrer' : undefined}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
                 >
                   {getLocalizedText(block.link.text, language as Language)}
                   {shouldOpenInNewTab(block.link) && (

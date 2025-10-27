@@ -59,6 +59,12 @@ export interface NewsArticle {
   seo?: SEO
 }
 
+export interface NewsPage {
+  _id: string
+  blocks?: ContentBlock[]
+  seo?: SEO
+}
+
 export interface Service {
   title: LocalizedString
   description: LocalizedText

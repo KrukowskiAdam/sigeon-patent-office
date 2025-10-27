@@ -48,10 +48,10 @@ export function Header() {
   }, [])
 
   return (
-    <header className="sticky top-0 z-50">
+    <header className="sticky top-0 z-50 pb-8">
       {/* Górny pasek */}
       <div className="text-white py-0" style={{backgroundColor: '#0abaee'}}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-end items-center text-sm">
+        <div className="max-w-7xl mx-auto px-2 flex justify-end items-center text-sm">
             {/* Secondary Navigation + Language Switcher */}
             <div className="flex items-center space-x-6">
               {/* Secondary Navigation */}
@@ -120,7 +120,7 @@ export function Header() {
                 <Link 
                   key={index}
                   href={item.link} 
-                  className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-xs lg:text-sm' : 'text-xs'}`}
+                  className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}
                   target={item.isExternal ? '_blank' : undefined}
                   rel={item.isExternal ? 'noopener noreferrer' : undefined}
                 >
@@ -129,16 +129,16 @@ export function Header() {
               )) || (
                 // Fallback menu items if no CMS data
                 <>
-                  <Link href="/rzecznicy-patentowi" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-xs lg:text-sm' : 'text-xs'}`}>
+                  <Link href="/rzecznicy-patentowi" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
                     {nav.patentAttorneys}
                   </Link>
-                  <Link href="/uslugi-prawne" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-xs lg:text-sm' : 'text-xs'}`}>
+                  <Link href="/uslugi-prawne" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
                     {nav.legalServices}
                   </Link>
-                  <Link href="/doradztwo-biznesowe-ip" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-xs lg:text-sm' : 'text-xs'}`}>
+                  <Link href="/doradztwo-biznesowe-ip" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
                     {nav.businessConsulting}
                   </Link>
-                  <Link href="/biomed" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-xs lg:text-sm' : 'text-xs'}`}>
+                  <Link href="/biomed" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
                     {nav.biomed}
                   </Link>
                 </>

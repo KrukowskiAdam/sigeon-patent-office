@@ -1,5 +1,5 @@
 import {client} from './sanity'
-import {NewsArticle, Page, TeamMember, Homepage, Navigation} from '@/types/sanity'
+import {NewsArticle, NewsPage, Page, TeamMember, Homepage, Navigation} from '@/types/sanity'
 
 // Get homepage content
 export async function getNavigation(): Promise<Navigation | null> {
@@ -51,16 +51,44 @@ export async function getHomepage(): Promise<Homepage | null> {
 // Get all news articles
 export async function getNews(): Promise<NewsArticle[]> {
   return client.fetch(`
-    *[_type == "news" && defined(slug.current)] | order(publishedAt desc) {
+    *[_type == "news"] | order(publishedAt desc) {
       _id,
       title,
       slug,
       publishedAt,
       category,
       excerpt,
-      featuredImage,
+      featuredImage {
+        asset-> {
+          _id,
+          url
+        },
+        hotspot,
+        crop
+      },
       tags,
-      featured,
+      featured
+    }
+  `)
+}
+
+export async function getNewsPage(): Promise<NewsPage | null> {
+  return client.fetch(`
+    *[_type == "newsPage"][0] {
+      _id,
+      blocks[] {
+        _type,
+        _key,
+        ...,
+        link {
+          ...,
+          internalLink-> {
+            _type,
+            slug,
+            title
+          }
+        }
+      },
       seo
     }
   `)
@@ -76,7 +104,14 @@ export async function getFeaturedNews(): Promise<NewsArticle[]> {
       publishedAt,
       category,
       excerpt,
-      featuredImage,
+      featuredImage {
+        asset-> {
+          _id,
+          url
+        },
+        hotspot,
+        crop
+      },
       tags,
       featured
     }
@@ -93,7 +128,24 @@ export async function getNewsArticle(slug: string): Promise<NewsArticle | null> 
       publishedAt,
       category,
       excerpt,
-      featuredImage,
+      featuredImage {
+        asset-> {
+          _id,
+          url
+        },
+        hotspot,
+        crop
+      },
+      gallery[] {
+        asset-> {
+          _id,
+          url
+        },
+        hotspot,
+        crop,
+        alt,
+        caption
+      },
       content,
       tags,
       featured,

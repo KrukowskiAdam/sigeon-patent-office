@@ -10,6 +10,7 @@ import {textImageCarouselBlock} from './blocks/textImageCarouselBlock'
 // Document types
 import {homepage} from './homepage'
 import {news} from './post'
+import {newsPage} from './newsPage'
 import {page} from './page'
 import {teamMember} from './teamMember'
 import {navigation} from './navigation'
@@ -32,6 +33,7 @@ export const schemaTypes = [
   // Document types
   homepage,
   news,
+  newsPage,
   page,
   teamMember,
   navigation,

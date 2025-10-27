@@ -5,7 +5,6 @@ import { NewsArticle, TeamMember, Homepage } from '@/types/sanity'
 import Link from 'next/link'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Header } from '@/components/Header'
@@ -88,16 +87,19 @@ export default function Home() {
       {/* Featured News */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            {homepage?.newsSection?.title ? 
-              getLocalizedText(homepage.newsSection.title, currentLanguage) : 
-              'Najważniejsze aktualności'
-            }
-          </h2>
+          <div className="flex items-center gap-4 mb-12">
+            <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
+            <h2 className="text-3xl font-bold text-gray-900">
+              {homepage?.newsSection?.title ? 
+                getLocalizedText(homepage.newsSection.title, currentLanguage) : 
+                'Najważniejsze aktualności'
+              }
+            </h2>
+          </div>
           {featuredNews.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredNews.slice(0, 3).map((article: NewsArticle) => (
-                <Card key={article._id} className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow bg-slate-800 text-white border-slate-700">
+                <Card key={article._id} className="overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-gray-50 border-gray-200 flex flex-col h-full">
                   {article.featuredImage && (
                     <div className="relative aspect-video">
                       <Image
@@ -109,30 +111,33 @@ export default function Home() {
                       />
                     </div>
                   )}
-                  <CardHeader className="text-white">
+                  <CardHeader>
                     {article.featured && (
                       <div className="mb-2">
-                        <Badge variant="default" className="text-xs">Wyróżnione</Badge>
+                        <Badge variant="default" className="bg-[#0abaee] text-white text-xs">Wyróżnione</Badge>
                       </div>
                     )}
-                    <CardTitle className="text-lg text-white">
+                    <CardTitle className="text-lg text-gray-900">
                       {getLocalizedText(article.title, currentLanguage)}
                     </CardTitle>
-                    <CardDescription className="text-xs text-slate-300">
+                    <CardDescription className="text-sm text-gray-500">
                       {new Date(article.publishedAt).toLocaleDateString('pl-PL')}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="text-white">
+                  <CardContent className="flex flex-col flex-1">
                     {article.excerpt && (
-                      <p className="text-slate-300 mb-4 text-sm">
+                      <p className="text-gray-600 mb-4 text-sm flex-1">
                         {getLocalizedText(article.excerpt, currentLanguage)}
                       </p>
                     )}
-                    <Button variant="outline" className="bg-transparent border-slate-600 text-white hover:bg-slate-700 hover:text-white" asChild>
-                      <Link href={`/news/${article.slug.current}`}>
-                        Czytaj więcej →
+                    <div className="mt-auto">
+                      <Link 
+                        href={`/news/${article.slug.current}`}
+                        className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
+                      >
+                        Czytaj więcej
                       </Link>
-                    </Button>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -147,21 +152,24 @@ export default function Home() {
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Brak aktualności</h3>
                   <p>Aktualności będą wyświetlane po dodaniu ich do systemu CMS.</p>
                 </div>
-                <Button asChild>
-                  <a href="http://localhost:3333" target="_blank" rel="noopener noreferrer">
-                    Przejdź do CMS →
-                  </a>
-                </Button>
+                <a 
+                  href="http://localhost:3333" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
+                >
+                  Przejdź do CMS
+                </a>
               </CardContent>
             </Card>
           )}
           {featuredNews.length > 0 && (
-            <div className="text-center mt-8">
+            <div className="text-center mt-12 pt-8 border-t border-gray-200">
               <Link 
                 href="/news"
-                className="text-slate-700 hover:text-slate-900 font-medium"
+                className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
               >
-                Zobacz wszystkie aktualności →
+                Zobacz wszystkie aktualności
               </Link>
             </div>
           )}
@@ -221,12 +229,12 @@ export default function Home() {
                   </Card>
                 ))}
               </div>
-              <div className="text-center mt-8">
+              <div className="text-center mt-8 pt-8 border-t border-gray-200">
                 <Link 
                   href="/team"
-                  className="text-slate-700 hover:text-slate-900 font-medium"
+                  className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
                 >
-                  Poznaj cały zespół →
+                  Poznaj cały zespół
                 </Link>
               </div>
             </>
@@ -240,11 +248,14 @@ export default function Home() {
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Brak członków zespołu</h3>
                   <p>Profil zespołu będzie wyświetlany po dodaniu członków w CMS.</p>
                 </div>
-                <Button asChild>
-                  <a href="http://localhost:3333" target="_blank" rel="noopener noreferrer">
-                    Przejdź do CMS →
-                  </a>
-                </Button>
+                <a 
+                  href="http://localhost:3333" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
+                >
+                  Przejdź do CMS
+                </a>
               </CardContent>
             </Card>
           )}
@@ -253,27 +264,27 @@ export default function Home() {
       )}
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 mt-auto">
+      <footer className="bg-[#0abaee] text-white py-12 mt-auto">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-xl font-bold mb-4">Patent Office</h3>
-              <p className="text-gray-300">
-                Profesjonalna obsługa w zakresie ochrony własności intelektualnej.
+              <h3 className="text-xl font-bold mb-4">Grzelak i Wspólnicy, Kancelaria Patentowo-Prawna</h3>
+              <p className="text-blue-100">
+                Ochrona własności przemysłowej i intelektualnej, obsługa prawna i biznesowa firm i instytucji
               </p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Usługi</h4>
-              <ul className="space-y-2 text-gray-300">
-                <li>Patenty</li>
-                <li>Znaki towarowe</li>
-                <li>Wzory przemysłowe</li>
-                <li>Prawo autorskie</li>
+              <ul className="space-y-2 text-blue-100">
+                <li>Rzecznicy patentowi</li>
+                <li>Usługi prawne</li>
+                <li>Doradztwo biznesowe IP</li>
+                <li>Biomed</li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Firma</h4>
-              <ul className="space-y-2 text-gray-300">
+              <ul className="space-y-2 text-blue-100">
                 <li><Link href="/about" className="hover:text-white">O nas</Link></li>
                 <li><Link href="/team" className="hover:text-white">Zespół</Link></li>
                 <li><Link href="/news" className="hover:text-white">Aktualności</Link></li>
@@ -281,15 +292,15 @@ export default function Home() {
             </div>
             <div>
               <h4 className="font-semibold mb-4">Kontakt</h4>
-              <p className="text-gray-300">
+              <p className="text-blue-100">
                 ul. Przykładowa 123<br />
                 00-001 Warszawa<br />
                 Tel: +48 123 456 789
               </p>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Patent Office. Wszystkie prawa zastrzeżone.</p>
+          <div className="border-t border-blue-600 mt-8 pt-8 text-center text-blue-200">
+            <p>&copy; 2024 Grzelak i Wspólnicy, Kancelaria Patentowo-Prawna. Wszystkie prawa zastrzeżone.</p>
           </div>
         </div>
       </footer>

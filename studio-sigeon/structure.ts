@@ -26,6 +26,17 @@ export const structure = (S: StructureBuilder) =>
             .title('Main Navigation')
         ),
       
+      // News Page Settings - singleton document
+      S.listItem()
+        .title('News Page Settings')
+        .id('newsPage')
+        .child(
+          S.document()
+            .schemaType('newsPage')
+            .documentId('news-page-settings')
+            .title('News Page Settings')
+        ),
+      
       // Divider
       S.divider(),
       

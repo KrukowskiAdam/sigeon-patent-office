@@ -48,7 +48,7 @@ export function BannerBlock(props: BannerBlockProps) {
   }
 
   return (
-    <div className="relative w-full mb-16">
+    <div className="relative w-full py-10">
       <div 
         className="relative w-full overflow-hidden bg-gray-900 aspect-[21/9]"
       >
@@ -64,11 +64,11 @@ export function BannerBlock(props: BannerBlockProps) {
           {item.image && (
             <Image
               src={urlFor(item.image)
-                .width(2100)
-                .height(900)
+                .width(2560)
+                .height(1097)
                 .fit('crop')
                 .crop('center')
-                .quality(85)
+                .quality(90)
                 .url()}
               alt={item.image?.alt || (item.title?.[currentLanguage] || item.title?.pl) || ''}
               fill
@@ -88,8 +88,8 @@ export function BannerBlock(props: BannerBlockProps) {
             <div className={`max-w-4xl ml-4 md:ml-8 lg:ml-16 xl:ml-24 transition-all duration-500 ${
               index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
             }`}>
-              {/* Content Container with White Background */}
-              <div className="bg-white/80 backdrop-blur-sm p-6 md:p-8 shadow-2xl max-w-2xl">
+              {/* Content Container with Solid White Background */}
+              <div className="bg-white p-6 md:p-8 shadow-2xl max-w-2xl">
                 {item.title && (
                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight text-gray-800">
                     {item.title[currentLanguage] || item.title.pl}

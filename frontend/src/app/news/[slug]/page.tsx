@@ -35,9 +35,9 @@ export default async function NewsArticlePage({ params }: Props) {
       <div className="bg-gray-50 py-4">
         <div className="max-w-4xl mx-auto px-4">
           <nav className="text-sm text-gray-600">
-            <Link href="/" className="hover:text-blue-600">Home</Link>
+            <Link href="/" className="hover:text-[#0abaee]">Home</Link>
             <span className="mx-2">→</span>
-            <Link href="/news" className="hover:text-blue-600">Aktualności</Link>
+            <Link href="/news" className="hover:text-[#0abaee]">Aktualności</Link>
             <span className="mx-2">→</span>
             <span className="text-gray-900">{article.title.pl}</span>
           </nav>
@@ -77,7 +77,7 @@ export default async function NewsArticlePage({ params }: Props) {
             </div>
 
             {article.excerpt && (
-              <div className="text-xl text-gray-600 leading-relaxed mb-8 border-l-4 border-blue-500 pl-6">
+              <div className="text-xl text-gray-600 leading-relaxed mb-8 border-l-4 border-[#0abaee] pl-6">
                 {article.excerpt.pl}
               </div>
             )}
@@ -125,38 +125,38 @@ export default async function NewsArticlePage({ params }: Props) {
         </article>
 
         {/* Navigation */}
-        <div className="max-w-4xl mx-auto px-4 mt-12 pt-8 border-t border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 mt-12 pt-8 border-t border-gray-200 text-center">
           <Link 
             href="/news"
-            className="inline-flex items-center text-slate-700 hover:text-slate-900 font-medium"
+            className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
           >
-            ← Powrót do aktualności
+            Powrót do aktualności
           </Link>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 mt-auto">
+      <footer className="bg-[#0abaee] text-white py-12 mt-auto">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-xl font-bold mb-4">Patent Office</h3>
-              <p className="text-gray-300">
-                Profesjonalna obsługa w zakresie ochrony własności intelektualnej.
+              <h3 className="text-xl font-bold mb-4">Grzelak i Wspólnicy, Kancelaria Patentowo-Prawna</h3>
+              <p className="text-blue-100">
+                Ochrona własności przemysłowej i intelektualnej, obsługa prawna i biznesowa firm i instytucji
               </p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Usługi</h4>
-              <ul className="space-y-2 text-gray-300">
-                <li>Patenty</li>
-                <li>Znaki towarowe</li>
-                <li>Wzory przemysłowe</li>
-                <li>Prawo autorskie</li>
+              <ul className="space-y-2 text-blue-100">
+                <li>Rzecznicy patentowi</li>
+                <li>Usługi prawne</li>
+                <li>Doradztwo biznesowe IP</li>
+                <li>Biomed</li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Firma</h4>
-              <ul className="space-y-2 text-gray-300">
+              <ul className="space-y-2 text-blue-100">
                 <li><Link href="/about" className="hover:text-white">O nas</Link></li>
                 <li><Link href="/team" className="hover:text-white">Zespół</Link></li>
                 <li><Link href="/news" className="hover:text-white">Aktualności</Link></li>
@@ -164,15 +164,15 @@ export default async function NewsArticlePage({ params }: Props) {
             </div>
             <div>
               <h4 className="font-semibold mb-4">Kontakt</h4>
-              <p className="text-gray-300">
+              <p className="text-blue-100">
                 ul. Przykładowa 123<br />
                 00-001 Warszawa<br />
                 Tel: +48 123 456 789
               </p>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Patent Office. Wszystkie prawa zastrzeżone.</p>
+          <div className="border-t border-blue-600 mt-8 pt-8 text-center text-blue-200">
+            <p>&copy; 2024 Grzelak i Wspólnicy, Kancelaria Patentowo-Prawna. Wszystkie prawa zastrzeżone.</p>
           </div>
         </div>
       </footer>
