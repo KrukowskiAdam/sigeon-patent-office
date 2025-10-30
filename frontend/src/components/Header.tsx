@@ -154,28 +154,6 @@ export function Header() {
               )}
             </nav>
 
-            {/* Optional CTA Button */}
-            {navigation?.cta?.show && navigation.cta.text && navigation.cta.link && (
-              <div className="hidden lg:block ml-4">
-                <Button 
-                  asChild
-                  variant={navigation.cta.style === 'outline' ? 'outline' : 'default'}
-                  size="sm"
-                  className={
-                    navigation.cta.style === 'primary' 
-                      ? 'bg-slate-800 hover:bg-slate-900 text-white' 
-                      : navigation.cta.style === 'secondary'
-                      ? 'bg-slate-200 hover:bg-slate-300 text-slate-800'
-                      : 'border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white'
-                  }
-                >
-                  <Link href={navigation.cta.link}>
-                    {getLocalizedText(navigation.cta.text, currentLanguage)}
-                  </Link>
-                </Button>
-              </div>
-            )}
-
               {/* Mobile menu button */}
               <Button 
                 variant="ghost" 
