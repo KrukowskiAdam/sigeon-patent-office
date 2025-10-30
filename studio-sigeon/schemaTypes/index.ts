@@ -13,6 +13,7 @@ import {contactBlock} from './blocks/contactBlock'
 import {homepage} from './homepage'
 import {news} from './post'
 import {newsPage} from './newsPage'
+import {teamPage} from './teamPage'
 import {page} from './page'
 import {teamMember} from './teamMember'
 import {navigation} from './navigation'
@@ -39,6 +40,7 @@ export const schemaTypes = [
   homepage,
   news,
   newsPage,
+  teamPage,
   page,
   teamMember,
   navigation,

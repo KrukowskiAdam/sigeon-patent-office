@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from '@/context/LanguageContext';
 import { Nunito_Sans, Work_Sans } from 'next/font/google';
+import { getHomepage } from '@/lib/queries';
 
 const nunitoSans = Nunito_Sans({
   subsets: ['latin', 'latin-ext'],
@@ -15,10 +16,19 @@ const workSans = Work_Sans({
   variable: '--font-work',
 });
 
-export const metadata: Metadata = {
-  title: "Sigeon IP - Kancelaria Patentowa",
-  description: "Profesjonalna kancelaria patentowa - patenty, znaki towarowe, wzory przemysłowe",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const homepage = await getHomepage()
+  
+  return {
+    title: homepage?.siteTitle?.pl || "Sigeon IP - Kancelaria Patentowa",
+    description: homepage?.siteDescription?.pl || "Profesjonalna kancelaria patentowa - patenty, znaki towarowe, wzory przemysłowe",
+    icons: {
+      icon: '/favicon.png',
+      shortcut: '/favicon.png',
+      apple: '/favicon.png',
+    },
+  }
+}
 
 export default function RootLayout({
   children,

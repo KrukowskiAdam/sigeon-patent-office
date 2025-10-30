@@ -16,10 +16,18 @@ export function PortableText({ value, className = '' }: PortableTextProps) {
         components={{
           block: {
             normal: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
+            head: ({children}) => (
+              <div className="flex items-start gap-3 mb-4 mt-6">
+                <div className="w-1 bg-[#0abaee] flex-shrink-0 h-6 mt-1"></div>
+                <h3 className="text-lg font-bold leading-relaxed">{children}</h3>
+              </div>
+            ),
             h1: ({children}) => <h1 className="text-3xl font-bold mb-6 mt-8">{children}</h1>,
             h2: ({children}) => <h2 className="text-2xl font-semibold mb-4 mt-6">{children}</h2>,
             h3: ({children}) => <h3 className="text-xl font-medium mb-3 mt-5">{children}</h3>,
             h4: ({children}) => <h4 className="text-lg font-medium mb-3 mt-4">{children}</h4>,
+            h5: ({children}) => <h5 className="text-base font-medium mb-2 mt-3">{children}</h5>,
+            h6: ({children}) => <h6 className="text-sm font-medium mb-2 mt-3">{children}</h6>,
             blockquote: ({children}) => (
               <blockquote className="border-l-4 border-blue-500 pl-4 my-6 italic text-gray-600 bg-gray-50 py-4">
                 {children}

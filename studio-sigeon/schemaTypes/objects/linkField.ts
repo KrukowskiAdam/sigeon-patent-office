@@ -21,6 +21,7 @@ export const linkField = (options: {
         name: 'text',
         title: 'Link Text',
         type: 'localizedString',
+        description: 'Leave empty if you don\'t want to add a link',
       }),
       defineField({
         name: 'linkType',
@@ -35,17 +36,19 @@ export const linkField = (options: {
           ],
         },
         initialValue: 'internal',
+        hidden: ({parent}) => !parent?.text?.pl, // Hide if no link text
       }),
       defineField({
         name: 'internalPath',
         title: 'Internal Path',
         description: 'For internal links (e.g. /team, /about, /services)',
         type: 'string',
-        hidden: ({parent}) => parent?.linkType !== 'internal',
+        hidden: ({parent}) => parent?.linkType !== 'internal' || !parent?.text?.pl,
         validation: (Rule) => Rule.custom((value, context) => {
           const parent = context.parent as any
-          if (parent?.linkType === 'internal' && !value) {
-            return 'Internal path is required for internal links'
+          // Only validate if link text exists
+          if (parent?.text?.pl && parent?.linkType === 'internal' && !value) {
+            return 'Internal path is required when link text is provided'
           }
           return true
         }),
@@ -55,11 +58,12 @@ export const linkField = (options: {
         title: 'External URL',
         description: 'Full URL starting with http:// or https://',
         type: 'url',
-        hidden: ({parent}) => parent?.linkType !== 'external',
+        hidden: ({parent}) => parent?.linkType !== 'external' || !parent?.text?.pl,
         validation: (Rule) => Rule.custom((value, context) => {
           const parent = context.parent as any
-          if (parent?.linkType === 'external' && !value) {
-            return 'External URL is required for external links'
+          // Only validate if link text exists
+          if (parent?.text?.pl && parent?.linkType === 'external' && !value) {
+            return 'External URL is required when link text is provided'
           }
           return true
         }),
@@ -68,11 +72,12 @@ export const linkField = (options: {
         name: 'email',
         title: 'Email Address',
         type: 'email',
-        hidden: ({parent}) => parent?.linkType !== 'email',
+        hidden: ({parent}) => parent?.linkType !== 'email' || !parent?.text?.pl,
         validation: (Rule) => Rule.custom((value, context) => {
           const parent = context.parent as any
-          if (parent?.linkType === 'email' && !value) {
-            return 'Email address is required for email links'
+          // Only validate if link text exists
+          if (parent?.text?.pl && parent?.linkType === 'email' && !value) {
+            return 'Email address is required when link text is provided'
           }
           return true
         }),
@@ -81,11 +86,12 @@ export const linkField = (options: {
         name: 'phone',
         title: 'Phone Number',
         type: 'string',
-        hidden: ({parent}) => parent?.linkType !== 'phone',
+        hidden: ({parent}) => parent?.linkType !== 'phone' || !parent?.text?.pl,
         validation: (Rule) => Rule.custom((value, context) => {
           const parent = context.parent as any
-          if (parent?.linkType === 'phone' && !value) {
-            return 'Phone number is required for phone links'
+          // Only validate if link text exists
+          if (parent?.text?.pl && parent?.linkType === 'phone' && !value) {
+            return 'Phone number is required when link text is provided'
           }
           return true
         }),
@@ -95,7 +101,7 @@ export const linkField = (options: {
         title: 'Open in New Tab',
         type: 'boolean',
         initialValue: false,
-        hidden: ({parent}) => parent?.linkType === 'internal',
+        hidden: ({parent}) => parent?.linkType === 'internal' || !parent?.text?.pl,
       }),
     ],
   })

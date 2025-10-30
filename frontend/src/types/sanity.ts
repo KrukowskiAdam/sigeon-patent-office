@@ -65,6 +65,17 @@ export interface NewsPage {
   seo?: SEO
 }
 
+export interface TeamPage {
+  _id: string
+  blocks?: ContentBlock[]
+  teamSection?: {
+    title?: LocalizedString
+    subtitle?: LocalizedText
+    showTeam?: boolean
+  }
+  seo?: SEO
+}
+
 export interface Service {
   title: LocalizedString
   description: LocalizedText
@@ -258,11 +269,8 @@ export interface Page {
 export interface TeamMember {
   _id: string
   name: string
-  slug?: {
-    current: string
-  }
   position: LocalizedString
-  bio?: LocalizedRichText
+  description?: LocalizedRichText
   photo?: {
     asset: {
       _ref: string
@@ -270,11 +278,8 @@ export interface TeamMember {
     }
     alt?: string
   }
-  specializations?: Array<'patents' | 'trademarks' | 'design' | 'copyright' | 'eu-law' | 'litigation'>
-  qualifications?: LocalizedRichText
   email?: string
   phone?: string
-  languages?: string[]
   displayOrder?: number
   showOnWebsite?: boolean
 }
@@ -307,6 +312,8 @@ export interface Navigation {
 
 export interface Homepage {
   _id: string
+  siteTitle: LocalizedString
+  siteDescription: LocalizedText
   content?: ContentBlock[]
   newsSection?: {
     title?: LocalizedString

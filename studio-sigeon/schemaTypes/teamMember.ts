@@ -12,24 +12,16 @@ export const teamMember = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 96,
-      },
-    }),
-    defineField({
       name: 'position',
       title: 'Position/Title',
       type: 'localizedString',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'bio',
-      title: 'Biography',
+      name: 'description',
+      title: 'Description',
       type: 'localizedRichText',
+      description: 'General description of the person',
     }),
     defineField({
       name: 'photo',
@@ -40,31 +32,6 @@ export const teamMember = defineType({
       },
     }),
     defineField({
-      name: 'specializations',
-      title: 'Specializations',
-      type: 'array',
-      of: [
-        {
-          type: 'string',
-          options: {
-            list: [
-              {title: 'Patents', value: 'patents'},
-              {title: 'Trademarks', value: 'trademarks'},
-              {title: 'Industrial Design', value: 'design'},
-              {title: 'Copyright', value: 'copyright'},
-              {title: 'EU Law', value: 'eu-law'},
-              {title: 'Litigation', value: 'litigation'},
-            ],
-          },
-        },
-      ],
-    }),
-    defineField({
-      name: 'qualifications',
-      title: 'Qualifications & Education',
-      type: 'localizedRichText',
-    }),
-    defineField({
       name: 'email',
       title: 'Email',
       type: 'email',
@@ -73,21 +40,6 @@ export const teamMember = defineType({
       name: 'phone',
       title: 'Phone',
       type: 'string',
-    }),
-    defineField({
-      name: 'languages',
-      title: 'Languages Spoken',
-      type: 'array',
-      of: [{type: 'string'}],
-      options: {
-        list: [
-          {title: 'Polish', value: 'pl'},
-          {title: 'English', value: 'en'},
-          {title: 'German', value: 'de'},
-          {title: 'French', value: 'fr'},
-          {title: 'Russian', value: 'ru'},
-        ],
-      },
     }),
     defineField({
       name: 'displayOrder',

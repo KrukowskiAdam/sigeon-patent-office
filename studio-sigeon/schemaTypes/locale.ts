@@ -77,6 +77,10 @@ export const localizedRichText = defineType({
       of: [
         {
           type: 'block',
+          styles: [
+            {title: 'Normal', value: 'normal'},
+            {title: 'Head', value: 'head'},
+          ],
           marks: {
             annotations: [
               {

@@ -37,6 +37,17 @@ export const structure = (S: StructureBuilder) =>
             .title('News Page Settings')
         ),
       
+      // Team Page Settings - singleton document
+      S.listItem()
+        .title('Team Page Settings')
+        .id('teamPage')
+        .child(
+          S.document()
+            .schemaType('teamPage')
+            .documentId('team-page-settings')
+            .title('Team Page Settings')
+        ),
+      
       // Footer - singleton document
       S.listItem()
         .title('Footer')

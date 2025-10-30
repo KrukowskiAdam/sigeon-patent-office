@@ -28,6 +28,22 @@ export const homepage = defineType({
   ],
   fields: [
     defineField({
+      name: 'siteTitle',
+      title: 'Site Title',
+      type: 'localizedString',
+      fieldset: 'seoSettings',
+      description: 'Main site title shown in browser tab and search results',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'siteDescription',
+      title: 'Site Description',
+      type: 'localizedText',
+      fieldset: 'seoSettings',
+      description: 'Main site description for search engines (SEO)',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'content',
       title: 'Content Blocks',
       type: 'array',

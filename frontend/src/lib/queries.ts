@@ -1,5 +1,5 @@
 import {client} from './sanity'
-import {NewsArticle, NewsPage, Page, TeamMember, Homepage, Navigation, Footer} from '@/types/sanity'
+import {NewsArticle, NewsPage, TeamPage, Page, TeamMember, Homepage, Navigation, Footer} from '@/types/sanity'
 
 // Get homepage content
 export async function getNavigation(): Promise<Navigation | null> {
@@ -35,6 +35,8 @@ export async function getHomepage(): Promise<Homepage | null> {
   return client.fetch(`
     *[_type == "homepage"][0] {
       _id,
+      siteTitle,
+      siteDescription,
       content[] {
         _type,
         _key,
@@ -88,6 +90,34 @@ export async function getNewsPage(): Promise<NewsPage | null> {
             title
           }
         }
+      },
+      seo
+    }
+  `)
+}
+
+// Get team page settings
+export async function getTeamPage(): Promise<TeamPage | null> {
+  return client.fetch(`
+    *[_type == "teamPage"][0] {
+      _id,
+      blocks[] {
+        _type,
+        _key,
+        ...,
+        link {
+          ...,
+          internalLink-> {
+            _type,
+            slug,
+            title
+          }
+        }
+      },
+      teamSection {
+        title,
+        subtitle,
+        showTeam
       },
       seo
     }
@@ -218,40 +248,15 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
     *[_type == "teamMember"] | order(displayOrder asc) {
       _id,
       name,
-      slug,
       position,
-      bio,
+      description,
       photo,
-      specializations,
-      qualifications,
       email,
       phone,
-      languages,
       displayOrder,
       showOnWebsite
     }
   `)
-}
-
-// Get single team member by slug
-export async function getTeamMember(slug: string): Promise<TeamMember | null> {
-  return client.fetch(`
-    *[_type == "teamMember" && slug.current == $slug][0] {
-      _id,
-      name,
-      slug,
-      position,
-      bio,
-      photo,
-      specializations,
-      qualifications,
-      email,
-      phone,
-      languages,
-      displayOrder,
-      showOnWebsite
-    }
-  `, {slug})
 }
 
 // Get footer data

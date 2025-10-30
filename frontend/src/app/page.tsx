@@ -219,17 +219,6 @@ export default function Home() {
                         {getLocalizedText(member.position, currentLanguage)}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent>
-                      {member.specializations && member.specializations.length > 0 && (
-                        <div className="flex flex-wrap gap-1 justify-center">
-                          {member.specializations.slice(0, 3).map((spec, index) => (
-                            <Badge key={index} variant="outline">
-                              {spec}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
-                    </CardContent>
                   </Card>
                 ))}
               </div>

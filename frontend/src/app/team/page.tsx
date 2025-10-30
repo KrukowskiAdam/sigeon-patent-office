@@ -1,28 +1,49 @@
 'use client'
 
-import { getTeamMembers } from '@/lib/queries'
-import type { TeamMember } from '@/types/sanity'
+import { getTeamMembers, getTeamPage } from '@/lib/queries'
+import type { TeamMember, TeamPage } from '@/types/sanity'
 import Link from 'next/link'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { ContentBlock } from '@/components/blocks'
 import { useLanguage } from '@/context/LanguageContext'
 import { getLocalizedText } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { PortableText } from '@/components/ui/PortableText'
+import { getLocalizedPortableText } from '@/lib/portableText'
 
 export default function TeamPage() {
   const { currentLanguage } = useLanguage()
   const [team, setTeam] = useState<TeamMember[]>([])
+  const [teamPage, setTeamPage] = useState<TeamPage | null>(null)
   const [loading, setLoading] = useState(true)
+  const [expandedMembers, setExpandedMembers] = useState<Set<string>>(new Set())
+
+  const toggleDescription = (memberId: string) => {
+    setExpandedMembers(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(memberId)) {
+        newSet.delete(memberId)
+      } else {
+        newSet.add(memberId)
+      }
+      return newSet
+    })
+  }
 
   useEffect(() => {
-    const loadTeam = async () => {
+    const loadData = async () => {
       try {
-        const teamData = await getTeamMembers()
+        const [teamData, pageData] = await Promise.all([
+          getTeamMembers(),
+          getTeamPage()
+        ])
+        
         setTeam(teamData)
+        setTeamPage(pageData)
       } catch (error) {
         console.error('Error loading team:', error)
       } finally {
@@ -30,7 +51,7 @@ export default function TeamPage() {
       }
     }
 
-    loadTeam()
+    loadData()
   }, [])
 
   if (loading) {
@@ -48,22 +69,54 @@ export default function TeamPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#0abaee] to-[#0891b2] text-white py-20">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-semibold mb-6 leading-tight tracking-tight">
-            {currentLanguage === 'en' ? 'Our Team' : 'Nasz zespół'}
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 opacity-90">
-            {currentLanguage === 'en' ? 'Meet our experienced intellectual property specialists' : 'Poznaj doświadczonych specjalistów ds. własności intelektualnej'}
-          </p>
-        </div>
-      </section>
+      {/* Page Content Blocks from CMS */}
+      {teamPage?.blocks && teamPage.blocks.length > 0 && (
+        <>
+          {teamPage.blocks.map((block, index) => (
+            <ContentBlock 
+              key={block._key || index} 
+              block={block} 
+              language={currentLanguage} 
+            />
+          ))}
+        </>
+      )}
 
-      {/* Content */}
-      <main className="py-16 flex-grow">
-        <div className="max-w-6xl mx-auto px-4">
-          {team.length === 0 ? (
+      {/* Default Hero Section - only if no blocks in CMS */}
+      {(!teamPage?.blocks || teamPage.blocks.length === 0) && (
+        <section className="bg-gradient-to-r from-[#0abaee] to-[#0891b2] text-white py-20">
+          <div className="max-w-6xl mx-auto px-4 text-center">
+            <h1 className="text-4xl md:text-5xl font-semibold mb-6 leading-tight tracking-tight">
+              {currentLanguage === 'en' ? 'Our Team' : 'Nasz zespół'}
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 opacity-90">
+              {currentLanguage === 'en' ? 'Meet our experienced intellectual property specialists' : 'Poznaj doświadczonych specjalistów ds. własności intelektualnej'}
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* Team Members Section */}
+      {(!teamPage?.teamSection || teamPage.teamSection.showTeam !== false) && (
+        <main className="py-16 flex-grow">
+          <div className="max-w-6xl mx-auto px-4">
+            {/* Section Title from CMS or default */}
+            {teamPage?.teamSection?.title && (
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
+                <h2 className="text-3xl font-bold text-gray-900">
+                  {getLocalizedText(teamPage.teamSection.title, currentLanguage)}
+                </h2>
+              </div>
+            )}
+            
+            {teamPage?.teamSection?.subtitle && (
+              <p className="text-xl text-gray-600 mb-12 text-center max-w-3xl mx-auto">
+                {getLocalizedText(teamPage.teamSection.subtitle, currentLanguage)}
+              </p>
+            )}
+
+            {team.length === 0 ? (
             <Card className="max-w-md mx-auto">
               <CardContent className="text-center py-12">
                 <div className="text-gray-500 mb-4">
@@ -84,80 +137,93 @@ export default function TeamPage() {
               </CardContent>
             </Card>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="space-y-8">
               {team.map((member: TeamMember) => (
-                <Card key={member._id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  {member.photo && (
-                    <div className="h-64 relative">
-                      <Image
-                        src={urlFor(member.photo).width(400).height(300).url()}
-                        alt={member.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-                  <CardHeader>
-                    <CardTitle className="text-xl">
-                      {member.name}
-                    </CardTitle>
-                    <CardDescription>
-                      {getLocalizedText(member.position, currentLanguage)}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    {member.specializations && member.specializations.length > 0 && (
-                      <div className="mb-4">
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2">Specjalizacje:</h3>
-                        <div className="flex flex-wrap gap-1">
-                          {member.specializations.map((spec, index) => (
-                            <Badge key={index} variant="secondary">
-                              {spec}
-                            </Badge>
-                          ))}
-                        </div>
+                <Card key={member._id} className="overflow-hidden hover:shadow-lg transition-shadow pb-0">
+                  <div className="flex flex-col md:flex-row">
+                    {/* Zdjęcie po lewej - proporcje 3:2 */}
+                    {member.photo && (
+                      <div className="md:w-64 h-44 relative flex-shrink-0">
+                        <Image
+                          src={urlFor(member.photo).width(320).height(216).url()}
+                          alt={member.name}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 256px"
+                          className="object-cover"
+                        />
                       </div>
                     )}
                     
-                    {member.languages && member.languages.length > 0 && (
-                      <div className="mb-4">
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2">Języki:</h3>
-                        <div className="flex flex-wrap gap-1">
-                          {member.languages.map((lang, index) => (
-                            <Badge key={index} variant="outline">
-                              {lang}
-                            </Badge>
-                          ))}
+                    {/* Opis po prawej */}
+                    <div className="flex-1">
+                      <CardHeader>
+                        <CardTitle className="text-2xl">
+                          {member.name}
+                        </CardTitle>
+                        <CardDescription className="text-base">
+                          {getLocalizedText(member.position, currentLanguage)}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="mb-4">
+                          <button
+                            onClick={() => toggleDescription(member._id)}
+                            className="mt-2 mb-3 text-sm text-[#0abaee] hover:text-[#0891b2] font-medium flex items-center gap-1"
+                          >
+                            {expandedMembers.has(member._id) ? (
+                              <>
+                                Zwiń <span className="text-xs">▲</span>
+                              </>
+                            ) : (
+                              <>
+                                Czytaj więcej <span className="text-xs">▼</span>
+                              </>
+                            )}
+                          </button>
+                          {expandedMembers.has(member._id) && (
+                            <div>
+                              {member.description && (
+                                <div className="mb-4">
+                                  <PortableText 
+                                    value={getLocalizedPortableText(
+                                      member.description, 
+                                      currentLanguage
+                                    )} 
+                                  />
+                                </div>
+                              )}
+                              
+                              <div className="pt-4 border-t space-y-2">
+                                {member.email && (
+                                  <p className="text-sm text-gray-600">
+                                    <span className="font-medium">Email:</span> 
+                                    <a href={`mailto:${member.email}`} className="text-gray-900 hover:text-gray-700 ml-1">
+                                      {member.email}
+                                    </a>
+                                  </p>
+                                )}
+                                {member.phone && (
+                                  <p className="text-sm text-gray-600">
+                                    <span className="font-medium">Telefon:</span> 
+                                    <a href={`tel:${member.phone}`} className="text-gray-900 hover:text-gray-700 ml-1">
+                                      {member.phone}
+                                    </a>
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    )}
-                    
-                    <div className="pt-4 border-t">
-                      {member.email && (
-                        <p className="text-sm text-gray-600 mb-1">
-                          <span className="font-medium">Email:</span> 
-                          <a href={`mailto:${member.email}`} className="text-blue-600 hover:text-blue-800 ml-1">
-                            {member.email}
-                          </a>
-                        </p>
-                      )}
-                      {member.phone && (
-                        <p className="text-sm text-gray-600">
-                          <span className="font-medium">Telefon:</span> 
-                          <a href={`tel:${member.phone}`} className="text-blue-600 hover:text-blue-800 ml-1">
-                            {member.phone}
-                          </a>
-                        </p>
-                      )}
+                      </CardContent>
                     </div>
-                  </CardContent>
+                  </div>
                 </Card>
               ))}
             </div>
           )}
         </div>
-      </main>
+        </main>
+      )}
 
       {/* Navigation */}
       <section className="py-8">
