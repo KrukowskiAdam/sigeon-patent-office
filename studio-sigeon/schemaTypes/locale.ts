@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {EnvelopeIcon, MobileDeviceIcon, DocumentIcon} from '@sanity/icons'
 
 // Supported languages for the patent office
 export const supportedLanguages = [
@@ -99,7 +100,7 @@ export const localizedRichText = defineType({
                 name: 'emailLink',
                 type: 'object',
                 title: 'Email Link',
-                icon: () => '📧',
+                icon: EnvelopeIcon,
                 fields: [
                   {
                     name: 'email',
@@ -120,7 +121,7 @@ export const localizedRichText = defineType({
                 name: 'phoneLink',
                 type: 'object',
                 title: 'Phone Link',
-                icon: () => '📞',
+                icon: MobileDeviceIcon,
                 fields: [
                   {
                     name: 'phone',
@@ -133,7 +134,7 @@ export const localizedRichText = defineType({
                 name: 'faxLink',
                 type: 'object',
                 title: 'Fax Link',
-                icon: () => '📠',
+                icon: DocumentIcon,
                 fields: [
                   {
                     name: 'fax',

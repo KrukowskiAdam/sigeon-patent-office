@@ -13,7 +13,7 @@ const contactPortableTextComponents: PortableTextComponents = {
           href={value?.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#0abaee] hover:text-[#0891b2] font-medium"
+          className="text-gray-700 hover:text-[#0abaee] font-medium"
         >
           {children}
         </a>
@@ -23,7 +23,7 @@ const contactPortableTextComponents: PortableTextComponents = {
       return (
         <a
           href={`mailto:${value?.email}`}
-          className="inline-flex items-center gap-1.5 text-[#0abaee] hover:text-[#0891b2] font-medium"
+          className="inline-flex items-center gap-1.5 text-gray-700 hover:text-[#0abaee] font-medium"
         >
           <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
             <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />

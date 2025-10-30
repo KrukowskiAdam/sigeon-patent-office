@@ -6,12 +6,6 @@ export const navigation = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Navigation Title',
-      type: 'string',
-      description: 'Internal title for this navigation (e.g., "Main Navigation")',
-    }),
-    defineField({
       name: 'menuItems',
       title: 'Menu Items',
       type: 'array',
@@ -249,54 +243,16 @@ export const navigation = defineType({
         },
       ],
     }),
-    defineField({
-      name: 'cta',
-      title: 'Call to Action Button',
-      type: 'object',
-      description: 'Optional CTA button in navigation',
-      fields: [
-        {
-          name: 'show',
-          title: 'Show CTA Button',
-          type: 'boolean',
-          initialValue: false,
-        },
-        {
-          name: 'text',
-          title: 'Button Text',
-          type: 'localizedString',
-        },
-        {
-          name: 'link',
-          title: 'Button Link',
-          type: 'string',
-        },
-        {
-          name: 'style',
-          title: 'Button Style',
-          type: 'string',
-          options: {
-            list: [
-              {title: 'Primary', value: 'primary'},
-              {title: 'Secondary', value: 'secondary'},
-              {title: 'Outline', value: 'outline'},
-            ],
-          },
-          initialValue: 'primary',
-        },
-      ],
-    }),
   ],
   preview: {
     select: {
-      title: 'title',
       itemCount: 'menuItems',
     },
     prepare(selection) {
-      const {title, itemCount} = selection
+      const {itemCount} = selection
       const count = Array.isArray(itemCount) ? itemCount.length : 0
       return {
-        title: title || 'Navigation',
+        title: 'Navigation',
         subtitle: `${count} menu item${count !== 1 ? 's' : ''}`,
       }
     },

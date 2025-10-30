@@ -21,6 +21,11 @@ export const homepage = defineType({
       options: {collapsible: true, collapsed: true}
     },
     {
+      name: 'contactSettings',
+      title: '📧 Contact Section',
+      options: {collapsible: true, collapsed: true}
+    },
+    {
       name: 'seoSettings',
       title: '🔍 SEO & Meta Settings',
       options: {collapsible: true, collapsed: true}
@@ -123,6 +128,49 @@ export const homepage = defineType({
           title: 'Maximum Team Members to Show',
           type: 'number',
           initialValue: 4,
+        },
+      ],
+    }),
+    defineField({
+      name: 'contactSection',
+      title: 'Contact Section Configuration',
+      type: 'object',
+      fieldset: 'contactSettings',
+      fields: [
+        {
+          name: 'title',
+          title: 'Section Title',
+          type: 'localizedString',
+          initialValue: {
+            pl: 'Kontakt',
+            en: 'Contact'
+          }
+        },
+        {
+          name: 'subtitle',
+          title: 'Section Subtitle',
+          type: 'localizedString',
+        },
+        {
+          name: 'showContact',
+          title: 'Show Contact Section',
+          type: 'boolean',
+          initialValue: true,
+        },
+        {
+          name: 'content',
+          title: 'Content Blocks',
+          type: 'array',
+          of: [
+            {type: 'heroBlock'},
+            {type: 'textBlock'},
+            {type: 'textImageBlock'},
+            {type: 'textImageCarouselBlock'},
+            {type: 'servicesBlock'},
+            {type: 'bannerBlock'},
+            {type: 'contactBlock'},
+          ],
+          description: 'Content blocks for contact section',
         },
       ],
     }),

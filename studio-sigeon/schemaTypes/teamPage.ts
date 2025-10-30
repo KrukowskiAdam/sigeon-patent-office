@@ -6,13 +6,6 @@ export const teamPage = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Page Title (Internal)',
-      type: 'string',
-      initialValue: 'Team Page',
-      description: 'Internal title for CMS only',
-    }),
-    defineField({
       name: 'blocks',
       title: 'Page Content',
       type: 'array',

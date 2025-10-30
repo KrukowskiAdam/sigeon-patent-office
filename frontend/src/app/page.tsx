@@ -256,6 +256,37 @@ export default function Home() {
       </section>
       )}
 
+      {/* Contact Section */}
+      {homepage?.contactSection && 
+       homepage.contactSection.showContact !== false && 
+       homepage.contactSection.content && 
+       homepage.contactSection.content.length > 0 && (
+        <section className="py-16">
+          <div className="max-w-6xl mx-auto px-4">
+            {homepage.contactSection.title && (
+              <div className="flex items-center gap-4 mb-12">
+                <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
+                <h2 className="text-3xl font-bold text-gray-900">
+                  {getLocalizedText(homepage.contactSection.title, currentLanguage)}
+                </h2>
+              </div>
+            )}
+            {homepage.contactSection.subtitle && (
+              <p className="text-xl text-gray-600 mb-12 text-center max-w-3xl mx-auto">
+                {getLocalizedText(homepage.contactSection.subtitle, currentLanguage)}
+              </p>
+            )}
+            {homepage.contactSection.content.map((block, index) => (
+              <ContentBlock 
+                key={block._key || index} 
+                block={block} 
+                language={currentLanguage} 
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Footer */}
       <Footer />
     </div>

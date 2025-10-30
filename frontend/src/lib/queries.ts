@@ -6,7 +6,6 @@ export async function getNavigation(): Promise<Navigation | null> {
   return client.fetch(`
     *[_type == "navigation"][0] {
       _id,
-      title,
       menuItems[] {
         label,
         link,
@@ -25,8 +24,7 @@ export async function getNavigation(): Promise<Navigation | null> {
         isExternal,
         showInNavigation,
         order
-      },
-      cta
+      }
     }
   `)
 }
@@ -45,6 +43,16 @@ export async function getHomepage(): Promise<Homepage | null> {
       featuredServices,
       newsSection,
       teamSection,
+      contactSection {
+        title,
+        subtitle,
+        showContact,
+        content[] {
+          _type,
+          _key,
+          ...
+        }
+      },
       seo
     }
   `)
@@ -264,7 +272,6 @@ export async function getFooter(): Promise<Footer | null> {
   return client.fetch(`
     *[_type == "footer"][0] {
       _id,
-      title,
       column1 {
         title,
         content,

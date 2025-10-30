@@ -48,9 +48,33 @@ export function PortableText({ value, className = '' }: PortableTextProps) {
             link: ({value, children}) => (
               <a 
                 href={value.href} 
-                className="text-blue-600 hover:text-blue-800 underline transition-colors"
+                className="text-current hover:text-[#0abaee] underline transition-colors"
                 target={value.blank ? '_blank' : '_self'}
                 rel={value.blank ? 'noopener noreferrer' : undefined}
+              >
+                {children}
+              </a>
+            ),
+            emailLink: ({value, children}) => (
+              <a 
+                href={`mailto:${value.email}`}
+                className="text-current hover:text-[#0abaee] underline transition-colors"
+              >
+                {children}
+              </a>
+            ),
+            phoneLink: ({value, children}) => (
+              <a 
+                href={`tel:${value.phone}`}
+                className="text-current hover:text-[#0abaee] underline transition-colors"
+              >
+                {children}
+              </a>
+            ),
+            faxLink: ({value, children}) => (
+              <a 
+                href={`fax:${value.fax}`}
+                className="text-current hover:text-[#0abaee] underline transition-colors"
               >
                 {children}
               </a>

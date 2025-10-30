@@ -299,15 +299,8 @@ export interface MenuItem {
 
 export interface Navigation {
   _id: string
-  title: string
   menuItems: MenuItem[]
   secondaryMenuItems?: MenuItem[]
-  cta?: {
-    show?: boolean
-    text?: LocalizedString
-    link?: string
-    style?: 'primary' | 'secondary' | 'outline'
-  }
 }
 
 export interface Homepage {
@@ -327,6 +320,12 @@ export interface Homepage {
     showTeam?: boolean
     maxMembers?: number
   }
+  contactSection?: {
+    title?: LocalizedString
+    subtitle?: LocalizedString
+    showContact?: boolean
+    content?: ContentBlock[]
+  }
   seo?: SEO
 }
 
@@ -339,7 +338,6 @@ export interface FooterColumn {
 
 export interface Footer {
   _id: string
-  title: string
   column1: FooterColumn
   column2: FooterColumn
   column3: FooterColumn

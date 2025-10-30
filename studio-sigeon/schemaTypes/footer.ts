@@ -7,146 +7,141 @@ export default defineType({
   type: 'document',
   fields: [
     {
-      name: 'title',
-      title: 'Tytuł strony',
-      type: 'string',
-      description: 'Wewnętrzny tytuł dla administracji',
-      initialValue: 'Footer strony'
-    },
-    {
       name: 'column1',
-      title: 'Kolumna 1',
+      title: 'Column 1',
       type: 'object',
       fields: [
         {
           name: 'title',
-          title: 'Tytuł kolumny',
+          title: 'Column Title',
           type: localizedString.name,
           validation: Rule => Rule.required()
         },
         {
           name: 'content',
-          title: 'Treść kolumny',
+          title: 'Column Content',
           type: localizedText.name,
           validation: Rule => Rule.required()
         },
         {
           name: 'buttonText',
-          title: 'Tekst przycisku',
+          title: 'Button Text',
           type: localizedString.name,
-          description: 'Tekst wyświetlany na przycisku (opcjonalne)'
+          description: 'Text displayed on the button (optional)'
         },
         {
           name: 'buttonUrl',
-          title: 'URL przycisku',
+          title: 'Button URL',
           type: 'string',
-          description: 'URL do którego ma kierować przycisk (np. /about, /team, https://example.com)'
+          description: 'URL the button should link to (e.g. /about, /team, https://example.com)'
         }
       ]
     },
     {
       name: 'column2',
-      title: 'Kolumna 2',
+      title: 'Column 2',
       type: 'object',
       fields: [
         {
           name: 'title',
-          title: 'Tytuł kolumny',
+          title: 'Column Title',
           type: localizedString.name,
           validation: Rule => Rule.required()
         },
         {
           name: 'content',
-          title: 'Treść kolumny',
+          title: 'Column Content',
           type: localizedText.name,
           validation: Rule => Rule.required()
         },
         {
           name: 'buttonText',
-          title: 'Tekst przycisku',
+          title: 'Button Text',
           type: localizedString.name,
-          description: 'Tekst wyświetlany na przycisku (opcjonalne)'
+          description: 'Text displayed on the button (optional)'
         },
         {
           name: 'buttonUrl',
-          title: 'URL przycisku',
+          title: 'Button URL',
           type: 'string',
-          description: 'URL do którego ma kierować przycisk (np. /about, /team, https://example.com)'
+          description: 'URL the button should link to (e.g. /about, /team, https://example.com)'
         }
       ]
     },
     {
       name: 'column3',
-      title: 'Kolumna 3',
+      title: 'Column 3',
       type: 'object',
       fields: [
         {
           name: 'title',
-          title: 'Tytuł kolumny',
+          title: 'Column Title',
           type: localizedString.name,
           validation: Rule => Rule.required()
         },
         {
           name: 'content',
-          title: 'Treść kolumny',
+          title: 'Column Content',
           type: localizedText.name,
           validation: Rule => Rule.required()
         },
         {
           name: 'buttonText',
-          title: 'Tekst przycisku',
+          title: 'Button Text',
           type: localizedString.name,
-          description: 'Tekst wyświetlany na przycisku (opcjonalne)'
+          description: 'Text displayed on the button (optional)'
         },
         {
           name: 'buttonUrl',
-          title: 'URL przycisku',
+          title: 'Button URL',
           type: 'string',
-          description: 'URL do którego ma kierować przycisk (np. /about, /team, https://example.com)'
+          description: 'URL the button should link to (e.g. /about, /team, https://example.com)'
         }
       ]
     },
     {
       name: 'column4',
-      title: 'Kolumna 4',
+      title: 'Column 4',
       type: 'object',
       fields: [
         {
           name: 'title',
-          title: 'Tytuł kolumny',
+          title: 'Column Title',
           type: localizedString.name,
           validation: Rule => Rule.required()
         },
         {
           name: 'content',
-          title: 'Treść kolumny',
+          title: 'Column Content',
           type: localizedText.name,
           validation: Rule => Rule.required()
         },
         {
           name: 'buttonText',
-          title: 'Tekst przycisku',
+          title: 'Button Text',
           type: localizedString.name,
-          description: 'Tekst wyświetlany na przycisku (opcjonalne)'
+          description: 'Text displayed on the button (optional)'
         },
         {
           name: 'buttonUrl',
-          title: 'URL przycisku',
+          title: 'Button URL',
           type: 'string',
-          description: 'URL do którego ma kierować przycisk (np. /about, /team, https://example.com)'
+          description: 'URL the button should link to (e.g. /about, /team, https://example.com)'
         }
       ]
     },
     {
       name: 'copyrightText',
-      title: 'Tekst copyright',
+      title: 'Copyright Text',
       type: localizedString.name,
-      description: 'Tekst wyświetlany na dole stopki'
+      description: 'Text displayed at the bottom of the footer'
     }
   ],
   preview: {
-    select: {
-      title: 'title'
+    prepare() {
+      return {
+        title: 'Footer'
+      }
     }
   }
 })
