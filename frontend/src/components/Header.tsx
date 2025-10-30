@@ -15,7 +15,13 @@ export function Header() {
   const { currentLanguage } = useLanguage()
   const nav = navigationTranslations[currentLanguage]
   const [navigation, setNavigation] = useState<Navigation | null>(null)
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(() => {
+    // Initialize with current scroll position to prevent flash
+    if (typeof window !== 'undefined') {
+      return window.scrollY > 50
+    }
+    return false
+  })
 
   useEffect(() => {
     let ticking = false
@@ -29,6 +35,9 @@ export function Header() {
         ticking = true
       }
     }
+    
+    // Set initial state immediately
+    setIsScrolled(window.scrollY > 50)
     
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)

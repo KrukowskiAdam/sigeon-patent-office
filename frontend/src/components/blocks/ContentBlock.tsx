@@ -1,10 +1,12 @@
 import React from 'react'
-import { ContentBlock as ContentBlockType, TextBlock as TextBlockType, TextImageBlock as TextImageBlockType, TextImageCarouselBlock as TextImageCarouselBlockType, HeroBlock as HeroBlockType, BannerBlock as BannerBlockType, ServicesBlock as ServicesBlockType } from '@/types/sanity'
+import { ContentBlock as ContentBlockType, TextBlock as TextBlockType, TextImageBlock as TextImageBlockType, TextImageCarouselBlock as TextImageCarouselBlockType, HeroBlock as HeroBlockType, BannerBlock as BannerBlockType, ServicesBlock as ServicesBlockType, CodeBlock as CodeBlockType, ContactBlock as ContactBlockType } from '@/types/sanity'
 import { BannerBlock } from './BannerBlock'
 import { TextImageCarouselBlock } from './TextImageCarouselBlock'
 import { TextImageBlock } from './TextImageBlock'
 import { HeroBlock } from './HeroBlock'
 import { ServicesBlock } from './ServicesBlock'
+import { CodeBlock } from './CodeBlock'
+import { ContactBlock } from './ContactBlock'
 import { getLocalizedText } from '@/lib/i18n'
 import { PortableText } from '../ui/PortableText'
 import { Language } from '@/context/LanguageContext'
@@ -90,6 +92,10 @@ export function ContentBlock({ block, language }: ContentBlockProps) {
       return <ServicesBlock block={block as ServicesBlockType} language={language} />
     case 'bannerBlock':
       return <BannerBlock {...(block as BannerBlockType)} />
+    case 'codeBlock':
+      return <CodeBlock block={block as CodeBlockType} language={language} />
+    case 'contactBlock':
+      return <ContactBlock block={block as ContactBlockType} language={language} />
     default:
       console.warn(`Unknown block type`)
       return null

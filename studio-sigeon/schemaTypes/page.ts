@@ -22,26 +22,7 @@ export const page = defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: 'pageType',
-      title: 'Page Type',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Homepage', value: 'homepage'},
-          {title: 'About Us', value: 'about'},
-          {title: 'Contact', value: 'contact'},
-          {title: 'Team', value: 'team'},
-          {title: 'Patent Attorneys', value: 'patent-attorneys'},
-          {title: 'Legal Services', value: 'legal-services'},
-          {title: 'IP Business Consulting', value: 'business-consulting'},
-          {title: 'BioMed', value: 'biomed'},
-          {title: 'Services Overview', value: 'services'},
-          {title: 'Other', value: 'other'},
-        ],
-      },
-      validation: (Rule) => Rule.required(),
-    }),
+
     defineField({
       name: 'content',
       title: 'Page Content',
@@ -53,6 +34,8 @@ export const page = defineType({
         {type: 'textImageCarouselBlock'},
         {type: 'servicesBlock'},
         {type: 'bannerBlock'},
+        {type: 'codeBlock'},
+        {type: 'contactBlock'},
       ],
       description: 'Build your page with content blocks',
     }),
@@ -77,7 +60,7 @@ export const page = defineType({
           ],
         },
       ],
-      hidden: ({document}) => !['patent-attorneys', 'legal-services', 'business-consulting', 'biomed'].includes(document?.pageType as string),
+      hidden: ({document}) => !['rzecznicy-patentowi', 'uslugi-prawne', 'doradztwo-biznesowe-ip', 'biomed'].includes((document as any)?.slug?.current),
     }),
 
 
@@ -110,7 +93,7 @@ export const page = defineType({
   preview: {
     select: {
       title: 'internalTitle',
-      subtitle: 'pageType',
+      subtitle: 'slug.current',
       media: 'featuredImage',
     },
   },

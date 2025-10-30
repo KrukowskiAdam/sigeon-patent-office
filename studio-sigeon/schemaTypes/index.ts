@@ -6,6 +6,8 @@ import {seoFields} from './seo'
 import {textBlock, textImageBlock, heroBlock, servicesBlock} from './blocks'
 import {bannerBlock} from './blocks/bannerBlock'
 import {textImageCarouselBlock} from './blocks/textImageCarouselBlock'
+import {codeBlock} from './blocks/codeBlock'
+import {contactBlock} from './blocks/contactBlock'
 
 // Document types
 import {homepage} from './homepage'
@@ -14,6 +16,7 @@ import {newsPage} from './newsPage'
 import {page} from './page'
 import {teamMember} from './teamMember'
 import {navigation} from './navigation'
+import footer from './footer'
 
 export const schemaTypes = [
   // Object types (must be first)
@@ -29,6 +32,8 @@ export const schemaTypes = [
   heroBlock,
   servicesBlock,
   bannerBlock,
+  codeBlock,
+  contactBlock,
   
   // Document types
   homepage,
@@ -37,4 +42,5 @@ export const schemaTypes = [
   page,
   teamMember,
   navigation,
+  footer,
 ]

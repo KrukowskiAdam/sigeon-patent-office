@@ -1,5 +1,5 @@
 import {client} from './sanity'
-import {NewsArticle, NewsPage, Page, TeamMember, Homepage, Navigation} from '@/types/sanity'
+import {NewsArticle, NewsPage, Page, TeamMember, Homepage, Navigation, Footer} from '@/types/sanity'
 
 // Get homepage content
 export async function getNavigation(): Promise<Navigation | null> {
@@ -161,7 +161,6 @@ export async function getPages(): Promise<Page[]> {
       _id,
       internalTitle,
       slug,
-      pageType,
       featuredImage,
       showInNavigation,
       navigationOrder
@@ -176,7 +175,6 @@ export async function getNavigationPages(): Promise<Page[]> {
       _id,
       internalTitle,
       slug,
-      pageType,
       navigationOrder
     }
   `)
@@ -189,8 +187,22 @@ export async function getPage(slug: string): Promise<Page | null> {
       _id,
       internalTitle,
       slug,
-      pageType,
-      content,
+      content[] {
+        _type,
+        _key,
+        ...,
+        leftColumnTop,
+        socialMedia {
+          facebook,
+          linkedin
+        },
+        leftColumnBottom,
+        contactForm {
+          title,
+          formEmail
+        },
+        mapEmbedCode
+      },
       services,
       featuredImage,
       showInNavigation,
@@ -240,4 +252,39 @@ export async function getTeamMember(slug: string): Promise<TeamMember | null> {
       showOnWebsite
     }
   `, {slug})
+}
+
+// Get footer data
+export async function getFooter(): Promise<Footer | null> {
+  return client.fetch(`
+    *[_type == "footer"][0] {
+      _id,
+      title,
+      column1 {
+        title,
+        content,
+        buttonText,
+        buttonUrl
+      },
+      column2 {
+        title,
+        content,
+        buttonText,
+        buttonUrl
+      },
+      column3 {
+        title,
+        content,
+        buttonText,
+        buttonUrl
+      },
+      column4 {
+        title,
+        content,
+        buttonText,
+        buttonUrl
+      },
+      copyrightText
+    }
+  `)
 }

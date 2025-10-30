@@ -56,8 +56,8 @@ export const navigation = defineType({
           _type: 'menuItem',
           _key: 'biomed',
           label: {
-            pl: 'Biomed',
-            en: 'Biomed'
+            pl: 'BioMed',
+            en: 'BioMed'
           },
           link: '/biomed',
           isExternal: false,

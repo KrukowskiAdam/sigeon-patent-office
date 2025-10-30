@@ -14,6 +14,11 @@ interface TextImageBlockProps {
 }
 
 export function TextImageBlock({ block, language }: TextImageBlockProps) {
+  // If no image is provided, don't render this block
+  if (!block.image) {
+    return null
+  }
+
   const isImageLeft = block.layout === 'image-left'
   const sizeClasses = {
     small: isImageLeft ? 'md:w-1/3' : 'md:w-1/3',

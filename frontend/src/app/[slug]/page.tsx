@@ -1,15 +1,16 @@
 'use client'
 
 import { useEffect, useState, use } from 'react'
+import Link from 'next/link'
 import { useLanguage } from '@/context/LanguageContext'
 import { getPage } from '@/lib/queries'
 import { Page } from '@/types/sanity'
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { getLocalizedText } from '@/lib/i18n'
 import { ContentBlock } from '@/components/blocks'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 interface PageProps {
@@ -107,47 +108,29 @@ export default function DynamicPage({ params }: PageProps) {
 
       </main>
 
-      {/* Footer */}
-      <footer className="bg-[#0abaee] text-white py-12 mt-auto">
+      {/* Navigation Section */}
+      <section className="py-8">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">Grzelak i Wspólnicy, Kancelaria Patentowo-Prawna</h3>
-              <p className="text-blue-100">
-                Ochrona własności przemysłowej i intelektualnej, obsługa prawna i biznesowa firm i instytucji
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Usługi</h4>
-              <ul className="space-y-2 text-blue-100">
-                <li>Rzecznicy patentowi</li>
-                <li>Usługi prawne</li>
-                <li>Doradztwo biznesowe IP</li>
-                <li>Biomed</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Firma</h4>
-              <ul className="space-y-2 text-blue-100">
-                <li><Link href="/about" className="hover:text-white">O nas</Link></li>
-                <li><Link href="/team" className="hover:text-white">Zespół</Link></li>
-                <li><Link href="/news" className="hover:text-white">Aktualności</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Kontakt</h4>
-              <p className="text-blue-100">
-                ul. Przykładowa 123<br />
-                00-001 Warszawa<br />
-                Tel: +48 123 456 789
-              </p>
-            </div>
-          </div>
-          <div className="border-t border-blue-600 mt-8 pt-8 text-center text-blue-200">
-            <p>&copy; 2024 Grzelak i Wspólnicy, Kancelaria Patentowo-Prawna. Wszystkie prawa zastrzeżone.</p>
+          <div className="text-center pt-8 border-t border-gray-200">
+            <Link
+              href="/"
+              className="inline-block text-white font-medium py-3 px-8 rounded-lg transition-colors"
+              style={{ backgroundColor: '#0abaee' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#0891b2'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#0abaee'
+              }}
+            >
+              Strona główna
+            </Link>
           </div>
         </div>
-      </footer>
+      </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }

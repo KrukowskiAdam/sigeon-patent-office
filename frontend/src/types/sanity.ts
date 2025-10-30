@@ -201,7 +201,39 @@ export interface BannerBlock {
   height?: 'small' | 'medium' | 'large' | 'full'
 }
 
-export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | HeroBlock | ServicesBlock | BannerBlock
+export interface CodeBlock {
+  _type: 'codeBlock'
+  _key: string
+  title?: LocalizedString
+  code: string
+  description?: LocalizedText
+}
+
+export interface ContactBlock {
+  _type: 'contactBlock'
+  _key: string
+  leftColumnTop: {
+    pl: unknown[]
+    en?: unknown[]
+    de?: unknown[]
+  }
+  socialMedia?: {
+    facebook?: string
+    linkedin?: string
+  }
+  leftColumnBottom: {
+    pl: unknown[]
+    en?: unknown[]
+    de?: unknown[]
+  }
+  contactForm: {
+    title: LocalizedString
+    formEmail: string
+  }
+  mapEmbedCode: string
+}
+
+export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | HeroBlock | ServicesBlock | BannerBlock | CodeBlock | ContactBlock
 
 export interface Page {
   _id: string
@@ -209,7 +241,6 @@ export interface Page {
   slug: {
     current: string
   }
-  pageType: 'homepage' | 'about' | 'contact' | 'team' | 'patent-attorneys' | 'legal-services' | 'business-consulting' | 'biomed' | 'services' | 'other'
   content?: ContentBlock[]
   services?: Service[]
   featuredImage?: {
@@ -290,4 +321,21 @@ export interface Homepage {
     maxMembers?: number
   }
   seo?: SEO
+}
+
+export interface FooterColumn {
+  title: LocalizedString
+  content: LocalizedText
+  buttonText?: LocalizedString
+  buttonUrl?: string
+}
+
+export interface Footer {
+  _id: string
+  title: string
+  column1: FooterColumn
+  column2: FooterColumn
+  column3: FooterColumn
+  column4: FooterColumn
+  copyrightText?: LocalizedString
 }

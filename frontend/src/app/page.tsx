@@ -8,6 +8,7 @@ import { urlFor } from '@/lib/sanity'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 import { useLanguage } from '@/context/LanguageContext'
 import { getLocalizedText } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
@@ -180,12 +181,15 @@ export default function Home() {
       {(!homepage?.teamSection || homepage.teamSection.showTeam !== false) && (
         <section className="bg-gray-50 py-16">
           <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-              {homepage?.teamSection?.title ? 
-                getLocalizedText(homepage.teamSection.title, currentLanguage) : 
-                'Nasz zespół'
-              }
-            </h2>
+            <div className="flex items-center gap-4 mb-12">
+              <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
+              <h2 className="text-3xl font-bold text-gray-900">
+                {homepage?.teamSection?.title ? 
+                  getLocalizedText(homepage.teamSection.title, currentLanguage) : 
+                  'Nasz zespół'
+                }
+              </h2>
+            </div>
             {homepage?.teamSection?.subtitle && (
               <p className="text-xl text-gray-600 mb-12 text-center max-w-3xl mx-auto">
                 {getLocalizedText(homepage.teamSection.subtitle, currentLanguage)}
@@ -195,7 +199,7 @@ export default function Home() {
               <>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                   {team.slice(0, homepage?.teamSection?.maxMembers || 4).map((member: TeamMember) => (
-                    <Card key={member._id} className="text-center hover:shadow-lg transition-shadow">
+                    <Card key={member._id} className="text-center overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-gray-50 border-gray-200 flex flex-col h-full">
                     {member.photo && (
                       <div className="h-48 relative">
                         <Image
@@ -264,46 +268,7 @@ export default function Home() {
       )}
 
       {/* Footer */}
-      <footer className="bg-[#0abaee] text-white py-12 mt-auto">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">Grzelak i Wspólnicy, Kancelaria Patentowo-Prawna</h3>
-              <p className="text-blue-100">
-                Ochrona własności przemysłowej i intelektualnej, obsługa prawna i biznesowa firm i instytucji
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Usługi</h4>
-              <ul className="space-y-2 text-blue-100">
-                <li>Rzecznicy patentowi</li>
-                <li>Usługi prawne</li>
-                <li>Doradztwo biznesowe IP</li>
-                <li>Biomed</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Firma</h4>
-              <ul className="space-y-2 text-blue-100">
-                <li><Link href="/about" className="hover:text-white">O nas</Link></li>
-                <li><Link href="/team" className="hover:text-white">Zespół</Link></li>
-                <li><Link href="/news" className="hover:text-white">Aktualności</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Kontakt</h4>
-              <p className="text-blue-100">
-                ul. Przykładowa 123<br />
-                00-001 Warszawa<br />
-                Tel: +48 123 456 789
-              </p>
-            </div>
-          </div>
-          <div className="border-t border-blue-600 mt-8 pt-8 text-center text-blue-200">
-            <p>&copy; 2024 Grzelak i Wspólnicy, Kancelaria Patentowo-Prawna. Wszystkie prawa zastrzeżone.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

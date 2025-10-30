@@ -74,7 +74,74 @@ export const localizedRichText = defineType({
       title: lang.title,
       name: lang.id,
       type: 'array',
-      of: [{type: 'block'}],
+      of: [
+        {
+          type: 'block',
+          marks: {
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'URL',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'URL',
+                  },
+                ],
+              },
+              {
+                name: 'emailLink',
+                type: 'object',
+                title: 'Email Link',
+                icon: () => '📧',
+                fields: [
+                  {
+                    name: 'email',
+                    type: 'string',
+                    title: 'Email Address',
+                    validation: (Rule: any) =>
+                      Rule.regex(
+                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        {
+                          name: 'email',
+                          invert: false,
+                        }
+                      ).error('Please enter a valid email address'),
+                  },
+                ],
+              },
+              {
+                name: 'phoneLink',
+                type: 'object',
+                title: 'Phone Link',
+                icon: () => '📞',
+                fields: [
+                  {
+                    name: 'phone',
+                    type: 'string',
+                    title: 'Phone Number',
+                  },
+                ],
+              },
+              {
+                name: 'faxLink',
+                type: 'object',
+                title: 'Fax Link',
+                icon: () => '📠',
+                fields: [
+                  {
+                    name: 'fax',
+                    type: 'string',
+                    title: 'Fax Number',
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
       validation: (Rule) => {
         if (lang.isDefault) {
           return Rule.required()

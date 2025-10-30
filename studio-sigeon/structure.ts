@@ -37,6 +37,17 @@ export const structure = (S: StructureBuilder) =>
             .title('News Page Settings')
         ),
       
+      // Footer - singleton document
+      S.listItem()
+        .title('Footer')
+        .id('footer')
+        .child(
+          S.document()
+            .schemaType('footer')
+            .documentId('footer-settings')
+            .title('Footer Settings')
+        ),
+      
       // Divider
       S.divider(),
       
