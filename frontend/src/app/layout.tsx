@@ -22,14 +22,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: homepage?.siteTitle?.pl || "Sigeon IP - Kancelaria Patentowa",
     description: homepage?.siteDescription?.pl || "Profesjonalna kancelaria patentowa - patenty, znaki towarowe, wzory przemysłowe",
-    icons: {
-      icon: [
-        { url: '/icon.png' },
-        { url: '/favicon.png' },
-      ],
-      shortcut: '/icon.png',
-      apple: '/icon.png',
-    },
   }
 }
 
