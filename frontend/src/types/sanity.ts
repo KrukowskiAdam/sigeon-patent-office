@@ -44,7 +44,8 @@ export interface NewsArticle {
     current: string
   }
   publishedAt: string
-  category?: 'patents' | 'trademarks' | 'legal' | 'company' | 'industry'
+  showPl?: boolean
+  showEn?: boolean
   excerpt?: LocalizedText
   featuredImage?: {
     asset: {
@@ -62,6 +63,10 @@ export interface NewsArticle {
 export interface NewsPage {
   _id: string
   blocks?: ContentBlock[]
+  buttons?: {
+    readMore?: LocalizedString
+    backToHome?: LocalizedString
+  }
   seo?: SEO
 }
 
@@ -244,7 +249,28 @@ export interface ContactBlock {
   mapEmbedCode: string
 }
 
-export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | HeroBlock | ServicesBlock | BannerBlock | CodeBlock | ContactBlock
+export interface FooterBlock {
+  _type: 'footerBlock'
+  _key: string
+  column1?: {
+    title?: LocalizedString
+    content?: LocalizedRichText
+  }
+  column2?: {
+    title?: LocalizedString
+    content?: LocalizedRichText
+  }
+  column3?: {
+    title?: LocalizedString
+    content?: LocalizedRichText
+  }
+  column4?: {
+    title?: LocalizedString
+    content?: LocalizedRichText
+  }
+}
+
+export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | HeroBlock | ServicesBlock | BannerBlock | CodeBlock | ContactBlock | FooterBlock
 
 export interface Page {
   _id: string
@@ -311,12 +337,15 @@ export interface Homepage {
   newsSection?: {
     title?: LocalizedString
     subtitle?: LocalizedString
+    readMoreLabel?: LocalizedString
+    cta?: LinkField
     showFeaturedNews?: boolean
     maxArticles?: number
   }
   teamSection?: {
     title?: LocalizedString
     subtitle?: LocalizedString
+    cta?: LinkField
     showTeam?: boolean
     maxMembers?: number
   }

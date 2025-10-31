@@ -16,7 +16,7 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="text-white hover:text-blue-200 rounded-none border-none">
+        <Button variant="ghost" className="text-gray-900 hover:text-gray-700 rounded-none border-none">
           <Globe className="h-4 w-4 mr-2" />
           {languages[currentLanguage].flag} {languages[currentLanguage].name}
           <ChevronDown className="h-4 w-4 ml-1" />

@@ -85,7 +85,7 @@ export default function TeamPage() {
       {/* Default Hero Section - only if no blocks in CMS */}
       {(!teamPage?.blocks || teamPage.blocks.length === 0) && (
         <section className="bg-gradient-to-r from-[#0abaee] to-[#0891b2] text-white py-20">
-          <div className="max-w-6xl mx-auto px-4 text-center">
+          <div className="max-w-7xl mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-semibold mb-6 leading-tight tracking-tight">
               {currentLanguage === 'en' ? 'Our Team' : 'Nasz zespół'}
             </h1>
@@ -99,12 +99,12 @@ export default function TeamPage() {
       {/* Team Members Section */}
       {(!teamPage?.teamSection || teamPage.teamSection.showTeam !== false) && (
         <main className="py-16 flex-grow">
-          <div className="max-w-6xl mx-auto px-4">
+          <div className="max-w-7xl mx-auto px-4">
             {/* Section Title from CMS or default */}
             {teamPage?.teamSection?.title && (
-              <div className="flex items-center gap-4 mb-8">
+              <div className="flex items-center gap-4 mb-12">
                 <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                <h2 className="text-3xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-gray-900">
                   {getLocalizedText(teamPage.teamSection.title, currentLanguage)}
                 </h2>
               </div>
@@ -227,7 +227,7 @@ export default function TeamPage() {
 
       {/* Navigation */}
       <section className="py-8">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mt-12 pt-8 border-t border-gray-200">
             <Link 
               href="/"

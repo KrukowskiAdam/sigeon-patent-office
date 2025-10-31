@@ -1,6 +1,8 @@
 // Locale and SEO objects
 import {localizedString, localizedText, localizedRichText} from './locale'
+import {localizedStringNews, localizedTextNews, localizedRichTextNews} from './localeNews'
 import {seoFields} from './seo'
+import {seoFieldsNews} from './seoNews'
 
 // Content blocks
 import {textBlock, textImageBlock, heroBlock, servicesBlock} from './blocks'
@@ -8,6 +10,7 @@ import {bannerBlock} from './blocks/bannerBlock'
 import {textImageCarouselBlock} from './blocks/textImageCarouselBlock'
 import {codeBlock} from './blocks/codeBlock'
 import {contactBlock} from './blocks/contactBlock'
+import {footerBlock} from './blocks/footerBlock'
 
 // Document types
 import {homepage} from './homepage'
@@ -24,6 +27,10 @@ export const schemaTypes = [
   localizedString,
   localizedText, 
   localizedRichText,
+  localizedStringNews,
+  localizedTextNews,
+  localizedRichTextNews,
+  seoFieldsNews,
   seoFields,
   
   // Content blocks
@@ -35,6 +42,7 @@ export const schemaTypes = [
   bannerBlock,
   codeBlock,
   contactBlock,
+  footerBlock,
   
   // Document types
   homepage,

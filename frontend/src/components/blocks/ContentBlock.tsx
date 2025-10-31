@@ -7,6 +7,7 @@ import { HeroBlock } from './HeroBlock'
 import { ServicesBlock } from './ServicesBlock'
 import { CodeBlock } from './CodeBlock'
 import { ContactBlock } from './ContactBlock'
+import { FooterBlock } from './FooterBlock'
 import { getLocalizedText } from '@/lib/i18n'
 import { PortableText } from '../ui/PortableText'
 import { Language } from '@/context/LanguageContext'
@@ -27,13 +28,13 @@ function TextBlock({ block, language }: { block: TextBlockType; language: string
   }[block.alignment || 'left']
 
   return (
-    <section className="py-16">
-      <div className="max-w-4xl mx-auto px-4">
+    <section className="py-8">
+      <div className="max-w-7xl mx-auto px-4">
         <div className={`prose max-w-none ${alignmentClass}`}>
           {block.title && (
             <div className="flex items-center gap-4 mb-8">
               <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-              <h2 className="text-3xl font-semibold text-gray-800 leading-tight">
+              <h2 className="text-2xl font-semibold text-gray-800 leading-tight">
                 {getLocalizedText(block.title, language as Language)}
               </h2>
             </div>
@@ -96,6 +97,8 @@ export function ContentBlock({ block, language }: ContentBlockProps) {
       return <CodeBlock block={block as CodeBlockType} language={language} />
     case 'contactBlock':
       return <ContactBlock block={block as ContactBlockType} language={language} />
+    case 'footerBlock':
+      return <FooterBlock block={block} language={language} />
     default:
       console.warn(`Unknown block type`)
       return null

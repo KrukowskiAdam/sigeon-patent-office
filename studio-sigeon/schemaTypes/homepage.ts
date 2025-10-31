@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {linkField} from './objects/linkField'
 
 export const homepage = defineType({
   name: 'homepage',
@@ -60,6 +61,7 @@ export const homepage = defineType({
         {type: 'textImageCarouselBlock'},
         {type: 'servicesBlock'},
         {type: 'bannerBlock'},
+        {type: 'footerBlock'},
       ],
       description: 'Build your homepage with content blocks',
     }),
@@ -83,6 +85,19 @@ export const homepage = defineType({
           title: 'Section Subtitle',
           type: 'localizedString',
         },
+        {
+          name: 'readMoreLabel',
+          title: 'Read More Button Label',
+          type: 'localizedString',
+          initialValue: {
+            pl: 'Czytaj więcej',
+            en: 'Read more'
+          }
+        },
+        linkField({
+          name: 'cta',
+          title: 'CTA Button (label + link)'
+        }),
         {
           name: 'showFeaturedNews',
           title: 'Show Featured News',
@@ -117,6 +132,10 @@ export const homepage = defineType({
           title: 'Section Subtitle',
           type: 'localizedString',
         },
+        linkField({
+          name: 'cta',
+          title: 'CTA Button (label + link)'
+        }),
         {
           name: 'showTeam',
           title: 'Show Team Section',
@@ -169,6 +188,7 @@ export const homepage = defineType({
             {type: 'servicesBlock'},
             {type: 'bannerBlock'},
             {type: 'contactBlock'},
+            {type: 'footerBlock'},
           ],
           description: 'Content blocks for contact section',
         },

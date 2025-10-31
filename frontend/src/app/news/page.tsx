@@ -66,7 +66,7 @@ export default function NewsPage() {
 
       {/* Content */}
       <main className="py-16 flex-grow">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           {news.length === 0 ? (
             <Card className="max-w-md mx-auto">
               <CardContent className="text-center py-12">
@@ -89,13 +89,15 @@ export default function NewsPage() {
             </Card>
           ) : (
             <div className="space-y-8">
-              {news.map((article: NewsArticle, index: number) => (
+              {news
+                .filter((article) => currentLanguage === 'pl' ? article.showPl === true : article.showEn === true)
+                .map((article: NewsArticle, index: number) => (
                 <Card key={article._id} className="overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-gray-50 border-gray-200 flex flex-col h-full">
                   <div className="flex flex-col md:flex-row">
                     {/* Image on the left */}
                     {article.featuredImage ? (
-                      <div className="md:w-1/3 flex items-center justify-center bg-gray-50">
-                        <div className="relative w-full h-48 md:h-56">
+                      <div className="md:w-1/3 flex items-center justify-center bg-gray-50 p-8">
+                        <div className="relative w-full aspect-video">
                           <Image
                             src={urlFor(article.featuredImage).width(400).url()}
                             alt={getLocalizedText(article.title, currentLanguage)}
@@ -108,8 +110,8 @@ export default function NewsPage() {
                         </div>
                       </div>
                     ) : (
-                      <div className="md:w-1/3 bg-gray-100 flex items-center justify-center text-gray-400">
-                        <div className="text-center p-4">
+                      <div className="md:w-1/3 bg-gray-100 flex items-center justify-center text-gray-400 p-8">
+                        <div className="relative w-full aspect-video flex flex-col items-center justify-center">
                           <svg className="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
@@ -120,7 +122,7 @@ export default function NewsPage() {
                     
                     {/* Content on the right */}
                     <div className={`${article.featuredImage ? 'md:w-2/3' : 'w-full'} flex flex-col`}>
-                      <CardHeader className="text-gray-900">
+                      <CardHeader className="text-gray-900 pt-8">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
                             {article.featured && (
@@ -134,26 +136,25 @@ export default function NewsPage() {
                           </div>
                         </div>
                         <CardDescription className="text-sm text-gray-500">
-                          {new Date(article.publishedAt).toLocaleDateString('pl-PL')} 
-                          {article.category && (
-                            <span className="ml-2">• {article.category}</span>
-                          )}
+                          {new Date(article.publishedAt).toLocaleDateString('pl-PL')}
                         </CardDescription>
                       </CardHeader>
                       
                       <CardContent className="text-gray-700 flex-1 flex flex-col">
                         {article.excerpt && (
-                          <p className="text-gray-600 mb-4 line-clamp-3 flex-1">
+                          <p className="text-gray-600 mb-2 line-clamp-3">
                             {getLocalizedText(article.excerpt, currentLanguage)}
                           </p>
                         )}
                         
-                        <div className="flex items-center justify-between mt-auto">
+                        <div className="flex items-center justify-between mt-4">
                           <Link 
                             href={`/news/${article.slug.current}`}
                             className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
                           >
-                            Czytaj więcej
+                            {newsPage?.buttons?.readMore
+                              ? getLocalizedText(newsPage.buttons.readMore, currentLanguage)
+                              : 'Czytaj więcej'}
                           </Link>
                           
                           {article.tags && article.tags.length > 0 && (
@@ -178,13 +179,15 @@ export default function NewsPage() {
 
       {/* Navigation */}
       <section className="py-8">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mt-12 pt-8 border-t border-gray-200">
             <Link 
               href="/"
               className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
             >
-              Strona główna
+              {newsPage?.buttons?.backToHome
+                ? getLocalizedText(newsPage.buttons.backToHome, currentLanguage)
+                : 'Strona główna'}
             </Link>
           </div>
         </div>

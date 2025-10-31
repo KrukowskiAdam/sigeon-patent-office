@@ -13,6 +13,7 @@ import { useLanguage } from '@/context/LanguageContext'
 import { getLocalizedText } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
 import { ContentBlock } from '@/components/blocks/ContentBlock'
+import { getLinkHref, shouldOpenInNewTab } from '@/utils/linkUtils'
 
 export default function Home() {
   const { currentLanguage } = useLanguage()
@@ -86,11 +87,11 @@ export default function Home() {
       )}
 
       {/* Featured News */}
-      <section className="py-16">
-        <div className="max-w-6xl mx-auto px-4">
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center gap-4 mb-12">
             <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-            <h2 className="text-3xl font-bold text-gray-900">
+            <h2 className="text-2xl font-bold text-gray-900">
               {homepage?.newsSection?.title ? 
                 getLocalizedText(homepage.newsSection.title, currentLanguage) : 
                 'Najważniejsze aktualności'
@@ -98,48 +99,76 @@ export default function Home() {
             </h2>
           </div>
           {featuredNews.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredNews.slice(0, 3).map((article: NewsArticle) => (
+            <div className="space-y-8">
+              {featuredNews
+                .filter((article) => currentLanguage === 'pl' ? article.showPl === true : article.showEn === true)
+                .slice(0, 3)
+                .map((article: NewsArticle, index: number) => (
                 <Card key={article._id} className="overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-gray-50 border-gray-200 flex flex-col h-full">
-                  {article.featuredImage && (
-                    <div className="relative aspect-video">
-                      <Image
-                        src={urlFor(article.featuredImage).width(400).height(225).url()}
-                        alt={article.title.pl}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-                  <CardHeader>
-                    {article.featured && (
-                      <div className="mb-2">
-                        <Badge variant="default" className="bg-[#0abaee] text-white text-xs">Wyróżnione</Badge>
+                  <div className="flex flex-col md:flex-row">
+                    {/* Image on the left */}
+                    {article.featuredImage ? (
+                      <div className="md:w-1/3 flex items-center justify-center bg-gray-50 p-8">
+                        <div className="relative w-full aspect-video">
+                          <Image
+                            src={urlFor(article.featuredImage).width(400).url()}
+                            alt={getLocalizedText(article.title, currentLanguage)}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            className="object-contain"
+                            priority={index === 0}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="md:w-1/3 bg-gray-100 flex items-center justify-center text-gray-400 p-8">
+                        <div className="relative w-full aspect-video flex flex-col items-center justify-center">
+                          <svg className="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          <span className="text-xs">Brak obrazu</span>
+                        </div>
                       </div>
                     )}
-                    <CardTitle className="text-lg text-gray-900">
-                      {getLocalizedText(article.title, currentLanguage)}
-                    </CardTitle>
-                    <CardDescription className="text-sm text-gray-500">
-                      {new Date(article.publishedAt).toLocaleDateString('pl-PL')}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex flex-col flex-1">
-                    {article.excerpt && (
-                      <p className="text-gray-600 mb-4 text-sm flex-1">
-                        {getLocalizedText(article.excerpt, currentLanguage)}
-                      </p>
-                    )}
-                    <div className="mt-auto">
-                      <Link 
-                        href={`/news/${article.slug.current}`}
-                        className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
-                      >
-                        Czytaj więcej
-                      </Link>
+                    
+                    {/* Content on the right */}
+                    <div className={`${article.featuredImage ? 'md:w-2/3' : 'w-full'} flex flex-col`}>
+                      <CardHeader className="text-gray-900 pt-8">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            {article.featured && (
+                              <div className="mb-2">
+                                <Badge variant="default" className="bg-[#0abaee] text-white text-xs">Wyróżnione</Badge>
+                              </div>
+                            )}
+                            <CardTitle className="text-xl md:text-2xl text-gray-900 leading-tight">
+                              {getLocalizedText(article.title, currentLanguage)}
+                            </CardTitle>
+                          </div>
+                        </div>
+                        <CardDescription className="text-sm text-gray-500">
+                          {new Date(article.publishedAt).toLocaleDateString('pl-PL')}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex flex-col flex-1">
+                        {article.excerpt && (
+                          <p className="text-gray-600 mb-2 text-sm">
+                            {getLocalizedText(article.excerpt, currentLanguage)}
+                          </p>
+                        )}
+                        <div className="mt-4">
+                          <Link 
+                            href={`/news/${article.slug.current}`}
+                            className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
+                          >
+                            {homepage?.newsSection?.readMoreLabel
+                              ? getLocalizedText(homepage.newsSection.readMoreLabel, currentLanguage)
+                              : 'Czytaj więcej'}
+                          </Link>
+                        </div>
+                      </CardContent>
                     </div>
-                  </CardContent>
+                  </div>
                 </Card>
               ))}
             </div>
@@ -164,13 +193,15 @@ export default function Home() {
               </CardContent>
             </Card>
           )}
-          {featuredNews.length > 0 && (
+          {featuredNews.length > 0 && homepage?.newsSection?.cta?.text && (
             <div className="text-center mt-12 pt-8 border-t border-gray-200">
               <Link 
-                href="/news"
+                href={getLinkHref(homepage.newsSection.cta)}
+                target={shouldOpenInNewTab(homepage.newsSection.cta) ? '_blank' : undefined}
+                rel={shouldOpenInNewTab(homepage.newsSection.cta) ? 'noopener noreferrer' : undefined}
                 className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
               >
-                Zobacz wszystkie aktualności
+                {getLocalizedText(homepage.newsSection.cta.text, currentLanguage) || 'Zobacz wszystkie aktualności'}
               </Link>
             </div>
           )}
@@ -179,11 +210,11 @@ export default function Home() {
 
       {/* Team Preview */}
       {(!homepage?.teamSection || homepage.teamSection.showTeam !== false) && (
-        <section className="bg-gray-50 py-16">
-          <div className="max-w-6xl mx-auto px-4">
+        <section className="bg-gray-50 py-12">
+          <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center gap-4 mb-12">
               <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-              <h2 className="text-3xl font-bold text-gray-900">
+              <h2 className="text-2xl font-bold text-gray-900">
                 {homepage?.teamSection?.title ? 
                   getLocalizedText(homepage.teamSection.title, currentLanguage) : 
                   'Nasz zespół'
@@ -223,12 +254,16 @@ export default function Home() {
                 ))}
               </div>
               <div className="text-center mt-8 pt-8 border-t border-gray-200">
-                <Link 
-                  href="/team"
-                  className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
-                >
-                  Poznaj cały zespół
-                </Link>
+                {homepage?.teamSection?.cta?.text && (
+                  <Link 
+                    href={getLinkHref(homepage.teamSection.cta)}
+                    target={shouldOpenInNewTab(homepage.teamSection.cta) ? '_blank' : undefined}
+                    rel={shouldOpenInNewTab(homepage.teamSection.cta) ? 'noopener noreferrer' : undefined}
+                    className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
+                  >
+                    {getLocalizedText(homepage.teamSection.cta.text, currentLanguage) || 'Poznaj cały zespół'}
+                  </Link>
+                )}
               </div>
             </>
           ) : (
@@ -261,12 +296,12 @@ export default function Home() {
        homepage.contactSection.showContact !== false && 
        homepage.contactSection.content && 
        homepage.contactSection.content.length > 0 && (
-        <section className="py-16">
-          <div className="max-w-6xl mx-auto px-4">
+        <section className="py-12">
+          <div className="max-w-7xl mx-auto px-4">
             {homepage.contactSection.title && (
               <div className="flex items-center gap-4 mb-12">
                 <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                <h2 className="text-3xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-gray-900">
                   {getLocalizedText(homepage.contactSection.title, currentLanguage)}
                 </h2>
               </div>

@@ -33,7 +33,7 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
   }[block.imageSize || 'medium']
 
   return (
-    <section className="py-16">
+    <section className="py-8">
       <div className="max-w-7xl mx-auto px-4">
         <div className={`flex flex-col md:flex-row items-center gap-12 ${
           isImageLeft ? 'md:flex-row' : 'md:flex-row-reverse'
@@ -43,7 +43,7 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
             {block.title && (
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                <h2 className="text-3xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-gray-900">
                   {getLocalizedText(block.title, language as Language)}
                 </h2>
               </div>

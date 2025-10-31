@@ -7,6 +7,31 @@ export const newsPage = defineType({
   icon: () => '📰',
   fields: [
     defineField({
+      name: 'buttons',
+      title: 'Buttons / Labels',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'readMore',
+          title: 'Read More label',
+          type: 'localizedString',
+          initialValue: {
+            pl: 'Czytaj więcej',
+            en: 'Read more'
+          }
+        }),
+        defineField({
+          name: 'backToHome',
+          title: 'Back to Home label',
+          type: 'localizedString',
+          initialValue: {
+            pl: 'Strona główna',
+            en: 'Home'
+          }
+        })
+      ]
+    }),
+    defineField({
       name: 'blocks',
       title: 'Content Blocks',
       type: 'array',

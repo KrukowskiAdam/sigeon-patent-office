@@ -6,9 +6,21 @@ export const news = defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'showPl',
+      title: 'Show on Polish site (PL)',
+      type: 'boolean',
+      initialValue: true,
+    }),
+    defineField({
+      name: 'showEn',
+      title: 'Show on English site (EN)',
+      type: 'boolean',
+      initialValue: true,
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
-      type: 'localizedString',
+      type: 'localizedStringNews',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -16,7 +28,16 @@ export const news = defineType({
       title: 'Slug',
       type: 'slug',
       options: {
-        source: 'title.pl',
+        source: (doc) => {
+          const anyDoc: any = doc as any
+          const title = anyDoc?.title || {}
+          // Prefer PL if showPl is on and PL title exists
+          if (anyDoc?.showPl && title.pl) return title.pl
+          // Else use EN if showEn is on and EN title exists
+          if (anyDoc?.showEn && title.en) return title.en
+          // Fallback to whichever exists
+          return title.pl || title.en || ''
+        },
         maxLength: 96,
       },
       validation: (Rule) => Rule.required(),
@@ -29,23 +50,9 @@ export const news = defineType({
       initialValue: () => new Date().toISOString(),
     }),
     defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Patent News', value: 'patents'},
-          {title: 'Trademark News', value: 'trademarks'},
-          {title: 'Legal Updates', value: 'legal'},
-          {title: 'Company News', value: 'company'},
-          {title: 'Industry News', value: 'industry'},
-        ],
-      },
-    }),
-    defineField({
       name: 'excerpt',
       title: 'Excerpt',
-      type: 'localizedText',
+      type: 'localizedTextNews',
       description: 'Short description for previews and SEO',
     }),
     defineField({
@@ -70,13 +77,13 @@ export const news = defineType({
             {
               name: 'alt',
               title: 'Alt Text',
-              type: 'localizedString',
+              type: 'localizedStringNews',
               description: 'Alternative text for accessibility and SEO',
             },
             {
               name: 'caption',
               title: 'Caption',
-              type: 'localizedString',
+              type: 'localizedStringNews',
               description: 'Optional caption for the image',
             },
           ],
@@ -89,7 +96,7 @@ export const news = defineType({
     defineField({
       name: 'content',
       title: 'Article Content',
-      type: 'localizedRichText',
+      type: 'localizedRichTextNews',
     }),
     defineField({
       name: 'tags',
@@ -110,7 +117,7 @@ export const news = defineType({
     defineField({
       name: 'seo',
       title: 'SEO Settings',
-      type: 'seo',
+      type: 'seoNews',
     }),
   ],
   preview: {

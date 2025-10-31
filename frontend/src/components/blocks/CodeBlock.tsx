@@ -10,7 +10,7 @@ interface CodeBlockProps {
 
 export function CodeBlock({ block, language }: CodeBlockProps) {
   return (
-    <section className="py-16">
+    <section className="py-8">
       <div className="max-w-6xl mx-auto px-4">
         {block.title && (
           <div className="flex items-center gap-4 mb-8">

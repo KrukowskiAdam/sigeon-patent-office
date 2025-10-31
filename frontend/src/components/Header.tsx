@@ -59,7 +59,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 pb-8">
       {/* Górny pasek */}
-      <div className="text-white py-0" style={{backgroundColor: '#0abaee'}}>
+      <div className="text-gray-900 py-0" style={{backgroundColor: '#0abaee'}}>
         <div className="max-w-7xl mx-auto px-2 flex justify-end items-center text-sm">
             {/* Secondary Navigation + Language Switcher */}
             <div className="flex items-center space-x-6">
@@ -72,7 +72,7 @@ export function Header() {
                   <Link 
                     key={index}
                     href={item.link} 
-                    className="hover:text-white/80 transition-colors text-xs md:text-sm font-normal"
+                    className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal"
                     target={item.isExternal ? '_blank' : undefined}
                     rel={item.isExternal ? 'noopener noreferrer' : undefined}
                   >
@@ -81,13 +81,13 @@ export function Header() {
                 )) || (
                   // Fallback menu items if no CMS data
                   <>
-                    <Link href="/team" className="hover:text-white/80 transition-colors text-xs md:text-sm font-normal">
+                    <Link href="/team" className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal">
                       {nav.team}
                     </Link>
-                    <Link href="/news" className="hover:text-white/80 transition-colors text-xs md:text-sm font-normal">
+                    <Link href="/news" className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal">
                       {nav.news}
                     </Link>
-                    <Link href="/contact" className="hover:text-white/80 transition-colors text-xs md:text-sm font-normal">
+                    <Link href="/contact" className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal">
                       {nav.contact}
                     </Link>
                   </>

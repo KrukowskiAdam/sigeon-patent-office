@@ -1,11 +1,16 @@
-import { getNewsArticle, getNews } from '@/lib/queries'
+'use client'
+
+import { getNewsArticle } from '@/lib/queries'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import Link from 'next/link'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
 import { PortableText } from '@portabletext/react'
-import { notFound } from 'next/navigation'
+import { use, useEffect, useState } from 'react'
+import { useLanguage } from '@/context/LanguageContext'
+import { getLocalizedText } from '@/lib/i18n'
+import { getLocalizedPortableText } from '@/lib/portableText'
 
 interface Props {
   params: Promise<{
@@ -13,19 +18,45 @@ interface Props {
   }>
 }
 
-export async function generateStaticParams() {
-  const news = await getNews()
-  return news.map((article) => ({
-    slug: article.slug.current,
-  }))
-}
+export default function NewsArticlePage({ params }: Props) {
+  const { currentLanguage } = useLanguage()
+  const resolvedParams = use(params)
+  const [article, setArticle] = useState<Awaited<ReturnType<typeof getNewsArticle>> | null>(null)
+  const [loading, setLoading] = useState(true)
 
-export default async function NewsArticlePage({ params }: Props) {
-  const { slug } = await params
-  const article = await getNewsArticle(slug)
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await getNewsArticle(resolvedParams.slug)
+        setArticle(data)
+      } finally {
+        setLoading(false)
+      }
+    }
+    load()
+  }, [resolvedParams.slug])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <div className="text-xl">Ładowanie...</div>
+        </div>
+      </div>
+    )
+  }
 
   if (!article) {
-    notFound()
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="py-12">
+          <div className="max-w-7xl mx-auto px-4">Artykuł nie znaleziony.</div>
+        </main>
+        <Footer />
+      </div>
+    )
   }
 
   return (
@@ -34,37 +65,32 @@ export default async function NewsArticlePage({ params }: Props) {
 
       {/* Breadcrumbs */}
       <div className="bg-gray-50 py-4">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <nav className="text-sm text-gray-600">
             <Link href="/" className="hover:text-[#0abaee]">Home</Link>
             <span className="mx-2">→</span>
             <Link href="/news" className="hover:text-[#0abaee]">Aktualności</Link>
             <span className="mx-2">→</span>
-            <span className="text-gray-900">{article.title.pl}</span>
+            <span className="text-gray-900">{getLocalizedText(article.title, currentLanguage)}</span>
           </nav>
         </div>
       </div>
 
       {/* Article */}
       <main className="py-12">
-        <article className="max-w-4xl mx-auto px-4">
+        <article className="max-w-7xl mx-auto px-4">
           {/* Header */}
           <header className="mb-8">
-            {article.category && (
+            {article.featured && (
               <div className="mb-4">
-                <span className="inline-block bg-[#0abaee]/10 text-[#0891b2] px-3 py-1 rounded-full text-sm font-medium">
-                  {article.category}
+                <span className="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
+                  Wyróżnione
                 </span>
-                {article.featured && (
-                  <span className="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium ml-2">
-                    Wyróżnione
-                  </span>
-                )}
               </div>
             )}
             
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              {article.title.pl}
+              {getLocalizedText(article.title, currentLanguage)}
             </h1>
             
             <div className="flex items-center text-gray-600 mb-6">
@@ -79,7 +105,7 @@ export default async function NewsArticlePage({ params }: Props) {
 
             {article.excerpt && (
               <div className="text-xl text-gray-600 leading-relaxed mb-8 border-l-4 border-[#0abaee] pl-6">
-                {article.excerpt.pl}
+                {getLocalizedText(article.excerpt, currentLanguage)}
               </div>
             )}
           </header>
@@ -101,9 +127,9 @@ export default async function NewsArticlePage({ params }: Props) {
           )}
 
           {/* Content */}
-          {article.content && article.content.pl && (
+          {article.content && (
             <div className="prose prose-lg max-w-none">
-              <PortableText value={article.content.pl as never} />
+              <PortableText value={getLocalizedPortableText(article.content, currentLanguage) as never} />
             </div>
           )}
 
@@ -158,7 +184,7 @@ export default async function NewsArticlePage({ params }: Props) {
 
       {/* Navigation */}
       <section className="py-8">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mt-12 pt-8 border-t border-gray-200">
             <Link 
               href="/news"

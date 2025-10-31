@@ -66,7 +66,8 @@ export async function getNews(): Promise<NewsArticle[]> {
       title,
       slug,
       publishedAt,
-      category,
+      showPl,
+      showEn,
       excerpt,
       featuredImage {
         asset-> {
@@ -86,6 +87,7 @@ export async function getNewsPage(): Promise<NewsPage | null> {
   return client.fetch(`
     *[_type == "newsPage"][0] {
       _id,
+      buttons,
       blocks[] {
         _type,
         _key,
@@ -140,7 +142,8 @@ export async function getFeaturedNews(): Promise<NewsArticle[]> {
       title,
       slug,
       publishedAt,
-      category,
+      showPl,
+      showEn,
       excerpt,
       featuredImage {
         asset-> {
@@ -164,7 +167,8 @@ export async function getNewsArticle(slug: string): Promise<NewsArticle | null> 
       title,
       slug,
       publishedAt,
-      category,
+      showPl,
+      showEn,
       excerpt,
       featuredImage {
         asset-> {

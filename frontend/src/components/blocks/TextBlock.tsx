@@ -19,13 +19,13 @@ export function TextBlock({ block, language }: TextBlockProps) {
   }[block.alignment || 'left']
 
   return (
-    <section className="py-16">
-      <div className="max-w-4xl mx-auto px-4">
+    <section className="py-8">
+      <div className="max-w-7xl mx-auto px-4">
         <div className={`prose max-w-none ${alignmentClass}`}>
           {block.title && (
             <div className="flex items-center gap-4 mb-8">
               <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-              <h2 className="text-3xl font-bold text-gray-800">
+              <h2 className="text-2xl font-bold text-gray-800">
                 {getLocalizedText(block.title, language as Language)}
               </h2>
             </div>

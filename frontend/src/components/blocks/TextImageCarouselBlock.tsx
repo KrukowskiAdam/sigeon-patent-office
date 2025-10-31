@@ -31,23 +31,32 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
     setCurrentSlide(index)
   }
 
-  return (
-    <section className="py-16">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Section Title */}
-        {block.title && (
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-              <h2 className="text-3xl font-bold text-gray-800">
-                {getLocalizedText(block.title, language)}
-              </h2>
-            </div>
-          </div>
-        )}
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % block.slides.length)
+  }
 
-        {/* Carousel with pure CSS fade like BannerBlock */}
-        <div className="relative">
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + block.slides.length) % block.slides.length)
+  }
+
+  return (
+    <section className="py-8">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="px-8 md:px-16 py-8 relative" style={{backgroundColor: '#d3dae4'}}>
+          {/* Section Title */}
+          {block.title && (
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
+                <h2 className="text-2xl font-bold text-gray-800">
+                  {getLocalizedText(block.title, language)}
+                </h2>
+              </div>
+            </div>
+          )}
+
+          {/* Carousel with pure CSS fade like BannerBlock */}
+          <div className="relative">
           {/* Ghost slide to set container height */}
           <div className="opacity-0 pointer-events-none" aria-hidden="true">
             <div className="flex flex-col md:flex-row items-center gap-12">
@@ -93,7 +102,7 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
                       {slide.title && (
                         <div className="flex items-center gap-4 mb-4">
                           <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                          <h3 className="text-3xl font-bold text-gray-900 leading-tight">
+                          <h3 className="text-2xl font-bold text-gray-900 leading-tight">
                             {getLocalizedText(slide.title, language)}
                           </h3>
                         </div>
@@ -154,9 +163,36 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
 
         </div>
       
+      {/* Navigation Arrows - only show if more than 1 slide */}
+      {block.slides.length > 1 && (
+        <>
+          {/* Previous Arrow */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 text-gray-800 hover:text-slate-600 transition-all hover:scale-110"
+            aria-label="Poprzedni slajd"
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Next Arrow */}
+          <button
+            onClick={nextSlide}
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 text-gray-800 hover:text-slate-600 transition-all hover:scale-110"
+            aria-label="Następny slajd"
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </>
+      )}
+      
       {/* Indicators - positioned below carousel, center-aligned like BannerBlock */}
       {settings.showPagination !== false && block.slides.length > 1 && (
-        <div className="mt-6 flex justify-center gap-3">
+        <div className="mt-12 flex justify-center gap-3">
           {block.slides.map((_, index) => (
             <button
               key={index}
@@ -171,6 +207,7 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
           ))}
         </div>
       )}
+        </div>
       </div>
     </section>
   )
