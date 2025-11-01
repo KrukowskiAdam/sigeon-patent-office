@@ -8,120 +8,110 @@ export default defineType({
     {
       name: 'leftColumn',
       title: 'Left Column',
-      type: 'object',
-      fields: [
+      type: 'array',
+      of: [
         {
-          name: 'backgroundColor',
-          title: 'Background Color',
-          type: 'string',
-          options: {
-            list: [
-              { title: 'White', value: 'white' },
-              { title: 'Gray', value: 'gray' },
-            ],
-          },
-          initialValue: 'white',
-        },
-        {
-          name: 'items',
-          title: 'Content Items',
-          type: 'array',
-          of: [
+          type: 'object',
+          name: 'textItem',
+          title: 'Text Item',
+          fields: [
             {
-              type: 'object',
-              name: 'textItem',
-              title: 'Text Item',
-              fields: [
-                {
-                  name: 'title',
-                  title: 'Title',
-                  type: 'localizedString',
-                },
-                {
-                  name: 'content',
-                  title: 'Content',
-                  type: 'localizedRichText',
-                  validation: (Rule) => Rule.required(),
-                },
-              ],
-              preview: {
-                select: {
-                  title: 'title.pl',
-                },
-                prepare(selection) {
-                  const { title } = selection
-                  return {
-                    title: title || 'Text block',
-                  }
-                },
+              name: 'title',
+              title: 'Title',
+              type: 'localizedString',
+            },
+            {
+              name: 'content',
+              title: 'Content',
+              type: 'localizedRichText',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'backgroundColor',
+              title: 'Background Color',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'White', value: 'white' },
+                  { title: 'Gray', value: 'gray' },
+                ],
               },
+              initialValue: 'white',
             },
           ],
-          validation: (Rule) => Rule.required().min(1),
+          preview: {
+            select: {
+              title: 'title.pl',
+              bg: 'backgroundColor',
+            },
+            prepare(selection) {
+              const { title, bg } = selection
+              return {
+                title: title || 'Text block',
+                subtitle: bg === 'gray' ? 'Gray background' : 'White background',
+              }
+            },
+          },
         },
       ],
+      validation: (Rule) => Rule.required().min(1),
     },
     {
       name: 'rightColumn',
       title: 'Right Column',
-      type: 'object',
-      fields: [
+      type: 'array',
+      of: [
         {
-          name: 'backgroundColor',
-          title: 'Background Color',
-          type: 'string',
-          options: {
-            list: [
-              { title: 'White', value: 'white' },
-              { title: 'Gray', value: 'gray' },
-            ],
-          },
-          initialValue: 'white',
-        },
-        {
-          name: 'items',
-          title: 'Content Items',
-          type: 'array',
-          of: [
+          type: 'object',
+          name: 'textItem',
+          title: 'Text Item',
+          fields: [
             {
-              type: 'object',
-              name: 'textItem',
-              title: 'Text Item',
-              fields: [
-                {
-                  name: 'title',
-                  title: 'Title',
-                  type: 'localizedString',
-                },
-                {
-                  name: 'content',
-                  title: 'Content',
-                  type: 'localizedRichText',
-                  validation: (Rule) => Rule.required(),
-                },
-              ],
-              preview: {
-                select: {
-                  title: 'title.pl',
-                },
-                prepare(selection) {
-                  const { title } = selection
-                  return {
-                    title: title || 'Text block',
-                  }
-                },
+              name: 'title',
+              title: 'Title',
+              type: 'localizedString',
+            },
+            {
+              name: 'content',
+              title: 'Content',
+              type: 'localizedRichText',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'backgroundColor',
+              title: 'Background Color',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'White', value: 'white' },
+                  { title: 'Gray', value: 'gray' },
+                ],
               },
+              initialValue: 'white',
             },
           ],
-          validation: (Rule) => Rule.required().min(1),
+          preview: {
+            select: {
+              title: 'title.pl',
+              bg: 'backgroundColor',
+            },
+            prepare(selection) {
+              const { title, bg } = selection
+              return {
+                title: title || 'Text block',
+                subtitle: bg === 'gray' ? 'Gray background' : 'White background',
+              }
+            },
+          },
         },
       ],
+      validation: (Rule) => Rule.required().min(1),
     },
   ],
   preview: {
     select: {
-      leftCount: 'leftColumn.items',
-      rightCount: 'rightColumn.items',
+      leftCount: 'leftColumn',
+      rightCount: 'rightColumn',
     },
     prepare(selection) {
       const { leftCount, rightCount } = selection

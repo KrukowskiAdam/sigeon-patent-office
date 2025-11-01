@@ -11,15 +11,8 @@ interface HeroBlockProps {
 }
 
 export function HeroBlock({ block, language }: HeroBlockProps) {
-  const heightClasses = {
-    small: 'py-10',
-    medium: 'py-16',
-    large: 'py-24',
-    full: 'py-32'
-  }[block.height || 'medium']
-
   return (
-    <section className={`relative bg-white ${heightClasses} text-gray-700`}>
+    <section className="relative bg-white py-8 text-gray-700">
 
 
       {/* Content */}
@@ -28,7 +21,7 @@ export function HeroBlock({ block, language }: HeroBlockProps) {
           {/* Title with blue line */}
           <div className="flex items-stretch gap-4 mb-6">
             <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
-            <h1 className="text-3xl font-bold text-gray-800 leading-none">
+            <h1 className="text-2xl font-bold text-gray-800 leading-none">
               {getLocalizedText(block.title, language as Language)}
             </h1>
           </div>

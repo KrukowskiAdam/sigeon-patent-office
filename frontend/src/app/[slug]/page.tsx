@@ -7,9 +7,6 @@ import { getPage } from '@/lib/queries'
 import { Page } from '@/types/sanity'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { getLocalizedText } from '@/lib/i18n'
 import { ContentBlock } from '@/components/blocks'
 import { notFound } from 'next/navigation'
 
@@ -66,33 +63,7 @@ export default function DynamicPage({ params }: PageProps) {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="pt-0 flex-grow">        {/* Services Section - only for service pages */}
-        {page.services && page.services.length > 0 && (
-          <section className="py-16">
-            <div className="max-w-6xl mx-auto px-4">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {page.services.map((service, index) => (
-                  <Card key={index} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-3">
-                        <Badge variant="outline" className="w-8 h-8 rounded-full flex items-center justify-center">
-                          {index + 1}
-                        </Badge>
-                        {getLocalizedText(service.title, currentLanguage)}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-gray-600">
-                        {getLocalizedText(service.description, currentLanguage)}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
+      <main className="pt-0 flex-grow">
         {/* Content Blocks */}
         {page.content && page.content.length > 0 && (
           <div>

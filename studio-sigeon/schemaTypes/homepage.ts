@@ -17,11 +17,6 @@ export const homepage = defineType({
       options: {collapsible: true, collapsed: true}
     },
     {
-      name: 'teamSettings',
-      title: '👥 Team Section Settings',
-      options: {collapsible: true, collapsed: true}
-    },
-    {
       name: 'contactSettings',
       title: '📧 Contact Section',
       options: {collapsible: true, collapsed: true}
@@ -108,44 +103,6 @@ export const homepage = defineType({
         {
           name: 'maxArticles',
           title: 'Maximum Articles to Show',
-          type: 'number',
-          initialValue: 4,
-        },
-      ],
-    }),
-    defineField({
-      name: 'teamSection',
-      title: 'Team Section Configuration',
-      type: 'object',
-      fieldset: 'teamSettings',
-      fields: [
-        {
-          name: 'title',
-          title: 'Section Title',
-          type: 'localizedString',
-          initialValue: {
-            pl: 'Nasz zespół',
-            en: 'Our Team'
-          }
-        },
-        {
-          name: 'subtitle',
-          title: 'Section Subtitle',
-          type: 'localizedString',
-        },
-        linkField({
-          name: 'cta',
-          title: 'CTA Button (label + link)'
-        }),
-        {
-          name: 'showTeam',
-          title: 'Show Team Section',
-          type: 'boolean',
-          initialValue: true,
-        },
-        {
-          name: 'maxMembers',
-          title: 'Maximum Team Members to Show',
           type: 'number',
           initialValue: 4,
         },

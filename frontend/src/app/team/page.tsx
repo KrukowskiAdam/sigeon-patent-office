@@ -100,22 +100,6 @@ export default function TeamPage() {
       {(!teamPage?.teamSection || teamPage.teamSection.showTeam !== false) && (
         <main className="py-16 flex-grow">
           <div className="max-w-7xl mx-auto px-4">
-            {/* Section Title from CMS or default */}
-            {teamPage?.teamSection?.title && (
-              <div className="flex items-center gap-4 mb-12">
-                <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                <h2 className="text-2xl font-bold text-gray-900">
-                  {getLocalizedText(teamPage.teamSection.title, currentLanguage)}
-                </h2>
-              </div>
-            )}
-            
-            {teamPage?.teamSection?.subtitle && (
-              <p className="text-xl text-gray-600 mb-12 text-center max-w-3xl mx-auto">
-                {getLocalizedText(teamPage.teamSection.subtitle, currentLanguage)}
-              </p>
-            )}
-
             {team.length === 0 ? (
             <Card className="max-w-md mx-auto">
               <CardContent className="text-center py-12">

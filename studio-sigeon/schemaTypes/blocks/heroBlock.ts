@@ -18,22 +18,6 @@ export const heroBlock = defineType({
       title: 'Hero Content',
       type: 'localizedRichText',
     }),
-
-
-
-    defineField({
-      name: 'height',
-      title: 'Hero Height',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Small', value: 'small'},
-          {title: 'Medium', value: 'medium'},
-          {title: 'Large', value: 'large'},
-        ],
-      },
-      initialValue: 'medium',
-    }),
     linkField({
       title: 'Call to Action Link',
       description: 'Optional button link for the hero section'

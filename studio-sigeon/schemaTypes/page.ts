@@ -42,31 +42,6 @@ export const page = defineType({
       description: 'Build your page with content blocks',
     }),
     defineField({
-      name: 'services',
-      title: 'Services List',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'title',
-              title: 'Service Title',
-              type: 'localizedString',
-            },
-            {
-              name: 'description', 
-              title: 'Service Description',
-              type: 'localizedText',
-            },
-          ],
-        },
-      ],
-      hidden: ({document}) => !['rzecznicy-patentowi', 'uslugi-prawne', 'doradztwo-biznesowe-ip', 'biomed'].includes((document as any)?.slug?.current),
-    }),
-
-
-    defineField({
       name: 'featuredImage',
       title: 'Featured Image',
       type: 'image',

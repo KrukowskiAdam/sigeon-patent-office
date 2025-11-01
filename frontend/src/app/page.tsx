@@ -1,7 +1,7 @@
 'use client'
 
-import { getFeaturedNews, getTeamMembers, getHomepage } from '@/lib/queries'
-import { NewsArticle, TeamMember, Homepage } from '@/types/sanity'
+import { getFeaturedNews, getHomepage } from '@/lib/queries'
+import { NewsArticle, Homepage } from '@/types/sanity'
 import Link from 'next/link'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
@@ -18,7 +18,6 @@ import { getLinkHref, shouldOpenInNewTab } from '@/utils/linkUtils'
 export default function Home() {
   const { currentLanguage } = useLanguage()
   const [featuredNews, setFeaturedNews] = useState<NewsArticle[]>([])
-  const [team, setTeam] = useState<TeamMember[]>([])
   const [homepage, setHomepage] = useState<Homepage | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -28,7 +27,7 @@ export default function Home() {
         console.log('🔄 Starting data load...')
         
         // Load homepage data
-        console.log('� Loading homepage...')
+        console.log('📄 Loading homepage...')
         const homepageData = await getHomepage()
         console.log('✅ Homepage loaded:', homepageData ? 'Found' : 'Not found')
         
@@ -36,14 +35,9 @@ export default function Home() {
         const newsData = await getFeaturedNews()
         console.log('✅ News loaded:', newsData?.length || 0, 'articles')
         
-        console.log('👥 Loading team...')
-        const teamData = await getTeamMembers()
-        console.log('✅ Team loaded:', teamData?.length || 0, 'members')
-        
-        console.log('📝 Setting state...')
+        console.log(' Setting state...')
         setHomepage(homepageData)
         setFeaturedNews(newsData)
-        setTeam(teamData)
         console.log('✅ State updated successfully')
       } catch (error) {
         console.error('❌ Error loading data:', error)
@@ -207,89 +201,6 @@ export default function Home() {
           )}
         </div>
       </section>
-
-      {/* Team Preview */}
-      {(!homepage?.teamSection || homepage.teamSection.showTeam !== false) && (
-        <section id="team" className="bg-gray-50 py-12">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="flex items-stretch gap-4 mb-12">
-              <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
-              <h2 className="text-2xl font-bold text-gray-900 leading-none">
-                {homepage?.teamSection?.title ? 
-                  getLocalizedText(homepage.teamSection.title, currentLanguage) : 
-                  'Nasz zespół'
-                }
-              </h2>
-            </div>
-            {homepage?.teamSection?.subtitle && (
-              <p className="text-xl text-gray-600 mb-12 text-center max-w-3xl mx-auto">
-                {getLocalizedText(homepage.teamSection.subtitle, currentLanguage)}
-              </p>
-            )}
-            {team.length > 0 ? (
-              <>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                  {team.slice(0, homepage?.teamSection?.maxMembers || 4).map((member: TeamMember) => (
-                    <Card key={member._id} className="text-center overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-gray-50 border-gray-200 flex flex-col h-full">
-                    {member.photo && (
-                      <div className="h-48 relative">
-                        <Image
-                          src={urlFor(member.photo).width(300).height(200).url()}
-                          alt={member.name}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                          className="object-cover"
-                        />
-                      </div>
-                    )}
-                    <CardHeader>
-                      <CardTitle className="text-xl">
-                        {member.name}
-                      </CardTitle>
-                      <CardDescription>
-                        {getLocalizedText(member.position, currentLanguage)}
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
-                ))}
-              </div>
-              <div className="text-center mt-8 pt-8 border-t border-gray-200">
-                {homepage?.teamSection?.cta?.text && (
-                  <Link 
-                    href={getLinkHref(homepage.teamSection.cta)}
-                    target={shouldOpenInNewTab(homepage.teamSection.cta) ? '_blank' : undefined}
-                    rel={shouldOpenInNewTab(homepage.teamSection.cta) ? 'noopener noreferrer' : undefined}
-                    className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
-                  >
-                    {getLocalizedText(homepage.teamSection.cta.text, currentLanguage) || 'Poznaj cały zespół'}
-                  </Link>
-                )}
-              </div>
-            </>
-          ) : (
-            <Card className="max-w-md mx-auto">
-              <CardContent className="text-center py-12">
-                <div className="text-gray-500 mb-4">
-                  <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                  </svg>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Brak członków zespołu</h3>
-                  <p>Profil zespołu będzie wyświetlany po dodaniu członków w CMS.</p>
-                </div>
-                <a 
-                  href="http://localhost:3333" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
-                >
-                  Przejdź do CMS
-                </a>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </section>
-      )}
 
       {/* Contact Section */}
       {homepage?.contactSection && 

@@ -7,12 +7,6 @@ export const textImageCarouselBlock = defineType({
   type: 'object',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Section Title',
-      type: 'localizedString',
-      description: 'Optional main title for the entire carousel section',
-    }),
-    defineField({
       name: 'slides',
       title: 'Carousel Slides',
       type: 'array',

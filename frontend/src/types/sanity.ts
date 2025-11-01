@@ -74,8 +74,6 @@ export interface TeamPage {
   _id: string
   blocks?: ContentBlock[]
   teamSection?: {
-    title?: LocalizedString
-    subtitle?: LocalizedText
     showTeam?: boolean
   }
   seo?: SEO
@@ -142,7 +140,6 @@ export interface TextImageCarouselSlide {
 export interface TextImageCarouselBlock {
   _type: 'textImageCarouselBlock'
   _key: string
-  title?: LocalizedString
   slides: TextImageCarouselSlide[]
   carouselSettings?: {
     autoplay?: boolean
@@ -156,22 +153,18 @@ export interface TextImageCarouselBlock {
 export interface TwoColumnTextBlock {
   _type: 'twoColumnTextBlock'
   _key: string
-  leftColumn: {
+  leftColumn: Array<{
+    _key: string
+    title?: LocalizedString
+    content: LocalizedRichText
     backgroundColor?: 'white' | 'gray'
-    items: Array<{
-      _key: string
-      title?: LocalizedString
-      content: LocalizedRichText
-    }>
-  }
-  rightColumn: {
+  }>
+  rightColumn: Array<{
+    _key: string
+    title?: LocalizedString
+    content: LocalizedRichText
     backgroundColor?: 'white' | 'gray'
-    items: Array<{
-      _key: string
-      title?: LocalizedString
-      content: LocalizedRichText
-    }>
-  }
+  }>
 }
 
 export interface HeroBlock {
@@ -188,7 +181,6 @@ export interface HeroBlock {
   }
   backgroundColor?: 'primary' | 'dark' | 'light' | 'gray' | 'white'
   textColor?: 'white' | 'dark' | 'gray'
-  height?: 'small' | 'medium' | 'large' | 'full'
   link?: LinkField
 }
 
@@ -300,7 +292,6 @@ export interface Page {
     current: string
   }
   content?: ContentBlock[]
-  services?: Service[]
   featuredImage?: {
     asset: {
       _ref: string
@@ -362,13 +353,6 @@ export interface Homepage {
     cta?: LinkField
     showFeaturedNews?: boolean
     maxArticles?: number
-  }
-  teamSection?: {
-    title?: LocalizedString
-    subtitle?: LocalizedString
-    cta?: LinkField
-    showTeam?: boolean
-    maxMembers?: number
   }
   contactSection?: {
     title?: LocalizedString

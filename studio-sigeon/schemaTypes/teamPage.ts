@@ -27,16 +27,6 @@ export const teamPage = defineType({
       description: 'Configure how team members are displayed',
       fields: [
         defineField({
-          name: 'title',
-          title: 'Section Title',
-          type: 'localizedString',
-        }),
-        defineField({
-          name: 'subtitle',
-          title: 'Section Subtitle',
-          type: 'localizedText',
-        }),
-        defineField({
           name: 'showTeam',
           title: 'Show Team Members',
           type: 'boolean',

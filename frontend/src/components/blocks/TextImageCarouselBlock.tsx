@@ -42,19 +42,7 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
   return (
     <section className="py-8">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="px-8 md:px-16 py-8 relative bg-gray-100">
-          {/* Section Title */}
-          {block.title && (
-            <div className="text-center mb-12">
-              <div className="flex items-stretch justify-center gap-4 mb-4">
-                <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
-                <h2 className="text-2xl font-bold text-gray-800 leading-none">
-                  {getLocalizedText(block.title, language)}
-                </h2>
-              </div>
-            </div>
-          )}
-
+        <div className="px-8 md:px-16 pt-10 pb-6 relative bg-gray-100">
           {/* Carousel with pure CSS fade like BannerBlock */}
           <div className="relative">
           {/* Ghost slide to set container height */}
@@ -102,7 +90,7 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
                       {slide.title && (
                         <div className="flex items-stretch gap-4 mb-4">
                           <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
-                          <h3 className="text-xl font-bold text-gray-900 leading-none">
+                          <h3 className="text-2xl font-bold text-gray-900 leading-none">
                             {getLocalizedText(slide.title, language)}
                           </h3>
                         </div>

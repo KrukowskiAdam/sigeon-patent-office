@@ -40,27 +40,22 @@ export async function getHomepage(): Promise<Homepage | null> {
         _key,
         ...,
         _type == 'twoColumnTextBlock' => {
-          leftColumn {
-            backgroundColor,
-            items[] {
-              _key,
-              title,
-              content
-            }
+          leftColumn[] {
+            _key,
+            title,
+            content,
+            backgroundColor
           },
-          rightColumn {
-            backgroundColor,
-            items[] {
-              _key,
-              title,
-              content
-            }
+          rightColumn[] {
+            _key,
+            title,
+            content,
+            backgroundColor
           }
         }
       },
       featuredServices,
       newsSection,
-      teamSection,
       contactSection {
         title,
         subtitle,
@@ -252,21 +247,17 @@ export async function getPage(slug: string): Promise<Page | null> {
         _key,
         ...,
         _type == 'twoColumnTextBlock' => {
-          leftColumn {
-            backgroundColor,
-            items[] {
-              _key,
-              title,
-              content
-            }
+          leftColumn[] {
+            _key,
+            title,
+            content,
+            backgroundColor
           },
-          rightColumn {
-            backgroundColor,
-            items[] {
-              _key,
-              title,
-              content
-            }
+          rightColumn[] {
+            _key,
+            title,
+            content,
+            backgroundColor
           }
         },
         leftColumnTop,
@@ -281,7 +272,6 @@ export async function getPage(slug: string): Promise<Page | null> {
         },
         mapEmbedCode
       },
-      services,
       featuredImage,
       showInNavigation,
       navigationOrder,
