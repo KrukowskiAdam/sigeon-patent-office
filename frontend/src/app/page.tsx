@@ -87,7 +87,7 @@ export default function Home() {
       )}
 
       {/* Featured News */}
-      <section className="py-12">
+      <section id="news" className="py-12">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center gap-4 mb-12">
             <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
@@ -109,13 +109,13 @@ export default function Home() {
                     {/* Image on the left */}
                     {article.featuredImage ? (
                       <div className="md:w-1/3 flex items-center justify-center bg-gray-50 p-8">
-                        <div className="relative w-full aspect-video">
+                        <div className="relative w-[80%] aspect-video overflow-hidden">
                           <Image
                             src={urlFor(article.featuredImage).width(400).url()}
                             alt={getLocalizedText(article.title, currentLanguage)}
                             fill
                             sizes="(max-width: 768px) 100vw, 33vw"
-                            className="object-contain"
+                            className="object-cover"
                             priority={index === 0}
                           />
                         </div>
@@ -210,7 +210,7 @@ export default function Home() {
 
       {/* Team Preview */}
       {(!homepage?.teamSection || homepage.teamSection.showTeam !== false) && (
-        <section className="bg-gray-50 py-12">
+        <section id="team" className="bg-gray-50 py-12">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center gap-4 mb-12">
               <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
@@ -296,7 +296,7 @@ export default function Home() {
        homepage.contactSection.showContact !== false && 
        homepage.contactSection.content && 
        homepage.contactSection.content.length > 0 && (
-        <section className="py-12">
+        <section id="contact" className="py-12">
           <div className="max-w-7xl mx-auto px-4">
             {homepage.contactSection.title && (
               <div className="flex items-center gap-4 mb-12">

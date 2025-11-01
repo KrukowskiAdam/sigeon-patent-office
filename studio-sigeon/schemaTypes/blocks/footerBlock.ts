@@ -20,6 +20,31 @@ export const footerBlock = defineType({
           title: 'Column Content',
           type: 'localizedRichText',
         },
+        {
+          name: 'link',
+          title: 'Button Link',
+          type: 'object',
+          fields: [
+            {
+              name: 'text',
+              title: 'Button Text',
+              type: 'localizedString',
+              description: 'Text displayed on the button (optional)',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+              description: 'Link destination (e.g., /about or https://example.com)',
+            },
+            {
+              name: 'openInNewTab',
+              title: 'Open in new tab',
+              type: 'boolean',
+              initialValue: false,
+            },
+          ],
+        },
       ],
     }),
     defineField({
@@ -36,6 +61,31 @@ export const footerBlock = defineType({
           name: 'content',
           title: 'Column Content',
           type: 'localizedRichText',
+        },
+        {
+          name: 'link',
+          title: 'Button Link',
+          type: 'object',
+          fields: [
+            {
+              name: 'text',
+              title: 'Button Text',
+              type: 'localizedString',
+              description: 'Text displayed on the button (optional)',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+              description: 'Link destination (e.g., /about or https://example.com)',
+            },
+            {
+              name: 'openInNewTab',
+              title: 'Open in new tab',
+              type: 'boolean',
+              initialValue: false,
+            },
+          ],
         },
       ],
     }),
@@ -54,6 +104,31 @@ export const footerBlock = defineType({
           title: 'Column Content',
           type: 'localizedRichText',
         },
+        {
+          name: 'link',
+          title: 'Button Link',
+          type: 'object',
+          fields: [
+            {
+              name: 'text',
+              title: 'Button Text',
+              type: 'localizedString',
+              description: 'Text displayed on the button (optional)',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+              description: 'Link destination (e.g., /about or https://example.com)',
+            },
+            {
+              name: 'openInNewTab',
+              title: 'Open in new tab',
+              type: 'boolean',
+              initialValue: false,
+            },
+          ],
+        },
       ],
     }),
     defineField({
@@ -71,6 +146,31 @@ export const footerBlock = defineType({
           title: 'Column Content',
           type: 'localizedRichText',
         },
+        {
+          name: 'link',
+          title: 'Button Link',
+          type: 'object',
+          fields: [
+            {
+              name: 'text',
+              title: 'Button Text',
+              type: 'localizedString',
+              description: 'Text displayed on the button (optional)',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+              description: 'Link destination (e.g., /about or https://example.com)',
+            },
+            {
+              name: 'openInNewTab',
+              title: 'Open in new tab',
+              type: 'boolean',
+              initialValue: false,
+            },
+          ],
+        },
       ],
     }),
   ],
@@ -78,6 +178,7 @@ export const footerBlock = defineType({
     prepare() {
       return {
         title: 'Footer Block (4 columns)',
+        subtitle: 'Rich text content with links, email, phone support',
       }
     },
   },

@@ -117,11 +117,11 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
   }
 
   return (
-    <section className="py-8 bg-gray-50">
+    <section className="py-8 bg-gray-100">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:divide-x md:divide-gray-200">
           {/* Left Column - Contact Info */}
-          <div className="space-y-8">
+          <div className="space-y-8 md:pl-12 md:pr-12">
             {/* Top Section - Company Info */}
             {block.leftColumnTop && (
               <div className="prose prose-sm max-w-none text-gray-700">
@@ -177,7 +177,7 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
             )}
 
             {/* Divider */}
-            <div className="border-t border-gray-300"></div>
+            <div className="border-t border-gray-200 md:mr-[-3rem]"></div>
 
             {/* Bottom Section - Legal Info */}
             {block.leftColumnBottom && (
@@ -203,7 +203,8 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
           </div>
 
           {/* Right Column - Contact Form */}
-          <div className="bg-white p-12 rounded-lg shadow-sm">
+          <div className="md:pl-12 md:pr-12">
+            <div className="bg-white p-12 rounded-lg shadow-sm">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">
               {getLocalizedText(block.contactForm.title, language as Language)}
             </h3>
@@ -264,12 +265,13 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
                 {language === 'en' ? 'Send' : language === 'de' ? 'Senden' : 'Wyślij'}
               </button>
             </form>
+            </div>
           </div>
         </div>
 
         {/* Map Section - Full Width Below */}
         {block.mapEmbedCode && (
-          <div className="mt-12 pt-12 border-t border-gray-200">
+          <div className="mt-12 pt-12 border-t border-gray-200 px-12">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">
               {language === 'en' ? 'How to reach us?' : language === 'de' ? 'Wie erreichen Sie uns?' : 'Jak do nas dojechać?'}
             </h3>

@@ -43,13 +43,13 @@ export function Footer() {
       <footer className="bg-[#0abaee] text-white py-12 mt-auto">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
-            <div>
+            <div className="text-center">
               <h4 className="font-semibold mb-4">Grzelak i Wspólnicy, Kancelaria Patentowo-Prawna</h4>
               <p className="text-white text-sm">
                 Ochrona własności przemysłowej i intelektualnej, obsługa prawna i biznesowa firm i instytucji
               </p>
             </div>
-            <div>
+            <div className="text-center">
               <h4 className="font-semibold mb-4">Usługi</h4>
               <ul className="space-y-2 text-white text-sm">
                 <li>Rzecznicy patentowi</li>
@@ -58,7 +58,7 @@ export function Footer() {
                 <li>Biomed</li>
               </ul>
             </div>
-            <div>
+            <div className="text-center">
               <h4 className="font-semibold mb-4">Firma</h4>
               <ul className="space-y-2 text-white text-sm">
                 <li><Link href="/about" className="hover:text-white">O nas</Link></li>
@@ -66,7 +66,7 @@ export function Footer() {
                 <li><Link href="/news" className="hover:text-white">Aktualności</Link></li>
               </ul>
             </div>
-            <div>
+            <div className="text-center">
               <h4 className="font-semibold mb-4">Kontakt</h4>
               <p className="text-white text-sm">
                 ul. Przykładowa 123<br />
@@ -88,7 +88,7 @@ export function Footer() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Column 1 */}
-          <div>
+          <div className="text-center">
             <h4 className="font-semibold mb-4">
               {getLocalizedText(footer.column1.title, currentLanguage)}
             </h4>
@@ -98,7 +98,7 @@ export function Footer() {
             {footer.column1.buttonText && footer.column1.buttonUrl && (
               <Link 
                 href={footer.column1.buttonUrl}
-                className="inline-flex items-center gap-1 px-3 py-1.5 bg-white text-[#0abaee] font-medium rounded-md hover:bg-gray-100 transition-colors duration-200 text-xs"
+                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm"
               >
                 {getLocalizedText(footer.column1.buttonText, currentLanguage)}
               </Link>
@@ -106,7 +106,7 @@ export function Footer() {
           </div>
 
           {/* Column 2 */}
-          <div>
+          <div className="text-center">
             <h4 className="font-semibold mb-4">
               {getLocalizedText(footer.column2.title, currentLanguage)}
             </h4>
@@ -116,7 +116,7 @@ export function Footer() {
             {footer.column2.buttonText && footer.column2.buttonUrl && (
               <Link 
                 href={footer.column2.buttonUrl}
-                className="inline-flex items-center gap-1 px-3 py-1.5 bg-white text-[#0abaee] font-medium rounded-md hover:bg-gray-100 transition-colors duration-200 text-xs"
+                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm"
               >
                 {getLocalizedText(footer.column2.buttonText, currentLanguage)}
               </Link>
@@ -124,7 +124,7 @@ export function Footer() {
           </div>
 
           {/* Column 3 */}
-          <div>
+          <div className="text-center">
             <h4 className="font-semibold mb-4">
               {getLocalizedText(footer.column3.title, currentLanguage)}
             </h4>
@@ -134,7 +134,7 @@ export function Footer() {
             {footer.column3.buttonText && footer.column3.buttonUrl && (
               <Link 
                 href={footer.column3.buttonUrl}
-                className="inline-flex items-center gap-1 px-3 py-1.5 bg-white text-[#0abaee] font-medium rounded-md hover:bg-gray-100 transition-colors duration-200 text-xs"
+                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm"
               >
                 {getLocalizedText(footer.column3.buttonText, currentLanguage)}
               </Link>
@@ -142,7 +142,7 @@ export function Footer() {
           </div>
 
           {/* Column 4 */}
-          <div>
+          <div className="text-center">
             <h4 className="font-semibold mb-4">
               {getLocalizedText(footer.column4.title, currentLanguage)}
             </h4>
@@ -152,7 +152,7 @@ export function Footer() {
             {footer.column4.buttonText && footer.column4.buttonUrl && (
               <Link 
                 href={footer.column4.buttonUrl}
-                className="inline-flex items-center gap-1 px-3 py-1.5 bg-white text-[#0abaee] font-medium rounded-md hover:bg-gray-100 transition-colors duration-200 text-xs"
+                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm"
               >
                 {getLocalizedText(footer.column4.buttonText, currentLanguage)}
               </Link>

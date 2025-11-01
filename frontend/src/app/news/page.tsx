@@ -97,13 +97,13 @@ export default function NewsPage() {
                     {/* Image on the left */}
                     {article.featuredImage ? (
                       <div className="md:w-1/3 flex items-center justify-center bg-gray-50 p-8">
-                        <div className="relative w-full aspect-video">
+                        <div className="relative w-[80%] aspect-video overflow-hidden">
                           <Image
                             src={urlFor(article.featuredImage).width(400).url()}
                             alt={getLocalizedText(article.title, currentLanguage)}
                             fill
                             sizes="(max-width: 768px) 100vw, 33vw"
-                            className="object-contain"
+                            className="object-cover"
                             priority={index === 0}
                             onError={() => console.error('Error loading image for article:', getLocalizedText(article.title, currentLanguage))}
                           />

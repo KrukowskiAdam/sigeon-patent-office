@@ -42,7 +42,7 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
   return (
     <section className="py-8">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="px-8 md:px-16 py-8 relative" style={{backgroundColor: '#d3dae4'}}>
+        <div className="px-8 md:px-16 py-8 relative bg-gray-100">
           {/* Section Title */}
           {block.title && (
             <div className="text-center mb-12">
@@ -75,13 +75,13 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
               const isImageLeft = slide.layout === 'image-left'
               const sizeClasses = {
                 small: isImageLeft ? 'md:w-1/3' : 'md:w-1/3',
-                medium: isImageLeft ? 'md:w-1/2' : 'md:w-1/2',
+                medium: isImageLeft ? 'md:w-[40%]' : 'md:w-[40%]',
                 large: isImageLeft ? 'md:w-2/3' : 'md:w-2/3'
               }[slide.imageSize || 'medium']
 
               const textSizeClasses = {
                 small: isImageLeft ? 'md:w-2/3' : 'md:w-2/3',
-                medium: isImageLeft ? 'md:w-1/2' : 'md:w-1/2',
+                medium: isImageLeft ? 'md:w-[60%]' : 'md:w-[60%]',
                 large: isImageLeft ? 'md:w-1/3' : 'md:w-1/3'
               }[slide.imageSize || 'medium']
 
@@ -102,7 +102,7 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
                       {slide.title && (
                         <div className="flex items-center gap-4 mb-4">
                           <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                          <h3 className="text-2xl font-bold text-gray-900 leading-tight">
+                          <h3 className="text-xl font-bold text-gray-900 leading-tight">
                             {getLocalizedText(slide.title, language)}
                           </h3>
                         </div>
@@ -192,7 +192,7 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
       
       {/* Indicators - positioned below carousel, center-aligned like BannerBlock */}
       {settings.showPagination !== false && block.slides.length > 1 && (
-        <div className="mt-12 flex justify-center gap-3">
+        <div className="mt-0 flex justify-center gap-3">
           {block.slides.map((_, index) => (
             <button
               key={index}
