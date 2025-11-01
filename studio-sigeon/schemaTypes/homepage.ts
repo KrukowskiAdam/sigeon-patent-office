@@ -59,6 +59,7 @@ export const homepage = defineType({
         {type: 'textBlock'},
         {type: 'textImageBlock'},
         {type: 'textImageCarouselBlock'},
+        {type: 'twoColumnTextBlock'},
         {type: 'servicesBlock'},
         {type: 'bannerBlock'},
         {type: 'footerBlock'},

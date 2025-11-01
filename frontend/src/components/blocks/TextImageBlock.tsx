@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TextImageBlock as TextImageBlockType } from '@/types/sanity'
 import { getLocalizedText } from '@/lib/i18n'
 import { PortableText } from '../ui/PortableText'
@@ -14,6 +14,8 @@ interface TextImageBlockProps {
 }
 
 export function TextImageBlock({ block, language }: TextImageBlockProps) {
+  const [isExpanded, setIsExpanded] = useState(false)
+
   // If no image is provided, don't render this block
   if (!block.image) {
     return null
@@ -22,20 +24,20 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
   const isImageLeft = block.layout === 'image-left'
   const sizeClasses = {
     small: isImageLeft ? 'md:w-1/3' : 'md:w-1/3',
-    medium: isImageLeft ? 'md:w-1/2' : 'md:w-1/2',
+    medium: isImageLeft ? 'md:w-[40%]' : 'md:w-[40%]',
     large: isImageLeft ? 'md:w-2/3' : 'md:w-2/3'
   }[block.imageSize || 'medium']
 
   const textSizeClasses = {
     small: isImageLeft ? 'md:w-2/3' : 'md:w-2/3',
-    medium: isImageLeft ? 'md:w-1/2' : 'md:w-1/2',
+    medium: isImageLeft ? 'md:w-[60%]' : 'md:w-[60%]',
     large: isImageLeft ? 'md:w-1/3' : 'md:w-1/3'
   }[block.imageSize || 'medium']
 
   return (
     <section className="py-8">
       <div className="max-w-7xl mx-auto px-4">
-        <div className={`flex flex-col md:flex-row items-center gap-12 ${
+        <div className={`flex flex-col md:flex-row md:items-start gap-12 ${
           isImageLeft ? 'md:flex-row' : 'md:flex-row-reverse'
         }`}>
           {/* Text Content */}
@@ -48,10 +50,38 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
                 </h2>
               </div>
             )}
-            <div className="prose max-w-none text-gray-700">
-              <PortableText 
-                value={getLocalizedPortableText(block.content, language as Language)}
-              />
+            
+            {/* Content - truncated when collapsed, full when expanded */}
+            {!isExpanded ? (
+              <div className="prose max-w-none text-gray-700 line-clamp-6">
+                <PortableText 
+                  value={getLocalizedPortableText(block.content, language as Language)}
+                />
+              </div>
+            ) : (
+              <div className="prose max-w-none text-gray-700">
+                <PortableText 
+                  value={getLocalizedPortableText(block.content, language as Language)}
+                />
+              </div>
+            )}
+            
+            {/* Toggle button - fixed position after content */}
+            <div>
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="text-sm text-[#0abaee] hover:text-[#0891b2] font-medium flex items-center gap-1"
+              >
+                {isExpanded ? (
+                  <>
+                    Zwiń <span className="text-xs">▲</span>
+                  </>
+                ) : (
+                  <>
+                    Czytaj więcej <span className="text-xs">▼</span>
+                  </>
+                )}
+              </button>
             </div>
             
             {block.link && block.link.text && (

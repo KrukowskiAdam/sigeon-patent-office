@@ -38,7 +38,25 @@ export async function getHomepage(): Promise<Homepage | null> {
       content[] {
         _type,
         _key,
-        ...
+        ...,
+        _type == 'twoColumnTextBlock' => {
+          leftColumn {
+            backgroundColor,
+            items[] {
+              _key,
+              title,
+              content
+            }
+          },
+          rightColumn {
+            backgroundColor,
+            items[] {
+              _key,
+              title,
+              content
+            }
+          }
+        }
       },
       featuredServices,
       newsSection,
@@ -233,6 +251,24 @@ export async function getPage(slug: string): Promise<Page | null> {
         _type,
         _key,
         ...,
+        _type == 'twoColumnTextBlock' => {
+          leftColumn {
+            backgroundColor,
+            items[] {
+              _key,
+              title,
+              content
+            }
+          },
+          rightColumn {
+            backgroundColor,
+            items[] {
+              _key,
+              title,
+              content
+            }
+          }
+        },
         leftColumnTop,
         socialMedia {
           facebook,

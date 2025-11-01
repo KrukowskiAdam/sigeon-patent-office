@@ -11,6 +11,7 @@ import {textImageCarouselBlock} from './blocks/textImageCarouselBlock'
 import {codeBlock} from './blocks/codeBlock'
 import {contactBlock} from './blocks/contactBlock'
 import {footerBlock} from './blocks/footerBlock'
+import twoColumnTextBlock from './blocks/twoColumnTextBlock'
 
 // Document types
 import {homepage} from './homepage'
@@ -43,6 +44,7 @@ export const schemaTypes = [
   codeBlock,
   contactBlock,
   footerBlock,
+  twoColumnTextBlock,
   
   // Document types
   homepage,

@@ -1,8 +1,9 @@
 import React from 'react'
-import { ContentBlock as ContentBlockType, TextBlock as TextBlockType, TextImageBlock as TextImageBlockType, TextImageCarouselBlock as TextImageCarouselBlockType, HeroBlock as HeroBlockType, BannerBlock as BannerBlockType, ServicesBlock as ServicesBlockType, CodeBlock as CodeBlockType, ContactBlock as ContactBlockType } from '@/types/sanity'
+import { ContentBlock as ContentBlockType, TextBlock as TextBlockType, TextImageBlock as TextImageBlockType, TextImageCarouselBlock as TextImageCarouselBlockType, TwoColumnTextBlock as TwoColumnTextBlockType, HeroBlock as HeroBlockType, BannerBlock as BannerBlockType, ServicesBlock as ServicesBlockType, CodeBlock as CodeBlockType, ContactBlock as ContactBlockType } from '@/types/sanity'
 import { BannerBlock } from './BannerBlock'
 import { TextImageCarouselBlock } from './TextImageCarouselBlock'
 import { TextImageBlock } from './TextImageBlock'
+import TwoColumnTextBlockComponent from './TwoColumnTextBlock'
 import { HeroBlock } from './HeroBlock'
 import { ServicesBlock } from './ServicesBlock'
 import { CodeBlock } from './CodeBlock'
@@ -89,6 +90,8 @@ export function ContentBlock({ block, language }: ContentBlockProps) {
       return <TextImageBlock block={block as TextImageBlockType} language={language} />
     case 'textImageCarouselBlock':
       return <TextImageCarouselBlock block={block as TextImageCarouselBlockType} language={language as Language} />
+    case 'twoColumnTextBlock':
+      return <TwoColumnTextBlockComponent block={block as TwoColumnTextBlockType} language={language} />
     case 'servicesBlock':
       return <ServicesBlock block={block as ServicesBlockType} language={language} />
     case 'bannerBlock':

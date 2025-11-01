@@ -153,6 +153,27 @@ export interface TextImageCarouselBlock {
   }
 }
 
+export interface TwoColumnTextBlock {
+  _type: 'twoColumnTextBlock'
+  _key: string
+  leftColumn: {
+    backgroundColor?: 'white' | 'gray'
+    items: Array<{
+      _key: string
+      title?: LocalizedString
+      content: LocalizedRichText
+    }>
+  }
+  rightColumn: {
+    backgroundColor?: 'white' | 'gray'
+    items: Array<{
+      _key: string
+      title?: LocalizedString
+      content: LocalizedRichText
+    }>
+  }
+}
+
 export interface HeroBlock {
   _type: 'heroBlock'
   _key: string
@@ -270,7 +291,7 @@ export interface FooterBlock {
   }
 }
 
-export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | HeroBlock | ServicesBlock | BannerBlock | CodeBlock | ContactBlock | FooterBlock
+export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | TwoColumnTextBlock | HeroBlock | ServicesBlock | BannerBlock | CodeBlock | ContactBlock | FooterBlock
 
 export interface Page {
   _id: string

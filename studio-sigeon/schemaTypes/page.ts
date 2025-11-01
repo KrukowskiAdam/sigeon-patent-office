@@ -32,6 +32,7 @@ export const page = defineType({
         {type: 'textBlock'},
         {type: 'textImageBlock'},
         {type: 'textImageCarouselBlock'},
+        {type: 'twoColumnTextBlock'},
         {type: 'servicesBlock'},
         {type: 'bannerBlock'},
         {type: 'codeBlock'},
