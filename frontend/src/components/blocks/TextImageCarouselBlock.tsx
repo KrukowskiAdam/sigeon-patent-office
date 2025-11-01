@@ -46,9 +46,9 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
           {/* Section Title */}
           {block.title && (
             <div className="text-center mb-12">
-              <div className="flex items-center justify-center gap-4 mb-4">
-                <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                <h2 className="text-2xl font-bold text-gray-800">
+              <div className="flex items-stretch justify-center gap-4 mb-4">
+                <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
+                <h2 className="text-2xl font-bold text-gray-800 leading-none">
                   {getLocalizedText(block.title, language)}
                 </h2>
               </div>
@@ -100,9 +100,9 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
                       index === currentSlide ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                     }`}>
                       {slide.title && (
-                        <div className="flex items-center gap-4 mb-4">
-                          <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                          <h3 className="text-xl font-bold text-gray-900 leading-tight">
+                        <div className="flex items-stretch gap-4 mb-4">
+                          <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
+                          <h3 className="text-xl font-bold text-gray-900 leading-none">
                             {getLocalizedText(slide.title, language)}
                           </h3>
                         </div>

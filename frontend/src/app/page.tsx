@@ -89,9 +89,9 @@ export default function Home() {
       {/* Featured News */}
       <section id="news" className="py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center gap-4 mb-12">
-            <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-            <h2 className="text-2xl font-bold text-gray-900">
+          <div className="flex items-stretch gap-4 mb-12">
+            <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
+            <h2 className="text-2xl font-bold text-gray-900 leading-none">
               {homepage?.newsSection?.title ? 
                 getLocalizedText(homepage.newsSection.title, currentLanguage) : 
                 'Najważniejsze aktualności'
@@ -212,9 +212,9 @@ export default function Home() {
       {(!homepage?.teamSection || homepage.teamSection.showTeam !== false) && (
         <section id="team" className="bg-gray-50 py-12">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="flex items-center gap-4 mb-12">
-              <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-              <h2 className="text-2xl font-bold text-gray-900">
+            <div className="flex items-stretch gap-4 mb-12">
+              <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
+              <h2 className="text-2xl font-bold text-gray-900 leading-none">
                 {homepage?.teamSection?.title ? 
                   getLocalizedText(homepage.teamSection.title, currentLanguage) : 
                   'Nasz zespół'

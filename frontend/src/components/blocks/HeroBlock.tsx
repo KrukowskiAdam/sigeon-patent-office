@@ -26,9 +26,9 @@ export function HeroBlock({ block, language }: HeroBlockProps) {
       <div className="relative max-w-7xl mx-auto px-4">
         <div className="max-w-4xl">
           {/* Title with blue line */}
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-            <h1 className="text-3xl font-bold text-gray-800">
+          <div className="flex items-stretch gap-4 mb-6">
+            <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
+            <h1 className="text-3xl font-bold text-gray-800 leading-none">
               {getLocalizedText(block.title, language as Language)}
             </h1>
           </div>

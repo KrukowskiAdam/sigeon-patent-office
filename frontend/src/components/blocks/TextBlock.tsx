@@ -23,9 +23,9 @@ export function TextBlock({ block, language }: TextBlockProps) {
       <div className="max-w-7xl mx-auto px-4">
         <div className={`prose max-w-none ${alignmentClass}`}>
           {block.title && (
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-              <h2 className="text-2xl font-bold text-gray-800">
+            <div className="flex items-stretch gap-4 mb-8">
+              <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
+              <h2 className="text-2xl font-bold text-gray-800 leading-none">
                 {getLocalizedText(block.title, language as Language)}
               </h2>
             </div>

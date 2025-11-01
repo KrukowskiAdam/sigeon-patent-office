@@ -58,9 +58,9 @@ export default function TwoColumnTextBlockComponent({ block, language }: TwoColu
             {leftItems.map((item) => (
               <div key={item._key} className="space-y-4">
                 {item.title && (
-                  <div className="flex items-center gap-4">
-                    <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                    <h3 className="text-xl font-bold text-gray-900">
+                  <div className="flex items-stretch gap-4">
+                    <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
+                    <h3 className="text-xl font-bold text-gray-900 leading-none">
                       {getLocalizedText(item.title, language as Language)}
                     </h3>
                   </div>
@@ -79,9 +79,9 @@ export default function TwoColumnTextBlockComponent({ block, language }: TwoColu
             {rightItems.map((item) => (
               <div key={item._key} className="space-y-4">
                 {item.title && (
-                  <div className="flex items-center gap-4">
-                    <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                    <h3 className="text-xl font-bold text-gray-900">
+                  <div className="flex items-stretch gap-4">
+                    <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
+                    <h3 className="text-xl font-bold text-gray-900 leading-none">
                       {getLocalizedText(item.title, language as Language)}
                     </h3>
                   </div>

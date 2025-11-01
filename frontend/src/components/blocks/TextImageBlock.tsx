@@ -43,9 +43,9 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
           {/* Text Content */}
           <div className={`${textSizeClasses} space-y-6`}>
             {block.title && (
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-                <h2 className="text-2xl font-bold text-gray-900">
+              <div className="flex items-stretch gap-4 mb-6">
+                <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
+                <h2 className="text-2xl font-bold text-gray-900 leading-none">
                   {getLocalizedText(block.title, language as Language)}
                 </h2>
               </div>

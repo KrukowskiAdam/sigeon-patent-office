@@ -13,9 +13,9 @@ export function CodeBlock({ block, language }: CodeBlockProps) {
     <section className="py-8">
       <div className="max-w-6xl mx-auto px-4">
         {block.title && (
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-1 h-[1.25em] bg-[#0abaee]"></div>
-            <h2 className="text-3xl font-semibold text-gray-800 leading-tight">
+          <div className="flex items-stretch gap-4 mb-8">
+            <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
+            <h2 className="text-3xl font-semibold text-gray-800 leading-none">
               {getLocalizedText(block.title, language as Language)}
             </h2>
           </div>
