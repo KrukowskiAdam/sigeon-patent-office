@@ -1,13 +1,13 @@
 # Sigeon - Patent Office Website CMS
 
 ## Project Overview
-Multi-language Sanity CMS for a patent office website. Supports Polish (default), English, and German content with structured schemas for legal practice content management.
+Multi-language Sanity CMS for a patent office website. Supports Polish (default) and English content with structured schemas for legal practice content management.
 
 **Key Details:**
 - Project ID: `pofl8c47`
 - Dataset: `production` 
 - Built with React 19.1 and Sanity v4.11.0
-- Multi-language support: PL (default), EN, DE
+- Multi-language support: PL (default), EN
 
 ## Content Architecture
 

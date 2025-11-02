@@ -244,7 +244,6 @@ export interface ContactBlock {
   leftColumnTop: {
     pl: unknown[]
     en?: unknown[]
-    de?: unknown[]
   }
   socialMedia?: {
     facebook?: string
@@ -253,7 +252,6 @@ export interface ContactBlock {
   leftColumnBottom: {
     pl: unknown[]
     en?: unknown[]
-    de?: unknown[]
   }
   contactForm: {
     title: LocalizedString

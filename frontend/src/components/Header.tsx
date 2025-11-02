@@ -103,7 +103,7 @@ export function Header() {
         </div>
 
       {/* Main Navigation Bar */}
-      <div className="text-slate-800 shadow-md border-b border-gray-200 transition-all duration-300" style={{backgroundColor: '#d3dae4'}}>
+      <div className="text-slate-800 shadow-sm border-b border-gray-200 transition-all duration-300" style={{backgroundColor: '#d3dae4'}}>
         <div className={`max-w-7xl mx-auto px-6 transition-all duration-300 ${isScrolled ? 'py-6' : 'py-4'}`}>
           <div className="flex items-center justify-between">
             {/* Logo */}

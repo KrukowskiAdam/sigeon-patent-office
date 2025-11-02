@@ -130,7 +130,6 @@ npm run deploy
 Languages are configured in `frontend/src/contexts/LanguageContext.tsx`:
 - Polish (pl) - Default
 - English (en)  
-- German (de)
 - Chinese (zh)
 - Korean (ko)
 - Japanese (ja)

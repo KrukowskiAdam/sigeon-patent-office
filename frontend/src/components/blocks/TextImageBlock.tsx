@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { TextImageBlock as TextImageBlockType } from '@/types/sanity'
 import { getLocalizedText } from '@/lib/i18n'
 import { PortableText } from '../ui/PortableText'
@@ -15,6 +15,17 @@ interface TextImageBlockProps {
 
 export function TextImageBlock({ block, language }: TextImageBlockProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [isMultiline, setIsMultiline] = useState(false)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+
+  useEffect(() => {
+    if (titleRef.current) {
+      // Check if title height is greater than single line height
+      const lineHeight = parseFloat(getComputedStyle(titleRef.current).lineHeight)
+      const height = titleRef.current.offsetHeight
+      setIsMultiline(height > lineHeight * 1.5) // 1.5 to account for slight variations
+    }
+  }, [block.title, language])
 
   // If no image is provided, don't render this block
   if (!block.image) {
@@ -45,7 +56,10 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
             {block.title && (
               <div className="flex items-stretch gap-4 mb-6">
                 <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
-                <h2 className="text-2xl font-bold text-gray-900 leading-none">
+                <h2 
+                  ref={titleRef}
+                  className={`${isMultiline ? 'text-xl' : 'text-2xl'} font-bold text-gray-900 leading-none text-balance`}
+                >
                   {getLocalizedText(block.title, language as Language)}
                 </h2>
               </div>

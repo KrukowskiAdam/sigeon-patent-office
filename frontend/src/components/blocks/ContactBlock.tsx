@@ -68,7 +68,6 @@ interface ContactBlockType {
   leftColumnTop: {
     pl: unknown[]
     en?: unknown[]
-    de?: unknown[]
   }
   socialMedia?: {
     facebook?: string
@@ -77,13 +76,11 @@ interface ContactBlockType {
   leftColumnBottom: {
     pl: unknown[]
     en?: unknown[]
-    de?: unknown[]
   }
   contactForm: {
     title: {
       pl: string
       en?: string
-      de?: string
     }
     formEmail: string
   }
@@ -212,7 +209,7 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="temat" className="block text-sm font-medium text-gray-700 mb-2">
-                  {language === 'en' ? 'Subject' : language === 'de' ? 'Betreff' : 'Temat'}
+                  {language === 'en' ? 'Subject' : 'Temat'}
                 </label>
                 <input
                   type="text"
@@ -222,13 +219,13 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0abaee] focus:border-transparent"
-                  placeholder={language === 'en' ? 'Subject' : language === 'de' ? 'Betreff' : 'Temat'}
+                  placeholder={language === 'en' ? 'Subject' : 'Temat'}
                 />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  {language === 'en' ? 'Email' : language === 'de' ? 'E-Mail' : 'Email'}
+                  {language === 'en' ? 'Email' : 'Email'}
                 </label>
                 <input
                   type="email"
@@ -244,7 +241,7 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  {language === 'en' ? 'Message' : language === 'de' ? 'Nachricht' : 'Wiadomość'}
+                  {language === 'en' ? 'Message' : 'Wiadomość'}
                 </label>
                 <textarea
                   id="message"
@@ -254,7 +251,7 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
                   required
                   rows={3}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0abaee] focus:border-transparent"
-                  placeholder={language === 'en' ? 'Your message...' : language === 'de' ? 'Ihre Nachricht...' : 'Twoja wiadomość...'}
+                  placeholder={language === 'en' ? 'Your message...' : 'Twoja wiadomość...'}
                 />
               </div>
 
@@ -262,7 +259,7 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
                 type="submit"
                 className="w-full bg-[#0abaee] hover:bg-[#0891b2] text-white font-medium py-3 px-6 rounded-lg transition-colors"
               >
-                {language === 'en' ? 'Send' : language === 'de' ? 'Senden' : 'Wyślij'}
+                {language === 'en' ? 'Send' : 'Wyślij'}
               </button>
             </form>
             </div>
@@ -273,7 +270,7 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
         {block.mapEmbedCode && (
           <div className="mt-12 pt-12 border-t border-gray-200 px-12">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              {language === 'en' ? 'How to reach us?' : language === 'de' ? 'Wie erreichen Sie uns?' : 'Jak do nas dojechać?'}
+              {language === 'en' ? 'How can you find us?' : 'Jak do nas dojechać?'}
             </h3>
             <div 
               className="w-full rounded-lg overflow-hidden"

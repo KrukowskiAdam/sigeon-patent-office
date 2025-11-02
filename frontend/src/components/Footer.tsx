@@ -29,7 +29,7 @@ export function Footer() {
 
   if (loading) {
     return (
-      <footer className="bg-[#0abaee] text-white py-12 mt-auto">
+      <footer className="bg-[#0abaee] text-white py-6 mt-auto">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">Ładowanie...</div>
         </div>
@@ -40,7 +40,7 @@ export function Footer() {
   if (!footer) {
     // Fallback footer if no CMS data is available
     return (
-      <footer className="bg-[#0abaee] text-white py-12 mt-auto">
+      <footer className="bg-[#0abaee] text-white py-6 mt-auto">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
@@ -84,7 +84,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-[#0abaee] text-white py-12 mt-auto">
+    <footer className="bg-[#0abaee] text-white py-6 mt-auto">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Column 1 */}

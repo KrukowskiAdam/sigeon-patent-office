@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { TextImageCarouselBlock as TextImageCarouselBlockType } from '@/types/sanity'
 import { getLocalizedText } from '@/lib/i18n'
 import { Language } from '@/context/LanguageContext'
@@ -7,7 +7,6 @@ import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
 import { getLinkHref, shouldOpenInNewTab } from '@/utils/linkUtils'
 import { PortableText } from '../ui/PortableText'
-import { useEffect } from 'react'
 
 interface TextImageCarouselBlockProps {
   block: TextImageCarouselBlockType
@@ -16,6 +15,8 @@ interface TextImageCarouselBlockProps {
 
 export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlockProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [titleHeights, setTitleHeights] = useState<boolean[]>([])
+  const titleRefs = useRef<(HTMLHeadingElement | null)[]>([])
   const settings = block.carouselSettings || {}
 
   useEffect(() => {
@@ -26,6 +27,19 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
       return () => clearInterval(timer)
     }
   }, [settings.autoplay, settings.autoplayDelay, block.slides.length])
+
+  useEffect(() => {
+    // Check each slide title for multiline
+    const heights = titleRefs.current.map(ref => {
+      if (ref) {
+        const lineHeight = parseFloat(getComputedStyle(ref).lineHeight)
+        const height = ref.offsetHeight
+        return height > lineHeight * 1.5
+      }
+      return false
+    })
+    setTitleHeights(heights)
+  }, [block.slides, language])
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index)
@@ -90,7 +104,10 @@ export function TextImageCarouselBlock({ block, language }: TextImageCarouselBlo
                       {slide.title && (
                         <div className="flex items-stretch gap-4 mb-4">
                           <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
-                          <h3 className="text-2xl font-bold text-gray-900 leading-none">
+                          <h3 
+                            ref={el => { titleRefs.current[index] = el }}
+                            className={`${titleHeights[index] ? 'text-xl' : 'text-2xl'} font-bold text-gray-900 leading-none text-balance`}
+                          >
                             {getLocalizedText(slide.title, language)}
                           </h3>
                         </div>
