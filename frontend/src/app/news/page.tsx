@@ -147,7 +147,7 @@ export default function NewsPage() {
                           </p>
                         )}
                         
-                        <div className="flex items-center justify-between mt-4">
+                        <div className="mt-4">
                           <Link 
                             href={`/news/${article.slug.current}`}
                             className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
@@ -156,16 +156,6 @@ export default function NewsPage() {
                               ? getLocalizedText(newsPage.buttons.readMore, currentLanguage)
                               : 'Czytaj więcej'}
                           </Link>
-                          
-                          {article.tags && article.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-1">
-                              {article.tags.slice(0, 2).map((tag, index) => (
-                                <Badge key={index} variant="secondary" className="text-xs">
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
-                          )}
                         </div>
                       </CardContent>
                     </div>
