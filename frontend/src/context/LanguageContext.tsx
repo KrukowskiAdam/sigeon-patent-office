@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useState, ReactNode } from 'react'
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 
 export type Language = 'pl' | 'en' | 'zh' | 'ko' | 'ja' | 'ru'
 
@@ -25,21 +25,19 @@ interface LanguageProviderProps {
 }
 
 export function LanguageProvider({ children }: LanguageProviderProps) {
-  const [currentLanguage, setCurrentLanguage] = useState<Language>(
-    (() => {
-      if (typeof window !== 'undefined') {
-        const saved = localStorage.getItem('language') as Language | null
-        if (saved === 'pl' || saved === 'en' || saved === 'zh' || saved === 'ko' || saved === 'ja' || saved === 'ru') {
-          return saved
-        }
-      }
-      return 'pl'
-    })()
-  )
+  // Always start with 'pl' on both server and client for consistent hydration
+  const [currentLanguage, setCurrentLanguage] = useState<Language>('pl')
+
+  // After hydration, sync with localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('language') as Language | null
+    if (saved && (saved === 'pl' || saved === 'en' || saved === 'zh' || saved === 'ko' || saved === 'ja' || saved === 'ru')) {
+      setCurrentLanguage(saved)
+    }
+  }, [])
 
   const setLanguage = (lang: Language) => {
     setCurrentLanguage(lang)
-    // W przyszłości można dodać localStorage lub cookies
     localStorage.setItem('language', lang)
   }
 
