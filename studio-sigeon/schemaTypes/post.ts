@@ -9,13 +9,13 @@ export const news = defineType({
       name: 'showPl',
       title: 'Show on Polish site (PL)',
       type: 'boolean',
-      initialValue: true,
+      initialValue: false,
     }),
     defineField({
       name: 'showEn',
       title: 'Show on English site (EN)',
       type: 'boolean',
-      initialValue: true,
+      initialValue: false,
     }),
     defineField({
       name: 'title',

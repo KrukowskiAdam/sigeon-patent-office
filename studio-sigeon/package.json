@@ -24,6 +24,7 @@
   "devDependencies": {
     "@sanity/eslint-config-studio": "^5.0.2",
     "@types/react": "^18.3.26",
+    "cheerio": "^1.1.2",
     "eslint": "^9.28",
     "prettier": "^3.5",
     "typescript": "^5.8"
