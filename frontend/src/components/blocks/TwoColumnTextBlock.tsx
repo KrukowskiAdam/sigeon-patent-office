@@ -23,6 +23,21 @@ export default function TwoColumnTextBlockComponent({ block, language }: TwoColu
     return null
   }
 
+  // Helper function to check if content exists in current language
+  const hasContentInLanguage = (content: { [key: string]: unknown[] | undefined }) => {
+    const lang = language as keyof typeof content
+    return content && content[lang] && Array.isArray(content[lang]) && content[lang].length > 0
+  }
+
+  // Filter items that have content in current language
+  const filteredLeftColumn = block.leftColumn.filter(item => hasContentInLanguage(item.content))
+  const filteredRightColumn = block.rightColumn.filter(item => hasContentInLanguage(item.content))
+
+  // If no items in current language, don't render the block
+  if (filteredLeftColumn.length === 0 && filteredRightColumn.length === 0) {
+    return null
+  }
+
   return (
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4">
@@ -30,7 +45,7 @@ export default function TwoColumnTextBlockComponent({ block, language }: TwoColu
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left Column */}
           <div className="space-y-0">
-            {block.leftColumn.map((item) => {
+            {filteredLeftColumn.map((item) => {
               const itemBg = item.backgroundColor === 'gray' ? 'bg-gray-100' : 'bg-white'
               return (
                 <div key={item._key} className={`${itemBg} p-8 space-y-4`}>
@@ -54,7 +69,7 @@ export default function TwoColumnTextBlockComponent({ block, language }: TwoColu
 
           {/* Right Column */}
           <div className="space-y-0">
-            {block.rightColumn.map((item) => {
+            {filteredRightColumn.map((item) => {
               const itemBg = item.backgroundColor === 'gray' ? 'bg-gray-100' : 'bg-white'
               return (
                 <div key={item._key} className={`${itemBg} p-8 space-y-4`}>
