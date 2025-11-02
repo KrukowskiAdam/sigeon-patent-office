@@ -1,6 +1,6 @@
 'use client'
 
-import { TwoColumnTextBlock } from '@/types/sanity'
+import { TwoColumnTextBlock, LocalizedRichText } from '@/types/sanity'
 import { PortableText } from '../ui/PortableText'
 import { getLocalizedText } from '@/lib/i18n'
 import { getLocalizedPortableText } from '@/lib/portableText'
@@ -24,9 +24,9 @@ export default function TwoColumnTextBlockComponent({ block, language }: TwoColu
   }
 
   // Helper function to check if content exists in current language
-  const hasContentInLanguage = (content: { [key: string]: unknown[] | undefined }) => {
-    const lang = language as keyof typeof content
-    return content && content[lang] && Array.isArray(content[lang]) && content[lang].length > 0
+  const hasContentInLanguage = (content: LocalizedRichText): boolean => {
+    const lang = language as keyof LocalizedRichText
+    return content && content[lang] !== undefined && Array.isArray(content[lang]) && (content[lang] as unknown[]).length > 0
   }
 
   // Filter items that have content in current language
