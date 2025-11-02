@@ -9,7 +9,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { ContentBlock } from '@/components/blocks'
 import { useLanguage } from '@/context/LanguageContext'
-import { getLocalizedText } from '@/lib/i18n'
+import { getLocalizedText, navigationTranslations } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { PortableText } from '@/components/ui/PortableText'
@@ -156,11 +156,11 @@ export default function TeamPage() {
                           >
                             {expandedMembers.has(member._id) ? (
                               <>
-                                Zwiń <span className="text-xs">▲</span>
+                                {currentLanguage === 'en' ? 'Show less' : 'Zwiń'} <span className="text-xs">▲</span>
                               </>
                             ) : (
                               <>
-                                Czytaj więcej <span className="text-xs">▼</span>
+                                {currentLanguage === 'en' ? 'Read more' : 'Czytaj więcej'} <span className="text-xs">▼</span>
                               </>
                             )}
                           </button>
@@ -217,7 +217,9 @@ export default function TeamPage() {
               href="/"
               className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
             >
-              Strona główna
+              {teamPage?.buttons?.backToHome
+                ? getLocalizedText(teamPage.buttons.backToHome, currentLanguage)
+                : navigationTranslations[currentLanguage].home}
             </Link>
           </div>
         </div>

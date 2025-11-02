@@ -142,6 +142,9 @@ export async function getTeamPage(): Promise<TeamPage | null> {
         subtitle,
         showTeam
       },
+      buttons {
+        backToHome
+      },
       seo
     }
   `)
@@ -275,6 +278,9 @@ export async function getPage(slug: string): Promise<Page | null> {
       featuredImage,
       showInNavigation,
       navigationOrder,
+      buttons {
+        backToHome
+      },
       seo
     }
   `, {slug})

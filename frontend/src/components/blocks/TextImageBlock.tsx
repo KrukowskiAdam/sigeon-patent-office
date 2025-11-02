@@ -88,11 +88,11 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
               >
                 {isExpanded ? (
                   <>
-                    Zwiń <span className="text-xs">▲</span>
+                    {language === 'en' ? 'Show less' : 'Zwiń'} <span className="text-xs">▲</span>
                   </>
                 ) : (
                   <>
-                    Czytaj więcej <span className="text-xs">▼</span>
+                    {language === 'en' ? 'Read more' : 'Czytaj więcej'} <span className="text-xs">▼</span>
                   </>
                 )}
               </button>

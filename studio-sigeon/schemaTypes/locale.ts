@@ -87,12 +87,21 @@ export const localizedRichText = defineType({
               {
                 name: 'link',
                 type: 'object',
-                title: 'URL',
+                title: 'Link',
                 fields: [
                   {
                     name: 'href',
-                    type: 'url',
+                    type: 'string',
                     title: 'URL',
+                    description: 'External URL (https://...) or internal path (/page-name)',
+                    validation: (Rule: any) => Rule.required(),
+                  },
+                  {
+                    name: 'blank',
+                    type: 'boolean',
+                    title: 'Open in new tab',
+                    description: 'Check to open link in a new tab',
+                    initialValue: false,
                   },
                 ],
               },

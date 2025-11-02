@@ -7,13 +7,16 @@ import { getLocalizedPortableText } from '@/lib/portableText'
 // Custom components for PortableText with icons
 const contactPortableTextComponents: PortableTextComponents = {
   marks: {
-    link: ({ children, value }: { children: React.ReactNode; value?: { href?: string } }) => {
+    link: ({ children, value }: { children: React.ReactNode; value?: { href?: string; blank?: boolean } }) => {
+      const isExternal = value?.href?.startsWith('http://') || value?.href?.startsWith('https://')
+      const shouldOpenInNewTab = value?.blank || isExternal
+      
       return (
         <a
           href={value?.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-700 hover:text-[#0abaee] font-medium"
+          target={shouldOpenInNewTab ? '_blank' : undefined}
+          rel={shouldOpenInNewTab ? 'noopener noreferrer' : undefined}
+          className="text-[#0abaee] hover:text-gray-900 font-medium transition-colors"
         >
           {children}
         </a>

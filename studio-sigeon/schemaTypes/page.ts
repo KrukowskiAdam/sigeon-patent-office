@@ -62,6 +62,20 @@ export const page = defineType({
       description: 'Order in navigation menu (lower numbers first)',
     }),
     defineField({
+      name: 'buttons',
+      title: 'Button Labels',
+      type: 'object',
+      description: 'Customize button text that appears on the page',
+      fields: [
+        defineField({
+          name: 'backToHome',
+          title: 'Back to Home Button',
+          type: 'localizedString',
+          description: 'Text for the button that returns to homepage',
+        }),
+      ],
+    }),
+    defineField({
       name: 'seo',
       title: 'SEO Settings',
       type: 'seo',

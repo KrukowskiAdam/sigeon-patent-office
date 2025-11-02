@@ -76,6 +76,9 @@ export interface TeamPage {
   teamSection?: {
     showTeam?: boolean
   }
+  buttons?: {
+    backToHome?: LocalizedString
+  }
   seo?: SEO
 }
 
@@ -299,6 +302,9 @@ export interface Page {
   }
   showInNavigation?: boolean
   navigationOrder?: number
+  buttons?: {
+    backToHome?: LocalizedString
+  }
   seo?: SEO
 }
 

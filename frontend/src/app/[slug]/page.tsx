@@ -9,6 +9,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { ContentBlock } from '@/components/blocks'
 import { notFound } from 'next/navigation'
+import { navigationTranslations, getLocalizedText } from '@/lib/i18n'
 
 interface PageProps {
   params: Promise<{
@@ -94,7 +95,9 @@ export default function DynamicPage({ params }: PageProps) {
                 e.currentTarget.style.backgroundColor = '#0abaee'
               }}
             >
-              Strona główna
+              {page?.buttons?.backToHome
+                ? getLocalizedText(page.buttons.backToHome, currentLanguage)
+                : navigationTranslations[currentLanguage].home}
             </Link>
           </div>
         </div>

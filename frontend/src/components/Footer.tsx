@@ -88,17 +88,19 @@ export function Footer() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Column 1 */}
-          <div className="text-center">
-            <h4 className="font-semibold mb-4">
-              {getLocalizedText(footer.column1.title, currentLanguage)}
-            </h4>
-            <p className="text-white text-sm mb-4">
-              {getLocalizedText(footer.column1.content, currentLanguage)}
-            </p>
+          <div className="flex flex-col text-center">
+            <div className="flex-grow">
+              <h4 className="font-semibold mb-4">
+                {getLocalizedText(footer.column1.title, currentLanguage)}
+              </h4>
+              <p className="text-white text-sm mb-4">
+                {getLocalizedText(footer.column1.content, currentLanguage)}
+              </p>
+            </div>
             {footer.column1.buttonText && footer.column1.buttonUrl && (
               <Link 
                 href={footer.column1.buttonUrl}
-                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm"
+                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm mx-auto"
               >
                 {getLocalizedText(footer.column1.buttonText, currentLanguage)}
               </Link>
@@ -106,17 +108,19 @@ export function Footer() {
           </div>
 
           {/* Column 2 */}
-          <div className="text-center">
-            <h4 className="font-semibold mb-4">
-              {getLocalizedText(footer.column2.title, currentLanguage)}
-            </h4>
-            <div className="text-white text-sm whitespace-pre-line mb-4">
-              {getLocalizedText(footer.column2.content, currentLanguage)}
+          <div className="flex flex-col text-center">
+            <div className="flex-grow">
+              <h4 className="font-semibold mb-4">
+                {getLocalizedText(footer.column2.title, currentLanguage)}
+              </h4>
+              <div className="text-white text-sm whitespace-pre-line mb-4">
+                {getLocalizedText(footer.column2.content, currentLanguage)}
+              </div>
             </div>
             {footer.column2.buttonText && footer.column2.buttonUrl && (
               <Link 
                 href={footer.column2.buttonUrl}
-                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm"
+                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm mx-auto"
               >
                 {getLocalizedText(footer.column2.buttonText, currentLanguage)}
               </Link>
@@ -124,17 +128,19 @@ export function Footer() {
           </div>
 
           {/* Column 3 */}
-          <div className="text-center">
-            <h4 className="font-semibold mb-4">
-              {getLocalizedText(footer.column3.title, currentLanguage)}
-            </h4>
-            <div className="text-white text-sm whitespace-pre-line mb-4">
-              {getLocalizedText(footer.column3.content, currentLanguage)}
+          <div className="flex flex-col text-center">
+            <div className="flex-grow">
+              <h4 className="font-semibold mb-4">
+                {getLocalizedText(footer.column3.title, currentLanguage)}
+              </h4>
+              <div className="text-white text-sm whitespace-pre-line mb-4">
+                {getLocalizedText(footer.column3.content, currentLanguage)}
+              </div>
             </div>
             {footer.column3.buttonText && footer.column3.buttonUrl && (
               <Link 
                 href={footer.column3.buttonUrl}
-                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm"
+                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm mx-auto"
               >
                 {getLocalizedText(footer.column3.buttonText, currentLanguage)}
               </Link>
@@ -142,17 +148,19 @@ export function Footer() {
           </div>
 
           {/* Column 4 */}
-          <div className="text-center">
-            <h4 className="font-semibold mb-4">
-              {getLocalizedText(footer.column4.title, currentLanguage)}
-            </h4>
-            <div className="text-white text-sm whitespace-pre-line mb-4">
-              {getLocalizedText(footer.column4.content, currentLanguage)}
+          <div className="flex flex-col text-center">
+            <div className="flex-grow">
+              <h4 className="font-semibold mb-4">
+                {getLocalizedText(footer.column4.title, currentLanguage)}
+              </h4>
+              <div className="text-white text-sm whitespace-pre-line mb-4">
+                {getLocalizedText(footer.column4.content, currentLanguage)}
+              </div>
             </div>
             {footer.column4.buttonText && footer.column4.buttonUrl && (
               <Link 
                 href={footer.column4.buttonUrl}
-                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm"
+                className="inline-flex items-center gap-1 px-4 py-2 bg-white text-[#0abaee] font-bold rounded-md hover:bg-gray-100 transition-colors duration-200 text-sm shadow-sm mx-auto"
               >
                 {getLocalizedText(footer.column4.buttonText, currentLanguage)}
               </Link>
