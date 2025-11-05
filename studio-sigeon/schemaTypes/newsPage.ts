@@ -26,7 +26,11 @@ export const newsPage = defineType({
           type: 'localizedString',
           initialValue: {
             pl: 'Strona główna',
-            en: 'Home'
+            en: 'Home',
+            zh: '首页',
+            ko: '홈',
+            ja: 'ホーム',
+            ru: 'Главная'
           }
         })
       ]
