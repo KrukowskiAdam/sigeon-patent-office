@@ -18,7 +18,7 @@ export const redirectPage = defineType({
       name: 'slug',
       title: 'URL Slug',
       type: 'slug',
-      description: '⚠️ WAŻNE: Link w newsletterze będzie w formacie: sigeon.pl/r/[slug]. Na przykład, jeśli wpiszesz "umow-spotkanie", pełny link to: sigeon.pl/r/umow-spotkanie',
+      description: '⚠️ WAŻNE: Link w newsletterze będzie w formacie: sigeon.pl/r/[slug]   |   Przykład: jeśli wpiszesz "umow-spotkanie", pełny link to: sigeon.pl/r/umow-spotkanie',
       options: {
         source: 'title',
         maxLength: 96,
