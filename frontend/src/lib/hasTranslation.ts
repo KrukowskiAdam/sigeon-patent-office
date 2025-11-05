@@ -41,18 +41,20 @@ export function hasBlockTranslation(block: any, language: string): boolean {
       return true
     
     case 'twoColumnTextBlock':
-      // Check if any column has translation
+      // Check if any column has content (not just title) in target language
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const leftHasTranslation = block.leftColumn?.some((item: any) => 
-        item.title?.[language] || item.content?.[language]
-      ) ?? false
+      const leftHasContent = block.leftColumn?.some((item: any) => {
+        const content = item.content?.[language]
+        return Array.isArray(content) && content.length > 0
+      }) ?? false
       
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const rightHasTranslation = block.rightColumn?.some((item: any) => 
-        item.title?.[language] || item.content?.[language]
-      ) ?? false
+      const rightHasContent = block.rightColumn?.some((item: any) => {
+        const content = item.content?.[language]
+        return Array.isArray(content) && content.length > 0
+      }) ?? false
       
-      return leftHasTranslation || rightHasTranslation
+      return leftHasContent || rightHasContent
     
     default:
       // For unknown block types, show them
