@@ -104,6 +104,12 @@ export const contactBlock = defineType({
       rows: 8,
       description: 'Paste the iframe code from Google Maps embed',
     }),
+    defineField({
+      name: 'mapTitle',
+      title: 'Map Section Title',
+      type: 'localizedString',
+      description: 'Title above the map (e.g., "Jak do nas dojechać?")',
+    }),
   ],
   preview: {
     prepare() {

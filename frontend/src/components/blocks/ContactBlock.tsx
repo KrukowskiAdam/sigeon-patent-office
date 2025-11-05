@@ -88,6 +88,14 @@ interface ContactBlockType {
     formEmail: string
   }
   mapEmbedCode: string
+  mapTitle?: {
+    pl: string
+    en?: string
+    zh?: string
+    ko?: string
+    ja?: string
+    ru?: string
+  }
 }
 
 interface ContactBlockProps {
@@ -273,7 +281,9 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
         {block.mapEmbedCode && (
           <div className="mt-12 pt-12 border-t border-gray-200 px-12">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              {language === 'en' ? 'How can you find us?' : 'Jak do nas dojechać?'}
+              {block.mapTitle?.[language as keyof typeof block.mapTitle] || 
+               block.mapTitle?.pl || 
+               (language === 'en' ? 'How can you find us?' : 'Jak do nas dojechać?')}
             </h3>
             <div 
               className="w-full rounded-lg overflow-hidden"
