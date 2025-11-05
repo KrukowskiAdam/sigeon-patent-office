@@ -13,17 +13,22 @@ export function hasBlockTranslation(block: any, language: string): boolean {
       return !!(block.title?.[language] || block.subtitle?.[language])
     
     case 'textBlock':
-      return !!(block.title?.[language] || block.content?.[language])
+      // Check if content exists in target language (not just title)
+      const textContent = block.content?.[language]
+      return Array.isArray(textContent) && textContent.length > 0
     
     case 'textImageBlock':
-      return !!(block.title?.[language] || block.content?.[language])
+      // Check if content exists in target language
+      const imageBlockContent = block.content?.[language]
+      return Array.isArray(imageBlockContent) && imageBlockContent.length > 0
     
     case 'textImageCarouselBlock':
-      // Check if any slide has translation
+      // Check if any slide has content in target language
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return block.slides?.some((slide: any) => 
-        slide.title?.[language] || slide.content?.[language]
-      ) ?? false
+      return block.slides?.some((slide: any) => {
+        const slideContent = slide.content?.[language]
+        return Array.isArray(slideContent) && slideContent.length > 0
+      }) ?? false
     
     case 'servicesBlock':
       return !!(block.title?.[language] || 
