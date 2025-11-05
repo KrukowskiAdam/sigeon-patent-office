@@ -336,3 +336,18 @@ export async function getFooter(): Promise<Footer | null> {
     }
   `)
 }
+
+// Get redirect page by slug
+export async function getRedirectPage(slug: string): Promise<{
+  destinationUrl: string;
+  redirectType: string;
+  isActive: boolean;
+} | null> {
+  return client.fetch(`
+    *[_type == "redirectPage" && slug.current == $slug][0] {
+      destinationUrl,
+      redirectType,
+      isActive
+    }
+  `, { slug })
+}

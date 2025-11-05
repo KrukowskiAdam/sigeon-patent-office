@@ -77,4 +77,9 @@ export const structure = (S: StructureBuilder) =>
         .title('Team Members')
         .schemaType('teamMember')
         .child(S.documentTypeList('teamMember').title('Team Members')),
+      
+      S.listItem()
+        .title('Redirect Pages')
+        .schemaType('redirectPage')
+        .child(S.documentTypeList('redirectPage').title('Redirect Pages')),
     ])

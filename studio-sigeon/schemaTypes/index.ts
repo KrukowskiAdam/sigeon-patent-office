@@ -22,6 +22,7 @@ import {page} from './page'
 import {teamMember} from './teamMember'
 import {navigation} from './navigation'
 import footer from './footer'
+import {redirectPage} from './redirectPage'
 
 export const schemaTypes = [
   // Object types (must be first)
@@ -55,4 +56,5 @@ export const schemaTypes = [
   teamMember,
   navigation,
   footer,
+  redirectPage,
 ]
