@@ -14,6 +14,7 @@ import { getLocalizedText } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
 import { ContentBlock } from '@/components/blocks/ContentBlock'
 import { getLinkHref, shouldOpenInNewTab } from '@/utils/linkUtils'
+import { hasBlockTranslation } from '@/lib/hasTranslation'
 
 export default function Home() {
   const { currentLanguage } = useLanguage()
@@ -70,7 +71,9 @@ export default function Home() {
       {/* Content Blocks from CMS */}
       {homepage?.content && homepage.content.length > 0 && (
         <>
-          {homepage.content.map((block, index) => (
+          {homepage.content
+            .filter(block => hasBlockTranslation(block, currentLanguage))
+            .map((block, index) => (
             <ContentBlock 
               key={block._key || index} 
               block={block} 
