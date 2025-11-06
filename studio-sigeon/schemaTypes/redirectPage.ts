@@ -9,16 +9,16 @@ export const redirectPage = defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Nazwa wewnętrzna',
+      title: 'Internal Title',
       type: 'string',
-      description: 'Nazwa do identyfikacji w CMS (np. "Umów spotkanie - Newsletter grudzień 2024")',
+      description: 'For internal reference only (e.g., "Booking Link - December Newsletter")',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
       title: 'URL Slug',
       type: 'slug',
-      description: '⚠️ WAŻNE: Link w newsletterze będzie w formacie: sigeon.pl/r/[slug]   |   Przykład: jeśli wpiszesz "umow-spotkanie", pełny link to: sigeon.pl/r/umow-spotkanie',
+      description: '⚠️ IMPORTANT: Newsletter link format will be: yourdomain.com/r/[slug]   |   Example: if you enter "book-meeting", the full link will be: yourdomain.com/r/book-meeting',
       options: {
         source: 'title',
         maxLength: 96,
@@ -27,9 +27,9 @@ export const redirectPage = defineType({
     }),
     defineField({
       name: 'destinationUrl',
-      title: 'Docelowy URL',
+      title: 'Destination URL',
       type: 'url',
-      description: 'Zewnętrzny link, na który zostanie przekierowany użytkownik (np. link do Calendly, formularza kontaktowego, itp.)',
+      description: 'External URL where users will be redirected (e.g., Calendly link, contact form, etc.)',
       validation: (Rule) => 
         Rule.required().uri({
           scheme: ['http', 'https']
@@ -37,36 +37,36 @@ export const redirectPage = defineType({
     }),
     defineField({
       name: 'redirectType',
-      title: 'Typ przekierowania',
+      title: 'Redirect Type',
       type: 'string',
       options: {
         list: [
-          {title: 'Permanentne (301) - nie zmieniaj po publikacji', value: '301'},
-          {title: 'Tymczasowe (302) - polecane dla newsletterów', value: '302'},
+          {title: 'Permanent (301) - do not change after publishing', value: '301'},
+          {title: 'Temporary (302) - recommended for newsletters', value: '302'},
         ],
       },
       initialValue: '302',
-      description: '💡 Dla newsletterów wybierz 302 (tymczasowe), żeby móc zmienić docelowy link w przyszłości',
+      description: '💡 For newsletters choose 302 (temporary), so you can change the destination link later',
     }),
     defineField({
       name: 'isActive',
-      title: 'Aktywne',
+      title: 'Active',
       type: 'boolean',
-      description: 'Odznacz, aby tymczasowo wyłączyć przekierowanie (użytkownicy zobaczą błąd 404)',
+      description: 'Uncheck to temporarily disable this redirect (users will see 404 error)',
       initialValue: true,
     }),
     defineField({
       name: 'description',
-      title: 'Opis wewnętrzny',
+      title: 'Internal Notes',
       type: 'text',
       rows: 3,
-      description: 'Opcjonalne notatki (np. "Użyte w newsletterze grudniowym 2024")',
+      description: 'Optional notes (e.g., "Used in December 2024 newsletter campaign")',
     }),
     defineField({
       name: 'createdFor',
-      title: 'Utworzone dla',
+      title: 'Created For',
       type: 'string',
-      description: 'Kampania lub cel (np. "Newsletter listopadowy", "Stopka strony")',
+      description: 'Campaign or purpose (e.g., "November Newsletter", "Website Footer")',
     }),
   ],
   preview: {
@@ -79,7 +79,7 @@ export const redirectPage = defineType({
     prepare({title, slug, destination, isActive}) {
       return {
         title: title,
-        subtitle: `/r/${slug} → ${destination}${!isActive ? ' (Nieaktywne)' : ''}`,
+        subtitle: `/r/${slug} → ${destination}${!isActive ? ' (Inactive)' : ''}`,
         media: LinkIcon,
       }
     },
