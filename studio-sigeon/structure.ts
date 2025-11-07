@@ -65,6 +65,17 @@ export const structure = (S: StructureBuilder) =>
         .schemaType('emailSettings')
         .child(S.documentTypeList('emailSettings').title('Email Settings')),
       
+      // Contact Form Settings - singleton document
+      S.listItem()
+        .title('Contact Form Settings')
+        .id('contactFormSettings')
+        .child(
+          S.document()
+            .schemaType('contactFormSettings')
+            .documentId('contact-form-settings')
+            .title('Contact Form Configuration')
+        ),
+      
       // Divider
       S.divider(),
       

@@ -146,6 +146,7 @@ export const homepage = defineType({
             {type: 'servicesBlock'},
             {type: 'bannerBlock'},
             {type: 'contactBlock'},
+            {type: 'contactFormBlock'},
             {type: 'footerBlock'},
           ],
           description: 'Content blocks for contact section',

@@ -37,6 +37,7 @@ export const page = defineType({
         {type: 'bannerBlock'},
         {type: 'codeBlock'},
         {type: 'contactBlock'},
+        {type: 'contactFormBlock'},
         {type: 'footerBlock'},
       ],
       description: 'Build your page with content blocks',

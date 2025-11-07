@@ -24,6 +24,8 @@ import {navigation} from './navigation'
 import footer from './footer'
 import {redirectPage} from './redirectPage'
 import {emailSettings} from './emailSettings'
+import {contactFormSettings} from './contactFormSettings'
+import {contactFormBlock} from './blocks/contactFormBlock'
 
 export const schemaTypes = [
   // Object types (must be first)
@@ -45,6 +47,7 @@ export const schemaTypes = [
   bannerBlock,
   codeBlock,
   contactBlock,
+  contactFormBlock,
   footerBlock,
   twoColumnTextBlock,
   
@@ -59,4 +62,5 @@ export const schemaTypes = [
   footer,
   redirectPage,
   emailSettings,
+  contactFormSettings,
 ]

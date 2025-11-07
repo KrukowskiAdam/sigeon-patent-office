@@ -283,6 +283,16 @@ export interface ContactBlock {
   mapEmbedCode: string
 }
 
+export interface ContactFormBlock {
+  _type: 'contactFormBlock'
+  _key: string
+  showTitle?: boolean
+  customTitle?: LocalizedString
+  description?: LocalizedText
+  backgroundColor?: 'white' | 'gray' | 'transparent'
+  padding?: 'small' | 'medium' | 'large'
+}
+
 export interface FooterBlock {
   _type: 'footerBlock'
   _key: string
@@ -304,7 +314,7 @@ export interface FooterBlock {
   }
 }
 
-export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | TwoColumnTextBlock | HeroBlock | ServicesBlock | BannerBlock | CodeBlock | ContactBlock | FooterBlock
+export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | TwoColumnTextBlock | HeroBlock | ServicesBlock | BannerBlock | CodeBlock | ContactBlock | ContactFormBlock | FooterBlock
 
 export interface Page {
   _id: string
