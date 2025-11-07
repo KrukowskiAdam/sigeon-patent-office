@@ -84,6 +84,66 @@ interface ContactBlockType {
     title: {
       pl: string
       en?: string
+      zh?: string
+      ko?: string
+      ja?: string
+      ru?: string
+    }
+    subjectLabel?: {
+      pl: string
+      en?: string
+      zh?: string
+      ko?: string
+      ja?: string
+      ru?: string
+    }
+    subjectPlaceholder?: {
+      pl: string
+      en?: string
+      zh?: string
+      ko?: string
+      ja?: string
+      ru?: string
+    }
+    emailLabel?: {
+      pl: string
+      en?: string
+      zh?: string
+      ko?: string
+      ja?: string
+      ru?: string
+    }
+    emailPlaceholder?: {
+      pl: string
+      en?: string
+      zh?: string
+      ko?: string
+      ja?: string
+      ru?: string
+    }
+    messageLabel?: {
+      pl: string
+      en?: string
+      zh?: string
+      ko?: string
+      ja?: string
+      ru?: string
+    }
+    messagePlaceholder?: {
+      pl: string
+      en?: string
+      zh?: string
+      ko?: string
+      ja?: string
+      ru?: string
+    }
+    submitButtonLabel?: {
+      pl: string
+      en?: string
+      zh?: string
+      ko?: string
+      ja?: string
+      ru?: string
     }
     formEmail: string
   }
@@ -249,7 +309,10 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="temat" className="block text-sm font-medium text-gray-700 mb-2">
-                  {language === 'en' ? 'Subject' : 'Temat'}
+                  {block.contactForm.subjectLabel 
+                    ? getLocalizedText(block.contactForm.subjectLabel, language as Language)
+                    : (language === 'en' ? 'Subject' : 'Temat')
+                  }
                 </label>
                 <input
                   type="text"
@@ -259,13 +322,19 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0abaee] focus:border-transparent"
-                  placeholder={language === 'en' ? 'Subject' : 'Temat'}
+                  placeholder={block.contactForm.subjectPlaceholder 
+                    ? getLocalizedText(block.contactForm.subjectPlaceholder, language as Language)
+                    : (language === 'en' ? 'Subject' : 'Temat')
+                  }
                 />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  {language === 'en' ? 'Email' : 'Email'}
+                  {block.contactForm.emailLabel 
+                    ? getLocalizedText(block.contactForm.emailLabel, language as Language)
+                    : 'Email'
+                  }
                 </label>
                 <input
                   type="email"
@@ -275,13 +344,19 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0abaee] focus:border-transparent"
-                  placeholder="your@email.com"
+                  placeholder={block.contactForm.emailPlaceholder 
+                    ? getLocalizedText(block.contactForm.emailPlaceholder, language as Language)
+                    : "your@email.com"
+                  }
                 />
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  {language === 'en' ? 'Message' : 'Wiadomość'}
+                  {block.contactForm.messageLabel 
+                    ? getLocalizedText(block.contactForm.messageLabel, language as Language)
+                    : (language === 'en' ? 'Message' : 'Wiadomość')
+                  }
                 </label>
                 <textarea
                   id="message"
@@ -291,7 +366,10 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
                   required
                   rows={3}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0abaee] focus:border-transparent"
-                  placeholder={language === 'en' ? 'Your message...' : 'Twoja wiadomość...'}
+                  placeholder={block.contactForm.messagePlaceholder 
+                    ? getLocalizedText(block.contactForm.messagePlaceholder, language as Language)
+                    : (language === 'en' ? 'Your message...' : 'Twoja wiadomość...')
+                  }
                 />
               </div>
 
@@ -319,7 +397,10 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
               >
                 {isSubmitting 
                   ? (language === 'en' ? 'Sending...' : 'Wysyłanie...') 
-                  : (language === 'en' ? 'Send' : 'Wyślij')
+                  : (block.contactForm.submitButtonLabel 
+                      ? getLocalizedText(block.contactForm.submitButtonLabel, language as Language)
+                      : (language === 'en' ? 'Send' : 'Wyślij')
+                    )
                 }
               </button>
             </form>

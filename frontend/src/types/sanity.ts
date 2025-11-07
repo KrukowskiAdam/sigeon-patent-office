@@ -271,6 +271,13 @@ export interface ContactBlock {
   }
   contactForm: {
     title: LocalizedString
+    subjectLabel?: LocalizedString
+    subjectPlaceholder?: LocalizedString
+    emailLabel?: LocalizedString
+    emailPlaceholder?: LocalizedString
+    messageLabel?: LocalizedString
+    messagePlaceholder?: LocalizedString
+    submitButtonLabel?: LocalizedString
     formEmail: string
   }
   mapEmbedCode: string

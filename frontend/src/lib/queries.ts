@@ -271,6 +271,13 @@ export async function getPage(slug: string): Promise<Page | null> {
         leftColumnBottom,
         contactForm {
           title,
+          subjectLabel,
+          subjectPlaceholder,
+          emailLabel,
+          emailPlaceholder,
+          messageLabel,
+          messagePlaceholder,
+          submitButtonLabel,
           formEmail
         },
         mapEmbedCode
