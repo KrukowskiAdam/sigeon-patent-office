@@ -257,37 +257,6 @@ export interface CodeBlock {
 export interface ContactBlock {
   _type: 'contactBlock'
   _key: string
-  leftColumnTop: {
-    pl: unknown[]
-    en?: unknown[]
-  }
-  socialMedia?: {
-    facebook?: string
-    linkedin?: string
-  }
-  leftColumnBottom: {
-    pl: unknown[]
-    en?: unknown[]
-  }
-  mapEmbedCode: string
-  mapTitle?: {
-    pl: string
-    en?: string
-    zh?: string
-    ko?: string
-    ja?: string
-    ru?: string
-  }
-}
-
-export interface ContactFormBlock {
-  _type: 'contactFormBlock'
-  _key: string
-  showTitle?: boolean
-  customTitle?: LocalizedString
-  description?: LocalizedText
-  backgroundColor?: 'white' | 'gray' | 'transparent'
-  padding?: 'small' | 'medium' | 'large'
 }
 
 export interface FooterBlock {
@@ -311,7 +280,7 @@ export interface FooterBlock {
   }
 }
 
-export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | TwoColumnTextBlock | HeroBlock | ServicesBlock | BannerBlock | CodeBlock | ContactBlock | ContactFormBlock | FooterBlock
+export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | TwoColumnTextBlock | HeroBlock | ServicesBlock | BannerBlock | CodeBlock | ContactBlock | FooterBlock
 
 export interface Page {
   _id: string

@@ -300,6 +300,34 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
   `)
 }
 
+// Get news page settings
+export async function getNewsPageSettings(): Promise<{
+  socialSharing?: {
+    showSocialButtons?: boolean
+    shareTitle?: {
+      pl: string
+      en?: string
+    }
+    showFacebook?: boolean
+    showLinkedIn?: boolean
+    showTwitter?: boolean
+    customShareUrl?: string
+  }
+} | null> {
+  return client.fetch(`
+    *[_type == "newsPage"][0] {
+      socialSharing {
+        showSocialButtons,
+        shareTitle,
+        showFacebook,
+        showLinkedIn,
+        showTwitter,
+        customShareUrl
+      }
+    }
+  `)
+}
+
 // Get footer data
 export async function getFooter(): Promise<Footer | null> {
   return client.fetch(`

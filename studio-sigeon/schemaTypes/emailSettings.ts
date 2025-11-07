@@ -69,6 +69,21 @@ export const emailSettings = defineType({
       initialValue: 'Formularz kontaktowy - Sigeon',
     }),
     defineField({
+      name: 'recipientEmail',
+      title: 'Recipient Email (Contact Form)',
+      type: 'string',
+      description: 'Email address where contact form submissions will be sent',
+      placeholder: 'ip@sigeon.pl',
+      validation: (Rule) => 
+        Rule.required().regex(
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+          {
+            name: 'email',
+            invert: false,
+          }
+        ).error('Please enter a valid email address'),
+    }),
+    defineField({
       name: 'isActive',
       title: 'Active Configuration',
       type: 'boolean',

@@ -30,9 +30,62 @@ export const newsPage = defineType({
             zh: '首页',
             ko: '홈',
             ja: 'ホーム',
-            ru: 'Главная'
+            ru: 'Главna'
           }
         })
+      ]
+    }),
+    defineField({
+      name: 'socialSharing',
+      title: 'Social Media Sharing',
+      type: 'object',
+      description: 'Configure social media sharing buttons for news articles',
+      fields: [
+        defineField({
+          name: 'showSocialButtons',
+          title: 'Show Social Sharing Buttons',
+          type: 'boolean',
+          description: 'Display social media sharing buttons on article pages',
+          initialValue: true,
+        }),
+        defineField({
+          name: 'shareTitle',
+          title: 'Share Section Title',
+          type: 'localizedStringNews',
+          description: 'Title above the sharing buttons',
+          initialValue: {
+            pl: 'Udostępnij',
+            en: 'Share'
+          }
+        }),
+        defineField({
+          name: 'showFacebook',
+          title: 'Show Facebook Share Button',
+          type: 'boolean',
+          description: 'Enable Facebook sharing',
+          initialValue: true,
+        }),
+        defineField({
+          name: 'showLinkedIn',
+          title: 'Show LinkedIn Share Button',
+          type: 'boolean',
+          description: 'Enable LinkedIn sharing',
+          initialValue: true,
+        }),
+        defineField({
+          name: 'showTwitter',
+          title: 'Show Twitter Share Button',
+          type: 'boolean',
+          description: 'Enable Twitter sharing',
+          initialValue: false,
+        }),
+        defineField({
+          name: 'customShareUrl',
+          title: 'Custom Base URL for Sharing',
+          type: 'url',
+          description: 'Override default URL for social sharing (e.g., https://sigeon.pl instead of https://sigeon.vercel.app)',
+          placeholder: 'https://sigeon.pl',
+        }),
       ]
     }),
     defineField({

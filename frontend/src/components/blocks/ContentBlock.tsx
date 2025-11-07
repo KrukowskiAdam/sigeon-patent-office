@@ -1,5 +1,5 @@
 import React from 'react'
-import { ContentBlock as ContentBlockType, TextBlock as TextBlockType, TextImageBlock as TextImageBlockType, TextImageCarouselBlock as TextImageCarouselBlockType, TwoColumnTextBlock as TwoColumnTextBlockType, HeroBlock as HeroBlockType, BannerBlock as BannerBlockType, ServicesBlock as ServicesBlockType, CodeBlock as CodeBlockType, ContactBlock as ContactBlockType, ContactFormBlock as ContactFormBlockType } from '@/types/sanity'
+import { ContentBlock as ContentBlockType, TextBlock as TextBlockType, TextImageBlock as TextImageBlockType, TextImageCarouselBlock as TextImageCarouselBlockType, TwoColumnTextBlock as TwoColumnTextBlockType, HeroBlock as HeroBlockType, BannerBlock as BannerBlockType, ServicesBlock as ServicesBlockType, CodeBlock as CodeBlockType } from '@/types/sanity'
 import { BannerBlock } from './BannerBlock'
 import { TextImageCarouselBlock } from './TextImageCarouselBlock'
 import { TextImageBlock } from './TextImageBlock'
@@ -8,7 +8,6 @@ import { HeroBlock } from './HeroBlock'
 import { ServicesBlock } from './ServicesBlock'
 import { CodeBlock } from './CodeBlock'
 import { ContactBlock } from './ContactBlock'
-import { ContactFormBlock } from './ContactFormBlock'
 import { FooterBlock } from './FooterBlock'
 import { getLocalizedText } from '@/lib/i18n'
 import { PortableText } from '../ui/PortableText'
@@ -100,9 +99,7 @@ export function ContentBlock({ block, language }: ContentBlockProps) {
     case 'codeBlock':
       return <CodeBlock block={block as CodeBlockType} language={language} />
     case 'contactBlock':
-      return <ContactBlock block={block as ContactBlockType} language={language} />
-    case 'contactFormBlock':
-      return <ContactFormBlock block={block as ContactFormBlockType} language={language} />
+      return <ContactBlock language={language} />
     case 'footerBlock':
       return <FooterBlock block={block} language={language} />
     default:
