@@ -25,6 +25,7 @@ import footer from './footer'
 import {redirectPage} from './redirectPage'
 import {emailSettings} from './emailSettings'
 import {contactSettings} from './contactSettings'
+import {newsletterAssets} from './newsletterAssets'
 
 export const schemaTypes = [
   // Object types (must be first)
@@ -61,4 +62,5 @@ export const schemaTypes = [
   redirectPage,
   emailSettings,
   contactSettings,
+  newsletterAssets,
 ]

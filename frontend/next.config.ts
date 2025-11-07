@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/images/:path*',
+        destination: 'https://cdn.sanity.io/images/pofl8c47/production/:path*',
+      },
+    ]
+  },
 };
 
 export default nextConfig;
