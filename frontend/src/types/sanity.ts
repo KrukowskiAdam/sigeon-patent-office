@@ -25,6 +25,19 @@ export interface LocalizedRichText {
   ru?: unknown[]
 }
 
+export interface EmailSettings {
+  _id: string
+  _type: 'emailSettings'
+  title: string
+  smtpHost: string
+  smtpPort: number
+  smtpSecure: boolean
+  smtpUser: string
+  smtpPass: string
+  senderName: string
+  isActive: boolean
+}
+
 export interface SEO {
   metaTitle?: LocalizedString
   metaDescription?: LocalizedText

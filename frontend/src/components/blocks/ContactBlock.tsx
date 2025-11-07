@@ -109,6 +109,8 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
     email: '',
     message: '',
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -118,10 +120,37 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const mailtoLink = `mailto:${block.contactForm.formEmail}?subject=${encodeURIComponent(formData.temat)}&body=${encodeURIComponent(formData.message)}`
-    window.location.href = mailtoLink
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          temat: formData.temat,
+          email: formData.email,
+          message: formData.message,
+          to: block.contactForm.formEmail,
+        }),
+      })
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        setFormData({ temat: '', email: '', message: '' }) // Reset form
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -266,11 +295,32 @@ export function ContactBlock({ block, language }: ContactBlockProps) {
                 />
               </div>
 
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <div className="p-4 bg-green-100 border border-green-300 text-green-700 rounded-lg">
+                  {language === 'en' 
+                    ? 'Message sent successfully! We will contact you soon.' 
+                    : 'Wiadomość wysłana pomyślnie! Skontaktujemy się z Tobą wkrótce.'}
+                </div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="p-4 bg-red-100 border border-red-300 text-red-700 rounded-lg">
+                  {language === 'en' 
+                    ? 'Error sending message. Please try again or contact us directly.' 
+                    : 'Błąd wysyłania wiadomości. Spróbuj ponownie lub skontaktuj się z nami bezpośrednio.'}
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="w-full bg-[#0abaee] hover:bg-[#0891b2] text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                disabled={isSubmitting}
+                className="w-full bg-[#0abaee] hover:bg-[#0891b2] disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-3 px-6 rounded-lg transition-colors"
               >
-                {language === 'en' ? 'Send' : 'Wyślij'}
+                {isSubmitting 
+                  ? (language === 'en' ? 'Sending...' : 'Wysyłanie...') 
+                  : (language === 'en' ? 'Send' : 'Wyślij')
+                }
               </button>
             </form>
             </div>

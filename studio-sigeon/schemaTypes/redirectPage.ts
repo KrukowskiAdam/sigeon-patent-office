@@ -29,7 +29,7 @@ export const redirectPage = defineType({
       name: 'destinationUrl',
       title: 'Destination URL',
       type: 'url',
-      description: 'External URL where users will be redirected (e.g., Calendly link, contact form, etc.)',
+      description: 'External URL where users will be redirected',
       validation: (Rule) => 
         Rule.required().uri({
           scheme: ['http', 'https']
