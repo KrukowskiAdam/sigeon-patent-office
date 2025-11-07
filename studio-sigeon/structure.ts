@@ -76,6 +76,17 @@ export const structure = (S: StructureBuilder) =>
             .title('Contact Settings')
         ),
       
+      // Newsletter Assets - singleton document
+      S.listItem()
+        .title('Newsletter Assets')
+        .id('newsletterAssets')
+        .child(
+          S.document()
+            .schemaType('newsletterAssets')
+            .documentId('newsletter-assets')
+            .title('Newsletter Assets')
+        ),
+      
       // Divider
       S.divider(),
       
