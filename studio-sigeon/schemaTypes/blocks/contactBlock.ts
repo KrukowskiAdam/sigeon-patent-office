@@ -2,8 +2,9 @@ import {defineField, defineType} from 'sanity'
 
 export const contactBlock = defineType({
   name: 'contactBlock',
-  title: 'Contact Block',
+  title: 'Contact Info Block',
   type: 'object',
+  description: 'Company contact information with address, phone, social media and map (without form)',
   fields: [
     defineField({
       name: 'leftColumnTop',
@@ -37,66 +38,7 @@ export const contactBlock = defineType({
       type: 'localizedRichText',
       description: 'NIP, KRS, capital, legal links with formatting',
     }),
-    defineField({
-      name: 'contactForm',
-      title: 'Contact Form (Right Column)',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'title',
-          title: 'Form Title',
-          type: 'localizedString',
-        }),
-        defineField({
-          name: 'subjectLabel',
-          title: 'Subject Field Label',
-          type: 'localizedString',
-          description: 'Label for the subject/topic field',
-        }),
-        defineField({
-          name: 'subjectPlaceholder',
-          title: 'Subject Field Placeholder',
-          type: 'localizedString',
-          description: 'Placeholder text for subject field',
-        }),
-        defineField({
-          name: 'emailLabel',
-          title: 'Email Field Label',
-          type: 'localizedString',
-          description: 'Label for the email field',
-        }),
-        defineField({
-          name: 'emailPlaceholder',
-          title: 'Email Field Placeholder',
-          type: 'localizedString',
-          description: 'Placeholder text for email field',
-        }),
-        defineField({
-          name: 'messageLabel',
-          title: 'Message Field Label',
-          type: 'localizedString',
-          description: 'Label for the message/content field',
-        }),
-        defineField({
-          name: 'messagePlaceholder',
-          title: 'Message Field Placeholder',
-          type: 'localizedString',
-          description: 'Placeholder text for message field',
-        }),
-        defineField({
-          name: 'submitButtonLabel',
-          title: 'Submit Button Label',
-          type: 'localizedString',
-          description: 'Text for the submit button',
-        }),
-        defineField({
-          name: 'formEmail',
-          title: 'Email to Send To',
-          type: 'string',
-          description: 'Where form submissions will be sent',
-        }),
-      ],
-    }),
+
     defineField({
       name: 'mapEmbedCode',
       title: 'Google Maps Embed Code',
@@ -114,8 +56,8 @@ export const contactBlock = defineType({
   preview: {
     prepare() {
       return {
-        title: 'Contact Section',
-        subtitle: '2-column layout with contact info and form',
+        title: 'Contact Info Block',
+        subtitle: 'Company info, address, social media and map (no form)',
       }
     },
   },

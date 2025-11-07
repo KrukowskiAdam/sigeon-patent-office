@@ -269,18 +269,8 @@ export async function getPage(slug: string): Promise<Page | null> {
           linkedin
         },
         leftColumnBottom,
-        contactForm {
-          title,
-          subjectLabel,
-          subjectPlaceholder,
-          emailLabel,
-          emailPlaceholder,
-          messageLabel,
-          messagePlaceholder,
-          submitButtonLabel,
-          formEmail
-        },
-        mapEmbedCode
+        mapEmbedCode,
+        mapTitle
       },
       featuredImage,
       showInNavigation,

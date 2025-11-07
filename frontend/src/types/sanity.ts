@@ -269,18 +269,15 @@ export interface ContactBlock {
     pl: unknown[]
     en?: unknown[]
   }
-  contactForm: {
-    title: LocalizedString
-    subjectLabel?: LocalizedString
-    subjectPlaceholder?: LocalizedString
-    emailLabel?: LocalizedString
-    emailPlaceholder?: LocalizedString
-    messageLabel?: LocalizedString
-    messagePlaceholder?: LocalizedString
-    submitButtonLabel?: LocalizedString
-    formEmail: string
-  }
   mapEmbedCode: string
+  mapTitle?: {
+    pl: string
+    en?: string
+    zh?: string
+    ko?: string
+    ja?: string
+    ru?: string
+  }
 }
 
 export interface ContactFormBlock {
