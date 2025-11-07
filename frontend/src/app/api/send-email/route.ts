@@ -4,8 +4,9 @@ import { client } from '@/lib/sanity'
 
 // Get email settings from Sanity
 async function getEmailSettings() {
-  const settings = await client.fetch(`
-    *[_type == "emailSettings" && isActive == true][0] {
+  // First try to get active configuration
+  let settings = await client.fetch(`
+    *[_type == "emailSettings" && isActive == true] | order(_updatedAt desc)[0] {
       smtpHost,
       smtpPort,
       smtpSecure,
@@ -14,6 +15,21 @@ async function getEmailSettings() {
       senderName
     }
   `)
+  
+  // If no active config, get the most recently created one
+  if (!settings) {
+    settings = await client.fetch(`
+      *[_type == "emailSettings"] | order(_createdAt desc)[0] {
+        smtpHost,
+        smtpPort,
+        smtpSecure,
+        smtpUser,
+        smtpPass,
+        senderName
+      }
+    `)
+  }
+  
   return settings
 }
 

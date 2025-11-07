@@ -1,0 +1,10 @@
+// Query to check existing email settings
+// Run this in Vision (GROQ playground) in your Sanity Studio
+
+*[_type == "emailSettings"]{
+  _id,
+  title,
+  smtpUser,
+  isActive,
+  _createdAt
+} | order(_createdAt asc)

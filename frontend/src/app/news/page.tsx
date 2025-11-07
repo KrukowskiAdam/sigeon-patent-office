@@ -15,10 +15,20 @@ import { Badge } from '@/components/ui/badge'
 import { ContentBlock } from '@/components/blocks'
 
 export default function NewsPage() {
-  const { currentLanguage } = useLanguage()
+  const { currentLanguage, setLanguage } = useLanguage()
   const [news, setNews] = useState<NewsArticle[]>([])
   const [newsPage, setNewsPage] = useState<NewsPage | null>(null)
   const [loading, setLoading] = useState(true)
+
+  // Check for language parameter in URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const langParam = urlParams.get('lang')
+    
+    if (langParam && ['en', 'pl', 'zh', 'ko', 'ja', 'ru'].includes(langParam)) {
+      setLanguage(langParam as 'en' | 'pl' | 'zh' | 'ko' | 'ja' | 'ru')
+    }
+  }, [setLanguage])
 
   useEffect(() => {
     const loadNews = async () => {

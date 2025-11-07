@@ -7,6 +7,7 @@ import { useLanguage } from '@/context/LanguageContext'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import { navigationTranslations } from '@/lib/i18n'
 import { getLocalizedText } from '@/lib/i18n'
+import { getLocalizedLink } from '@/lib/localizedLinks'
 import { getNavigation } from '@/lib/queries'
 import { Navigation } from '@/types/sanity'
 import { Button } from '@/components/ui/button'
@@ -71,7 +72,7 @@ export function Header() {
                   .map((item, index) => (
                   <Link 
                     key={index}
-                    href={item.link} 
+                    href={getLocalizedLink(item, currentLanguage)} 
                     className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal"
                     target={item.isExternal ? '_blank' : undefined}
                     rel={item.isExternal ? 'noopener noreferrer' : undefined}
@@ -128,7 +129,7 @@ export function Header() {
                 .map((item, index) => (
                 <Link 
                   key={index}
-                  href={item.link} 
+                  href={getLocalizedLink(item, currentLanguage)} 
                   className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}
                   target={item.isExternal ? '_blank' : undefined}
                   rel={item.isExternal ? 'noopener noreferrer' : undefined}

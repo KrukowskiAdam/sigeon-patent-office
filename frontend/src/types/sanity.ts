@@ -342,6 +342,14 @@ export interface TeamMember {
 export interface MenuItem {
   label: LocalizedString
   link: string
+  languageSpecificLinks?: {
+    pl?: string
+    en?: string
+    zh?: string
+    ko?: string
+    ja?: string
+    ru?: string
+  }
   isExternal?: boolean
   showInNavigation?: boolean
   order?: number

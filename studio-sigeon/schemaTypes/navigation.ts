@@ -173,6 +173,10 @@ export const navigation = defineType({
             en: 'News'
           },
           link: '/news',
+          languageSpecificLinks: {
+            pl: '/news',
+            en: '/news?lang=en'
+          },
           isExternal: false,
           showInNavigation: true,
           order: 2
@@ -204,9 +208,54 @@ export const navigation = defineType({
             },
             {
               name: 'link',
-              title: 'Link',
+              title: 'Link (Default)',
               type: 'string',
               validation: Rule => Rule.required(),
+              description: 'Default link used for all languages if no language-specific links are provided',
+            },
+            {
+              name: 'languageSpecificLinks',
+              title: 'Language-Specific Links',
+              type: 'object',
+              description: '🌍 Optional: Different URLs for different languages. If not provided, default link will be used.',
+              fields: [
+                {
+                  name: 'pl',
+                  title: 'Polish Link',
+                  type: 'string',
+                  placeholder: '/news',
+                },
+                {
+                  name: 'en',
+                  title: 'English Link',
+                  type: 'string',
+                  placeholder: '/en/news',
+                },
+                {
+                  name: 'zh',
+                  title: 'Chinese Link',
+                  type: 'string',
+                  placeholder: '/zh/news',
+                },
+                {
+                  name: 'ko',
+                  title: 'Korean Link',
+                  type: 'string',
+                  placeholder: '/ko/news',
+                },
+                {
+                  name: 'ja',
+                  title: 'Japanese Link',
+                  type: 'string',
+                  placeholder: '/ja/news',
+                },
+                {
+                  name: 'ru',
+                  title: 'Russian Link',
+                  type: 'string',
+                  placeholder: '/ru/news',
+                },
+              ],
             },
             {
               name: 'isExternal',

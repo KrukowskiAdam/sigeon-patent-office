@@ -59,6 +59,12 @@ export const structure = (S: StructureBuilder) =>
             .title('Footer Settings')
         ),
       
+      // Email Settings - list of documents (allows multiple configs)
+      S.listItem()
+        .title('Email Settings')
+        .schemaType('emailSettings')
+        .child(S.documentTypeList('emailSettings').title('Email Settings')),
+      
       // Divider
       S.divider(),
       
