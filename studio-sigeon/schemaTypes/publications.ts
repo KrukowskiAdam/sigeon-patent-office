@@ -50,24 +50,7 @@ export const publications = defineType({
         }),
       ],
     }),
-    defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Patent Law', value: 'patent-law'},
-          {title: 'Trademark Law', value: 'trademark-law'},
-          {title: 'IP Litigation', value: 'ip-litigation'},
-          {title: 'Research & Development', value: 'research-development'},
-          {title: 'Academic Papers', value: 'academic-papers'},
-          {title: 'Case Studies', value: 'case-studies'},
-          {title: 'Industry Analysis', value: 'industry-analysis'},
-          {title: 'Legal Commentary', value: 'legal-commentary'},
-        ],
-      },
-      validation: (Rule) => Rule.required(),
-    }),
+
     defineField({
       name: 'authors',
       title: 'Authors',
@@ -152,13 +135,12 @@ export const publications = defineType({
       title: 'title.pl',
       author: 'authors.0.name',
       media: 'mainImage',
-      category: 'category',
     },
     prepare(selection) {
-      const {author, category, media} = selection
+      const {author, media} = selection
       return {
         title: selection.title,
-        subtitle: `${category ? category.replace('-', ' ').toUpperCase() : ''} ${author ? `• by ${author}` : ''}`,
+        subtitle: author ? `by ${author}` : 'Publication',
         media,
       }
     },
