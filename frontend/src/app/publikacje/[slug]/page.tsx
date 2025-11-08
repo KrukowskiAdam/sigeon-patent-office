@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import { getPublicationBySlug, getPublicationsPage } from '@/lib/queries'
 import { Publication } from '@/types/sanity'
 import { urlFor } from '@/lib/sanity'
-import { PortableText } from '@portabletext/react'
+
 
 interface Props {
   params: {
@@ -215,7 +215,9 @@ export default async function PublicationDetailPage({ params }: Props) {
           <div className="p-8">
             {publication.content?.pl && (
               <div className="prose prose-lg max-w-none">
-                <PortableText value={publication.content.pl as unknown as any} />
+                <div className="text-gray-600">
+                  [Treść publikacji - PortableText będzie dodany później]
+                </div>
               </div>
             )}
 
