@@ -140,16 +140,16 @@ export default function PublicationPage({ params }: Props) {
           )}
 
           {/* Share Section - Configurable */}
-          {publicationsSettings?.socialSharing?.enableSharing && (
+          {publicationsSettings?.socialSharing?.showSocialButtons && (
             <div className="mt-12 pt-8 border-t border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                {publicationsSettings.socialSharing.shareText 
-                  ? getLocalizedText(publicationsSettings.socialSharing.shareText, currentLanguage)
+                {publicationsSettings.socialSharing.shareTitle 
+                  ? getLocalizedText(publicationsSettings.socialSharing.shareTitle, currentLanguage)
                   : (currentLanguage === 'en' ? 'Share' : 'Udostępnij')
                 }
               </h3>
               <div className="flex gap-3">
-                {publicationsSettings.socialSharing.platforms?.linkedin && (
+                {publicationsSettings.socialSharing.showLinkedIn && (
                   <a
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://sigeon.vercel.app/publikacje/${publication.slug.current}`)}`}
                     target="_blank"
@@ -162,7 +162,7 @@ export default function PublicationPage({ params }: Props) {
                     LinkedIn
                   </a>
                 )}
-                {publicationsSettings.socialSharing.platforms?.facebook && (
+                {publicationsSettings.socialSharing.showFacebook && (
                   <a
                     href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://sigeon.vercel.app/publikacje/${publication.slug.current}`)}`}
                     target="_blank"
@@ -175,7 +175,7 @@ export default function PublicationPage({ params }: Props) {
                     Facebook
                   </a>
                 )}
-                {publicationsSettings.socialSharing.platforms?.twitter && (
+                {publicationsSettings.socialSharing.showTwitter && (
                   <a
                     href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://sigeon.vercel.app/publikacje/${publication.slug.current}`)}&text=${encodeURIComponent(getLocalizedText(publication.title, currentLanguage))}`}
                     target="_blank"

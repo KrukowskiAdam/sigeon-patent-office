@@ -79,13 +79,6 @@ export const newsPage = defineType({
           description: 'Enable Twitter sharing',
           initialValue: false,
         }),
-        defineField({
-          name: 'customShareUrl',
-          title: 'Custom Base URL for Sharing',
-          type: 'url',
-          description: 'Override default URL for social sharing (e.g., https://sigeon.pl instead of https://sigeon.vercel.app)',
-          placeholder: 'https://sigeon.pl',
-        }),
       ]
     }),
     defineField({

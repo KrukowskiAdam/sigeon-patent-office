@@ -1,105 +1,110 @@
 import {defineField, defineType} from 'sanity'
-import {DocumentTextIcon} from '@sanity/icons'
 
 export const publicationsPage = defineType({
   name: 'publicationsPage',
   title: 'Publications Page Settings',
   type: 'document',
-  icon: DocumentTextIcon,
+  icon: () => '📚',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Page Title',
-      type: 'localizedStringNews',
-      validation: (Rule) => Rule.required(),
+      name: 'buttons',
+      title: 'Buttons / Labels',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'readMore',
+          title: 'Read More label',
+          type: 'localizedString',
+          initialValue: {
+            pl: 'Czytaj więcej',
+            en: 'Read more'
+          }
+        }),
+        defineField({
+          name: 'backToHome',
+          title: 'Back to Home label',
+          type: 'localizedString',
+          initialValue: {
+            pl: 'Strona główna',
+            en: 'Home',
+            zh: '首页',
+            ko: '홈',
+            ja: 'ホーム',
+            ru: 'Główna'
+          }
+        })
+      ]
     }),
-    defineField({
-      name: 'description',
-      title: 'Page Description',
-      type: 'localizedTextNews',
-      description: 'Brief description of the publications section',
-    }),
-    defineField({
-      name: 'featuredPublications',
-      title: 'Featured Publications',
-      type: 'array',
-      description: 'Select publications to feature at the top of the page',
-      of: [
-        {
-          type: 'reference',
-          to: {type: 'publications'},
-        },
-      ],
-      validation: (Rule) => Rule.max(3),
-    }),
-
     defineField({
       name: 'socialSharing',
       title: 'Social Media Sharing',
       type: 'object',
-      description: 'Configure social sharing buttons for publications',
+      description: 'Configure social media sharing buttons for publication articles',
       fields: [
         defineField({
-          name: 'enableSharing',
-          title: 'Enable Social Sharing',
+          name: 'showSocialButtons',
+          title: 'Show Social Sharing Buttons',
           type: 'boolean',
+          description: 'Display social media sharing buttons on article pages',
           initialValue: true,
         }),
         defineField({
-          name: 'platforms',
-          title: 'Enabled Platforms',
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'linkedin',
-              title: 'LinkedIn',
-              type: 'boolean',
-              initialValue: true,
-            }),
-            defineField({
-              name: 'facebook',
-              title: 'Facebook', 
-              type: 'boolean',
-              initialValue: true,
-            }),
-            defineField({
-              name: 'twitter',
-              title: 'Twitter/X',
-              type: 'boolean',
-              initialValue: true,
-            }),
-            defineField({
-              name: 'email',
-              title: 'Email',
-              type: 'boolean',
-              initialValue: true,
-            }),
-          ],
+          name: 'shareTitle',
+          title: 'Share Section Title',
+          type: 'localizedStringNews',
+          description: 'Title above the sharing buttons',
+          initialValue: {
+            pl: 'Udostępnij',
+            en: 'Share'
+          }
         }),
         defineField({
-          name: 'shareText',
-          title: 'Share Button Text',
-          type: 'localizedStringNews',
-          initialValue: {
-            pl: 'Udostępnij publikację',
-            en: 'Share publication',
-          },
+          name: 'showFacebook',
+          title: 'Show Facebook Share Button',
+          type: 'boolean',
+          description: 'Enable Facebook sharing',
+          initialValue: true,
         }),
+        defineField({
+          name: 'showLinkedIn',
+          title: 'Show LinkedIn Share Button',
+          type: 'boolean',
+          description: 'Enable LinkedIn sharing',
+          initialValue: true,
+        }),
+        defineField({
+          name: 'showTwitter',
+          title: 'Show Twitter Share Button',
+          type: 'boolean',
+          description: 'Enable Twitter sharing',
+          initialValue: false,
+        }),
+      ]
+    }),
+    defineField({
+      name: 'blocks',
+      title: 'Content Blocks',
+      type: 'array',
+      description: 'Add content blocks above the publications list',
+      of: [
+        {type: 'heroBlock'},
+        {type: 'textBlock'},
+        {type: 'textImageBlock'},
+        {type: 'textImageCarouselBlock'},
+        {type: 'servicesBlock'},
       ],
     }),
-    // SEO fields
     defineField({
       name: 'seo',
-      title: 'SEO',
+      title: 'SEO Settings',
       type: 'seo',
     }),
   ],
-
   preview: {
     prepare() {
       return {
         title: 'Publications Page Settings',
-        subtitle: 'Configure publications section',
+        subtitle: 'Page configuration and content blocks',
       }
     },
   },

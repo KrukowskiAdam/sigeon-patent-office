@@ -473,25 +473,24 @@ export async function getPublicationBySlug(slug: string): Promise<Publication | 
 
 export async function getPublicationsPageSettings(): Promise<{
   socialSharing?: {
-    enableSharing?: boolean
-    platforms?: {
-      linkedin?: boolean
-      facebook?: boolean
-      twitter?: boolean
-      email?: boolean
-    }
-    shareText?: {
+    showSocialButtons?: boolean
+    shareTitle?: {
       pl: string
       en?: string
     }
+    showFacebook?: boolean
+    showLinkedIn?: boolean
+    showTwitter?: boolean
   }
 } | null> {
   return client.fetch(`
     *[_type == "publicationsPage"][0] {
       socialSharing {
-        enableSharing,
-        platforms,
-        shareText
+        showSocialButtons,
+        shareTitle,
+        showFacebook,
+        showLinkedIn,
+        showTwitter
       }
     }
   `)
