@@ -8,13 +8,14 @@ import { urlFor } from '@/lib/sanity'
 
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const publication = await getPublicationBySlug(params.slug)
+  const { slug } = await params
+  const publication = await getPublicationBySlug(slug)
   
   if (!publication) {
     return {
@@ -129,8 +130,9 @@ function ShareButtons({ publication, socialSharing }: {
 }
 
 export default async function PublicationDetailPage({ params }: Props) {
+  const { slug } = await params
   const [publication, publicationsPage] = await Promise.all([
-    getPublicationBySlug(params.slug),
+    getPublicationBySlug(slug),
     getPublicationsPage()
   ])
 
