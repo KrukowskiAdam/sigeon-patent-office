@@ -90,38 +90,7 @@ export const publications = defineType({
       type: 'url',
       description: 'Link to external publication (journal, conference, etc.)',
     }),
-    defineField({
-      name: 'citationInfo',
-      title: 'Citation Information',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'journal',
-          title: 'Journal/Conference',
-          type: 'string',
-        }),
-        defineField({
-          name: 'volume',
-          title: 'Volume',
-          type: 'string',
-        }),
-        defineField({
-          name: 'issue',
-          title: 'Issue',
-          type: 'string',
-        }),
-        defineField({
-          name: 'pages',
-          title: 'Pages',
-          type: 'string',
-        }),
-        defineField({
-          name: 'doi',
-          title: 'DOI',
-          type: 'string',
-        }),
-      ],
-    }),
+
     // SEO fields
     defineField({
       name: 'seo',
