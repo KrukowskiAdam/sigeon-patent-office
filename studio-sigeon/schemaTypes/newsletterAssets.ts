@@ -52,24 +52,18 @@ export const newsletterAssets = defineType({
                 return `https://sigeon.vercel.app/images/${filename}`
               }
             }),
-            defineField({
-              name: 'description',
-              title: '📝 Description (optional)',
-              type: 'string',
-              description: 'What is this image for? (e.g., "November newsletter header")',
-            }),
+
           ],
           preview: {
             select: {
               title: 'originalFilename',
-              subtitle: 'description',
               media: 'asset'
             },
             prepare(selection: any) {
-              const {title, subtitle, media} = selection
+              const {title, media} = selection
               return {
                 title: title || 'Unnamed image',
-                subtitle: subtitle || 'Newsletter image',
+                subtitle: 'Newsletter image',
                 media: media
               }
             }
@@ -77,31 +71,7 @@ export const newsletterAssets = defineType({
         },
       ],
     }),
-    defineField({
-      name: 'usageInstructions',
-      title: '📋 How to use images in newsletters',
-      type: 'text',
-      description: 'Simple instructions for newsletter images',
-      initialValue: `JAK UŻYWAĆ ZDJĘĆ W NEWSLETTERZE:
 
-1. UPLOAD ZDJĘĆ:
-   - Dodaj zdjęcie powyżej 
-   - Wpisz oryginalną nazwę pliku (np. biomed.jpg)
-   - System automatycznie wygeneruje gotowy link
-
-2. KOPIOWANIE LINKU:
-   - Skopiuj URL z pola "Newsletter URL" 
-   - Nazwa pliku zostanie zachowana!
-   - Przykład: https://sigeon.vercel.app/images/biomed.jpg
-
-3. WKLEJ DO NEWSLETTERA:
-   - Gotowe! Używaj linku bezpośrednio w newsletterze
-   - Nazwa pozostaje czytelna (biomed.jpg zamiast dziwnych znaków)
-
-UWAGA: Upewnij się że nazwa pliku jest unikalna! 📧`,
-      rows: 12,
-      readOnly: true,
-    }),
   ],
   preview: {
     prepare() {
