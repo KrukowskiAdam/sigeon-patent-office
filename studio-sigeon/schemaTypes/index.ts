@@ -17,6 +17,8 @@ import twoColumnTextBlock from './blocks/twoColumnTextBlock'
 import {homepage} from './homepage'
 import {news} from './post'
 import {newsPage} from './newsPage'
+import {publications} from './publications'
+import {publicationsPage} from './publicationsPage'
 import {teamPage} from './teamPage'
 import {page} from './page'
 import {teamMember} from './teamMember'
@@ -54,6 +56,8 @@ export const schemaTypes = [
   homepage,
   news,
   newsPage,
+  publications,
+  publicationsPage,
   teamPage,
   page,
   teamMember,

@@ -37,6 +37,17 @@ export const structure = (S: StructureBuilder) =>
             .title('News Page Settings')
         ),
       
+      // Publications Page Settings - singleton document
+      S.listItem()
+        .title('Publications Page Settings')
+        .id('publicationsPage')
+        .child(
+          S.document()
+            .schemaType('publicationsPage')
+            .documentId('publications-page-settings')
+            .title('Publications Page Settings')
+        ),
+      
       // Team Page Settings - singleton document
       S.listItem()
         .title('Team Page Settings')
@@ -100,6 +111,11 @@ export const structure = (S: StructureBuilder) =>
         .title('News')
         .schemaType('news')
         .child(S.documentTypeList('news').title('News Articles')),
+      
+      S.listItem()
+        .title('Publications')
+        .schemaType('publications')
+        .child(S.documentTypeList('publications').title('Publications')),
       
       S.listItem()
         .title('Team Members')
