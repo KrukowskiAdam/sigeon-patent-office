@@ -16,6 +16,7 @@ export function Header() {
   const { currentLanguage } = useLanguage()
   const nav = navigationTranslations[currentLanguage]
   const [navigation, setNavigation] = useState<Navigation | null>(null)
+  const [navigationLoaded, setNavigationLoaded] = useState(false)
   const [isScrolled, setIsScrolled] = useState(() => {
     // Initialize with current scroll position to prevent flash
     if (typeof window !== 'undefined') {
@@ -49,8 +50,10 @@ export function Header() {
       try {
         const navData = await getNavigation()
         setNavigation(navData)
+        setNavigationLoaded(true)
       } catch (error) {
         console.error('Error loading navigation:', error)
+        setNavigationLoaded(true) // Show fallback even on error
       }
     }
     
@@ -66,20 +69,22 @@ export function Header() {
             <div className="flex items-center space-x-6">
               {/* Secondary Navigation */}
               <nav className="hidden sm:flex items-center space-x-4 md:space-x-6">
-                {navigation?.secondaryMenuItems
-                  ?.filter(item => item.showInNavigation !== false)
-                  .sort((a, b) => (a.order || 0) - (b.order || 0))
-                  .map((item, index) => (
-                  <Link 
-                    key={index}
-                    href={getLocalizedLink(item, currentLanguage)} 
-                    className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal"
-                    target={item.isExternal ? '_blank' : undefined}
-                    rel={item.isExternal ? 'noopener noreferrer' : undefined}
-                  >
-                    {getLocalizedText(item.label, currentLanguage)}
-                  </Link>
-                )) || (
+                {navigationLoaded && navigation?.secondaryMenuItems && navigation.secondaryMenuItems.length > 0 ? (
+                  navigation.secondaryMenuItems
+                    .filter(item => item.showInNavigation !== false)
+                    .sort((a, b) => (a.order || 0) - (b.order || 0))
+                    .map((item, index) => (
+                    <Link 
+                      key={index}
+                      href={getLocalizedLink(item, currentLanguage)} 
+                      className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal"
+                      target={item.isExternal ? '_blank' : undefined}
+                      rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                    >
+                      {getLocalizedText(item.label, currentLanguage)}
+                    </Link>
+                  ))
+                ) : navigationLoaded ? (
                   // Fallback menu items if no CMS data
                   <>
                     <Link href="/team" className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal">
@@ -91,8 +96,11 @@ export function Header() {
                     <Link href="/contact" className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal">
                       {nav.contact}
                     </Link>
+                    <Link href="/publikacje" className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal">
+                      Publikacje
+                    </Link>
                   </>
-                )}
+                ) : null}
               </nav>
 
               {/* Language Switcher */}
@@ -123,20 +131,22 @@ export function Header() {
             <div className="flex items-center">
               {/* Primary Desktop Navigation */}
               <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-              {navigation?.menuItems
-                .filter(item => item.showInNavigation !== false)
-                .sort((a, b) => (a.order || 0) - (b.order || 0))
-                .map((item, index) => (
-                <Link 
-                  key={index}
-                  href={getLocalizedLink(item, currentLanguage)} 
-                  className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}
-                  target={item.isExternal ? '_blank' : undefined}
-                  rel={item.isExternal ? 'noopener noreferrer' : undefined}
-                >
-                  {getLocalizedText(item.label, currentLanguage)}
-                </Link>
-              )) || (
+              {navigationLoaded && navigation?.menuItems && navigation.menuItems.length > 0 ? (
+                navigation.menuItems
+                  .filter(item => item.showInNavigation !== false)
+                  .sort((a, b) => (a.order || 0) - (b.order || 0))
+                  .map((item, index) => (
+                  <Link 
+                    key={index}
+                    href={getLocalizedLink(item, currentLanguage)} 
+                    className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}
+                    target={item.isExternal ? '_blank' : undefined}
+                    rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                  >
+                    {getLocalizedText(item.label, currentLanguage)}
+                  </Link>
+                ))
+              ) : navigationLoaded ? (
                 // Fallback menu items if no CMS data
                 <>
                   <Link href="/rzecznicy-patentowi" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
@@ -152,7 +162,7 @@ export function Header() {
                     {nav.biomed}
                   </Link>
                 </>
-              )}
+              ) : null}
             </nav>
 
               {/* Mobile menu button */}
