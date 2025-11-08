@@ -11,50 +11,93 @@ export const newsletterAssets = defineType({
       name: 'images',
       title: 'Newsletter Images',
       type: 'array',
-      description: 'Upload images for newsletters. Links will appear below each image.',
+      description: '⬆️ Upload images for newsletters. Original filename will be preserved below.',
       of: [
         {
           type: 'image',
           options: {
             hotspot: true,
+            metadata: ['blurhash', 'lqip', 'palette', 'exif', 'location']
           },
           fields: [
             defineField({
-              name: 'name',
-              title: 'Image Name (optional)',
+              name: 'originalFilename',
+              title: '📁 Original Filename',
               type: 'string',
-              description: 'Descriptive name for this image (e.g., "Header November 2025", "Event banner")',
+              description: 'Keep original filename (e.g., biomed.jpg, header-november.png)',
+              validation: (Rule) => Rule.custom((filename, context) => {
+                if (!filename) return 'Original filename is required'
+                // Check if filename has extension
+                if (!filename.includes('.')) {
+                  return 'Filename must include extension (e.g., .jpg, .png)'
+                }
+                // Check for valid characters
+                const validFilename = /^[a-zA-Z0-9._-]+\.[a-zA-Z]{2,4}$/.test(filename)
+                if (!validFilename) {
+                  return 'Use only letters, numbers, dots, dashes, and underscores'
+                }
+                return true
+              })
+            }),
+            defineField({
+              name: 'newsletterUrl',
+              title: '🔗 Newsletter URL (copy this)',
+              type: 'string',
+              description: 'This is your final URL for newsletters - copy and paste it',
+              readOnly: true,
+              initialValue: (parent: any, context: any) => {
+                const filename = parent?.originalFilename || 'your-image.jpg'
+                return `https://sigeon.vercel.app/images/${filename}`
+              }
+            }),
+            defineField({
+              name: 'description',
+              title: '📝 Description (optional)',
+              type: 'string',
+              description: 'What is this image for? (e.g., "November newsletter header")',
             }),
           ],
+          preview: {
+            select: {
+              title: 'originalFilename',
+              subtitle: 'description',
+              media: 'asset'
+            },
+            prepare(selection: any) {
+              const {title, subtitle, media} = selection
+              return {
+                title: title || 'Unnamed image',
+                subtitle: subtitle || 'Newsletter image',
+                media: media
+              }
+            }
+          }
         },
       ],
     }),
     defineField({
       name: 'usageInstructions',
-      title: '📋 How to get image links',
+      title: '📋 How to use images in newsletters',
       type: 'text',
-      description: 'Instructions for getting newsletter-ready URLs',
+      description: 'Simple instructions for newsletter images',
       initialValue: `JAK UŻYWAĆ ZDJĘĆ W NEWSLETTERZE:
 
 1. UPLOAD ZDJĘĆ:
-   - Dodaj zdjęcia powyżej w sekcji "Newsletter Images"
-   - Możesz dodać kilka banerów/headerów
+   - Dodaj zdjęcie powyżej 
+   - Wpisz oryginalną nazwę pliku (np. biomed.jpg)
+   - System automatycznie wygeneruje gotowy link
 
-2. POBIERANIE LINKU:
-   - Kliknij prawym na zdjęcie → "Copy image URL"
-   - Otrzymasz: https://cdn.sanity.io/images/pofl8c47/production/abc123...
+2. KOPIOWANIE LINKU:
+   - Skopiuj URL z pola "Newsletter URL" 
+   - Nazwa pliku zostanie zachowana!
+   - Przykład: https://sigeon.vercel.app/images/biomed.jpg
 
-3. ZAMIEŃ NA WŁASNĄ DOMENĘ:
-   - Zamień: "https://cdn.sanity.io/images/pofl8c47/production/"
-   - Na: "https://sigeon.vercel.app/images/"
-   - Wynik: https://sigeon.vercel.app/images/abc123.jpg
+3. WKLEJ DO NEWSLETTERA:
+   - Gotowe! Używaj linku bezpośrednio w newsletterze
+   - Nazwa pozostaje czytelna (biomed.jpg zamiast dziwnych znaków)
 
-4. AUTOMATYCZNY RESIZE (opcjonalnie):
-   - Dodaj ?w=600&h=300 dla konkretnego rozmiaru
-   - Przykład: https://sigeon.vercel.app/images/abc123.jpg?w=600&h=200
-
-GOTOWE! Wklej link do newslettera 📧`,
-      rows: 15,
+UWAGA: Upewnij się że nazwa pliku jest unikalna! 📧`,
+      rows: 12,
       readOnly: true,
     }),
   ],
