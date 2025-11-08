@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {EnvelopeIcon} from '@sanity/icons'
+import { FilenameInput } from '../components/FilenameInput'
 
 export const newsletterAssets = defineType({
   name: 'newsletterAssets',
@@ -22,16 +23,17 @@ export const newsletterAssets = defineType({
           fields: [
             defineField({
               name: 'originalFilename',
-              title: '📁 Original Filename',
-              type: 'string',
-              description: 'Keep original filename (e.g., biomed.jpg, header-november.png)',
+              title: '📁 Filename for Newsletter',
+              type: 'string', 
+              description: '✨ Filename auto-suggested from upload. Edit if needed.',
+              components: {
+                input: FilenameInput
+              },
               validation: (Rule) => Rule.custom((filename, context) => {
-                if (!filename) return 'Original filename is required'
-                // Check if filename has extension
+                if (!filename) return 'Filename is required for newsletter links'
                 if (!filename.includes('.')) {
                   return 'Filename must include extension (e.g., .jpg, .png)'
                 }
-                // Check for valid characters
                 const validFilename = /^[a-zA-Z0-9._-]+\.[a-zA-Z]{2,4}$/.test(filename)
                 if (!validFilename) {
                   return 'Use only letters, numbers, dots, dashes, and underscores'
