@@ -76,6 +76,20 @@ export const publications = defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'showPl',
+      title: 'Show in Polish',
+      type: 'boolean',
+      description: 'Show this publication in Polish version of the site',
+      initialValue: true,
+    }),
+    defineField({
+      name: 'showEn',
+      title: 'Show in English', 
+      type: 'boolean',
+      description: 'Show this publication in English version of the site',
+      initialValue: true,
+    }),
+    defineField({
       name: 'tags',
       title: 'Tags',
       type: 'array',

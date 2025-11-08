@@ -371,7 +371,7 @@ export async function getPublications(): Promise<Publication[]> {
       slug,
       publishedAt,
       excerpt,
-      featuredImage {
+      mainImage {
         asset-> {
           _id,
           url
@@ -431,7 +431,7 @@ export async function getPublicationBySlug(slug: string): Promise<Publication | 
       slug,
       excerpt,
       content,
-      featuredImage {
+      mainImage {
         asset->{
           _id,
           url

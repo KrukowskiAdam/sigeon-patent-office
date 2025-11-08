@@ -114,11 +114,11 @@ export default function PublicationPage({ params }: Props) {
           </header>
 
           {/* Featured Image */}
-          {publication.featuredImage && (
+          {publication.mainImage && (
             <div className="mb-8">
               <div className="relative aspect-video overflow-hidden">
                 <Image
-                  src={urlFor(publication.featuredImage).width(800).height(450).url()}
+                  src={urlFor(publication.mainImage).width(800).height(450).url()}
                   alt={publication.title.pl}
                   fill
                   sizes="(max-width: 768px) 100vw, 800px"
