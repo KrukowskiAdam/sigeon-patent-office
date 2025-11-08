@@ -10,13 +10,13 @@ export const publicationsPage = defineType({
     defineField({
       name: 'title',
       title: 'Page Title',
-      type: 'localizedString',
+      type: 'localizedStringNews',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'description',
       title: 'Page Description',
-      type: 'localizedText',
+      type: 'localizedTextNews',
       description: 'Brief description of the publications section',
     }),
     defineField({
@@ -79,7 +79,7 @@ export const publicationsPage = defineType({
         defineField({
           name: 'shareText',
           title: 'Share Button Text',
-          type: 'localizedString',
+          type: 'localizedStringNews',
           initialValue: {
             pl: 'Udostępnij publikację',
             en: 'Share publication',
