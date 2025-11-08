@@ -411,7 +411,7 @@ export interface Publication {
   }
   excerpt?: LocalizedTextNews
   content?: LocalizedRichTextNews
-  mainImage?: {
+  featuredImage?: {
     asset: {
       _id: string
       url: string
@@ -433,6 +433,8 @@ export interface Publication {
   }>
   publishedAt: string
   featured?: boolean
+  showPl?: boolean
+  showEn?: boolean
   tags?: string[]
   externalLink?: string
   seo?: SEO
@@ -442,6 +444,11 @@ export interface PublicationsPage {
   _id: string
   title: LocalizedStringNews
   description?: LocalizedTextNews
+  blocks?: ContentBlock[]
+  buttons?: {
+    readMore?: LocalizedString
+    backToHome?: LocalizedString
+  }
   featuredPublications?: Publication[]
   socialSharing?: {
     enableSharing?: boolean

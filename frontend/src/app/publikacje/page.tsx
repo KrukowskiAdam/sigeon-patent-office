@@ -1,169 +1,200 @@
-import { Metadata } from 'next'
-import Link from 'next/link'
-import Image from 'next/image'
-import { notFound } from 'next/navigation'
+'use client'
+
 import { getPublications, getPublicationsPage } from '@/lib/queries'
 import type { Publication, PublicationsPage } from '@/types/sanity'
+import Link from 'next/link'
+import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
+import { useLanguage } from '@/context/LanguageContext'
+import { getLocalizedText } from '@/lib/i18n'
+import { useEffect, useState } from 'react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { ContentBlock } from '@/components/blocks'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const publicationsPage = await getPublicationsPage()
-  
-  if (!publicationsPage) {
-    return {
-      title: 'Publikacje - Sigeon',
-      description: 'Publikacje naukowe i prawnicze zespołu Sigeon'
+export default function PublikacjePage() {
+  const { currentLanguage, setLanguage } = useLanguage()
+  const [publications, setPublications] = useState<Publication[]>([])
+  const [publicationsPage, setPublicationsPage] = useState<PublicationsPage | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  // Check for language parameter in URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const langParam = urlParams.get('lang')
+    
+    if (langParam && ['en', 'pl', 'zh', 'ko', 'ja', 'ru'].includes(langParam)) {
+      setLanguage(langParam as 'en' | 'pl' | 'zh' | 'ko' | 'ja' | 'ru')
     }
+  }, [setLanguage])
+
+  useEffect(() => {
+    const loadPublications = async () => {
+      try {
+        const [publicationsData, pageData] = await Promise.all([
+          getPublications(),
+          getPublicationsPage()
+        ])
+
+        setPublications(publicationsData)
+        setPublicationsPage(pageData)
+      } catch (error) {
+        console.error('Error loading publications:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadPublications()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <div className="text-xl">Ładowanie...</div>
+        </div>
+      </div>
+    )
   }
 
-  return {
-    title: publicationsPage.title.pl || 'Publikacje',
-    description: publicationsPage.description?.pl || 'Publikacje naukowe i prawnicze zespołu Sigeon',
-    openGraph: {
-      title: publicationsPage.title.pl || 'Publikacje',
-      description: publicationsPage.description?.pl || 'Publikacje naukowe i prawnicze zespołu Sigeon',
-    },
-  }
-}
-
-function formatDate(dateString: string) {
-  return new Date(dateString).toLocaleDateString('pl-PL', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
-
-function PublicationCard({ publication }: { publication: Publication }) {
   return (
-    <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      {publication.mainImage?.asset && (
-        <div className="aspect-video relative overflow-hidden">
-          <Image
-            src={urlFor(publication.mainImage.asset.url).width(600).height(400).url()}
-            alt={publication.mainImage.alt?.pl || publication.title.pl}
-            fill
-            className="object-cover hover:scale-105 transition-transform duration-300"
-          />
+    <div className="min-h-screen flex flex-col">
+      <Header />
+
+      {/* Page Content Blocks */}
+      {publicationsPage && publicationsPage.blocks && publicationsPage.blocks.length > 0 && (
+        <div>
+          {publicationsPage.blocks.map((block) => (
+            <ContentBlock key={block._key} block={block} language={currentLanguage} />
+          ))}
         </div>
       )}
-      
-      <div className="p-6">
-        <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-          <time dateTime={publication.publishedAt}>
-            {formatDate(publication.publishedAt)}
-          </time>
-          {publication.authors && publication.authors.length > 0 && (
-            <span>
-              by {publication.authors.map(author => author.name).join(', ')}
-            </span>
-          )}
-        </div>
-        
-        <h2 className="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
-          <Link href={`/publikacje/${publication.slug.current}`}>
-            {publication.title.pl}
-          </Link>
-        </h2>
-        
-        {publication.excerpt?.pl && (
-          <p className="text-gray-600 mb-4 line-clamp-3">
-            {publication.excerpt.pl}
-          </p>
-        )}
-        
-        <div className="flex items-center justify-between">
-          <Link 
-            href={`/publikacje/${publication.slug.current}`}
-            className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
-          >
-            Czytaj więcej
-            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-          
-          {publication.tags && publication.tags.length > 0 && (
-            <div className="flex gap-1">
-              {publication.tags.slice(0, 2).map((tag) => (
-                <span 
-                  key={tag} 
-                  className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full"
+
+      {/* Content */}
+      <main className="py-16 flex-grow">
+        <div className="max-w-7xl mx-auto px-4">
+          {publications.length === 0 ? (
+            <Card className="max-w-md mx-auto">
+              <CardContent className="text-center py-12">
+                <div className="text-gray-500 mb-4">
+                  <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Brak publikacji</h3>
+                  <p>Publikacje będą wyświetlane po dodaniu ich do systemu CMS.</p>
+                </div>
+                <a 
+                  href="http://localhost:3333" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
                 >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </article>
-  )
-}
-
-export default async function PublicationsPage() {
-  const [publications, publicationsPage] = await Promise.all([
-    getPublications(),
-    getPublicationsPage()
-  ])
-
-  if (!publications && !publicationsPage) {
-    notFound()
-  }
-
-  const featuredPublications = publicationsPage?.featuredPublications || []
-  const regularPublications = publications.filter(pub => 
-    !featuredPublications.some(featured => featured._id === pub._id)
-  )
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            {publicationsPage?.title?.pl || 'Publikacje'}
-          </h1>
-          {publicationsPage?.description?.pl && (
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {publicationsPage.description.pl}
-            </p>
-          )}
-        </div>
-
-        {/* Featured Publications */}
-        {featuredPublications.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Wyróżnione publikacje</h2>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {featuredPublications.map((publication) => (
-                <PublicationCard key={publication._id} publication={publication} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* All Publications */}
-        <section>
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-            {featuredPublications.length > 0 ? 'Wszystkie publikacje' : 'Nasze publikacje'}
-          </h2>
-          
-          {regularPublications.length > 0 ? (
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {regularPublications.map((publication) => (
-                <PublicationCard key={publication._id} publication={publication} />
-              ))}
-            </div>
+                  Przejdź do CMS
+                </a>
+              </CardContent>
+            </Card>
           ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">
-                Obecnie brak dostępnych publikacji.
-              </p>
+            <div className="space-y-8">
+              {publications
+                .filter((publication) => currentLanguage === 'pl' ? publication.showPl === true : publication.showEn === true)
+                .map((publication: Publication, index: number) => (
+                <Card key={publication._id} className="overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-gray-50 border-gray-200 flex flex-col h-full">
+                  <div className="flex flex-col md:flex-row">
+                    {/* Image on the left */}
+                    {publication.featuredImage ? (
+                      <div className="md:w-1/3 flex items-center justify-center bg-gray-50 p-8">
+                        <div className="relative w-[80%] aspect-video overflow-hidden">
+                          <Image
+                            src={urlFor(publication.featuredImage).width(400).url()}
+                            alt={getLocalizedText(publication.title, currentLanguage)}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            className="object-cover"
+                            priority={index === 0}
+                            onError={() => console.error('Error loading image for publication:', getLocalizedText(publication.title, currentLanguage))}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="md:w-1/3 bg-gray-100 flex items-center justify-center text-gray-400 p-8">
+                        <div className="relative w-full aspect-video flex flex-col items-center justify-center">
+                          <svg className="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          <span className="text-xs">Brak obrazu</span>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Content on the right */}
+                    <div className={`${publication.featuredImage ? 'md:w-2/3' : 'w-full'} flex flex-col`}>
+                      <CardHeader className="text-gray-900 pt-8">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            {publication.featured && (
+                              <div className="mb-2">
+                                <Badge variant="default" className="bg-[#0abaee] text-white text-xs">Wyróżnione</Badge>
+                              </div>
+                            )}
+                            <CardTitle className="text-xl md:text-2xl text-gray-900 leading-tight">
+                              {getLocalizedText(publication.title, currentLanguage)}
+                            </CardTitle>
+                          </div>
+                        </div>
+                        <CardDescription className="text-sm text-gray-500">
+                          {new Date(publication.publishedAt).toLocaleDateString('pl-PL')}
+                        </CardDescription>
+                      </CardHeader>
+                      
+                      <CardContent className="text-gray-700 flex-1 flex flex-col">
+                        {publication.excerpt && (
+                          <p className="text-gray-600 mb-2 line-clamp-3">
+                            {getLocalizedText(publication.excerpt, currentLanguage)}
+                          </p>
+                        )}
+                        
+                        <div className="mt-4">
+                          <Link 
+                            href={`/publikacje/${publication.slug.current}`}
+                            className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
+                          >
+                            {publicationsPage?.buttons?.readMore
+                              ? getLocalizedText(publicationsPage.buttons.readMore, currentLanguage)
+                              : 'Czytaj więcej'}
+                          </Link>
+                        </div>
+                      </CardContent>
+                    </div>
+                  </div>
+                </Card>
+              ))}
             </div>
           )}
-        </section>
-      </div>
+        </div>
+      </main>
+
+      {/* Navigation */}
+      <section className="py-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mt-12 pt-8 border-t border-gray-200">
+            <Link 
+              href="/"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
+            >
+              {publicationsPage?.buttons?.backToHome
+                ? getLocalizedText(publicationsPage.buttons.backToHome, currentLanguage)
+                : 'Strona główna'}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }

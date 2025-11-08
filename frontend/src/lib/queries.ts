@@ -371,7 +371,7 @@ export async function getPublications(): Promise<Publication[]> {
       slug,
       publishedAt,
       excerpt,
-      mainImage {
+      featuredImage {
         asset-> {
           _id,
           url
@@ -386,6 +386,8 @@ export async function getPublications(): Promise<Publication[]> {
       },
       tags,
       featured,
+      showPl,
+      showEn,
       externalLink
     }
   `)
@@ -427,10 +429,10 @@ export async function getPublicationBySlug(slug: string): Promise<Publication | 
       _id,
       title,
       slug,
-      content,
       excerpt,
-      mainImage {
-        asset-> {
+      content,
+      featuredImage {
+        asset->{
           _id,
           url
         },
@@ -443,18 +445,56 @@ export async function getPublicationBySlug(slug: string): Promise<Publication | 
         name,
         position,
         image {
-          asset-> {
+          asset->{
             _id,
             url
           }
         }
       },
       publishedAt,
+      featured,
+      showPl,
+      showEn,
       tags,
       externalLink,
-      seo
+      seo {
+        title,
+        description,
+        image {
+          asset->{
+            url
+          }
+        },
+        noIndex
+      }
     }
   `, { slug })
+}
+
+export async function getPublicationsPageSettings(): Promise<{
+  socialSharing?: {
+    enableSharing?: boolean
+    platforms?: {
+      linkedin?: boolean
+      facebook?: boolean
+      twitter?: boolean
+      email?: boolean
+    }
+    shareText?: {
+      pl: string
+      en?: string
+    }
+  }
+} | null> {
+  return client.fetch(`
+    *[_type == "publicationsPage"][0] {
+      socialSharing {
+        enableSharing,
+        platforms,
+        shareText
+      }
+    }
+  `)
 }
 
 // Get redirect page by slug
