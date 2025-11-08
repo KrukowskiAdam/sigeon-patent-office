@@ -3,49 +3,15 @@ import {EnvelopeIcon} from '@sanity/icons'
 
 export const newsletterAssets = defineType({
   name: 'newsletterAssets',
-  title: 'Newsletter Assets',
+  title: 'Newsletter Images',
   type: 'document',
   icon: EnvelopeIcon,
-  groups: [
-    {
-      name: 'branding',
-      title: 'Branding & Logos',
-    },
-    {
-      name: 'images',
-      title: 'Images & Graphics',
-    },
-    {
-      name: 'social',
-      title: 'Social Media Icons',
-    },
-  ],
   fields: [
-    // Branding Section
     defineField({
-      name: 'companyLogo',
-      title: 'Company Logo',
-      type: 'image',
-      group: 'branding',
-      description: 'Main company logo for newsletters',
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        defineField({
-          name: 'alt',
-          title: 'Alt Text',
-          type: 'string',
-          description: 'Alternative text for accessibility',
-        }),
-      ],
-    }),
-    defineField({
-      name: 'logoVariants',
-      title: 'Logo Variants',
+      name: 'images',
+      title: 'Newsletter Images',
       type: 'array',
-      group: 'branding',
-      description: 'Different logo versions (dark, light, small, etc.)',
+      description: 'Upload images for newsletters. Links will appear below each image.',
       of: [
         {
           type: 'image',
@@ -55,253 +21,48 @@ export const newsletterAssets = defineType({
           fields: [
             defineField({
               name: 'name',
-              title: 'Variant Name',
+              title: 'Image Name (optional)',
               type: 'string',
-              description: 'e.g., "Dark background", "Small version", "White logo"',
-            }),
-            defineField({
-              name: 'alt',
-              title: 'Alt Text',
-              type: 'string',
+              description: 'Descriptive name for this image (e.g., "Header November 2025", "Event banner")',
             }),
           ],
         },
       ],
     }),
-
-    // Images & Graphics Section
-    defineField({
-      name: 'headerImages',
-      title: 'Newsletter Headers',
-      type: 'array',
-      group: 'images',
-      description: 'Header/banner images for newsletters',
-      of: [
-        {
-          type: 'image',
-          options: {
-            hotspot: true,
-          },
-          fields: [
-            defineField({
-              name: 'title',
-              title: 'Image Title',
-              type: 'string',
-              description: 'Descriptive title for this header',
-            }),
-            defineField({
-              name: 'alt',
-              title: 'Alt Text',
-              type: 'string',
-            }),
-            defineField({
-              name: 'usage',
-              title: 'Usage Description',
-              type: 'text',
-              description: 'When to use this header (e.g., "Monthly newsletter", "Special announcements")',
-              rows: 2,
-            }),
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: 'companyPhotos',
-      title: 'Company Photos',
-      type: 'array',
-      group: 'images',
-      description: 'Office photos, team photos, events, etc.',
-      of: [
-        {
-          type: 'image',
-          options: {
-            hotspot: true,
-          },
-          fields: [
-            defineField({
-              name: 'title',
-              title: 'Photo Title',
-              type: 'string',
-            }),
-            defineField({
-              name: 'alt',
-              title: 'Alt Text',
-              type: 'string',
-            }),
-            defineField({
-              name: 'description',
-              title: 'Description',
-              type: 'text',
-              rows: 2,
-            }),
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: 'decorativeElements',
-      title: 'Decorative Elements',
-      type: 'array',
-      group: 'images',
-      description: 'Icons, dividers, backgrounds, decorative graphics',
-      of: [
-        {
-          type: 'image',
-          options: {
-            hotspot: true,
-          },
-          fields: [
-            defineField({
-              name: 'name',
-              title: 'Element Name',
-              type: 'string',
-              description: 'e.g., "Divider line", "Background pattern", "Patent icon"',
-            }),
-            defineField({
-              name: 'alt',
-              title: 'Alt Text',
-              type: 'string',
-            }),
-          ],
-        },
-      ],
-    }),
-
-    // Social Media Section
-    defineField({
-      name: 'socialIcons',
-      title: 'Social Media Icons',
-      type: 'object',
-      group: 'social',
-      description: 'Custom social media icons for newsletters',
-      fields: [
-        defineField({
-          name: 'facebook',
-          title: 'Facebook Icon',
-          type: 'image',
-          options: { hotspot: true },
-        }),
-        defineField({
-          name: 'linkedin',
-          title: 'LinkedIn Icon',
-          type: 'image',
-          options: { hotspot: true },
-        }),
-        defineField({
-          name: 'twitter',
-          title: 'Twitter Icon',
-          type: 'image',
-          options: { hotspot: true },
-        }),
-        defineField({
-          name: 'youtube',
-          title: 'YouTube Icon',
-          type: 'image',
-          options: { hotspot: true },
-        }),
-        defineField({
-          name: 'instagram',
-          title: 'Instagram Icon',
-          type: 'image',
-          options: { hotspot: true },
-        }),
-      ],
-    }),
-    defineField({
-      name: 'socialIconSets',
-      title: 'Social Icon Sets',
-      type: 'array',
-      group: 'social',
-      description: 'Complete sets of social icons in different styles',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'setName',
-              title: 'Set Name',
-              type: 'string',
-              description: 'e.g., "Colored icons", "White icons", "Outlined style"',
-            }),
-            defineField({
-              name: 'facebook',
-              title: 'Facebook',
-              type: 'image',
-              options: { hotspot: true },
-            }),
-            defineField({
-              name: 'linkedin',
-              title: 'LinkedIn',
-              type: 'image',
-              options: { hotspot: true },
-            }),
-            defineField({
-              name: 'twitter',
-              title: 'Twitter',
-              type: 'image',
-              options: { hotspot: true },
-            }),
-            defineField({
-              name: 'youtube',
-              title: 'YouTube',
-              type: 'image',
-              options: { hotspot: true },
-            }),
-            defineField({
-              name: 'instagram',
-              title: 'Instagram',
-              type: 'image',
-              options: { hotspot: true },
-            }),
-          ],
-          preview: {
-            select: {
-              title: 'setName',
-              media: 'facebook',
-            },
-          },
-        },
-      ],
-    }),
-
-    // Usage Instructions
     defineField({
       name: 'usageInstructions',
-      title: 'Usage Instructions',
+      title: '📋 How to get image links',
       type: 'text',
-      description: 'How to use these assets in newsletters and get the URLs',
-      initialValue: `JAK UŻYWAĆ GRAFIK W NEWSLETTERZE:
+      description: 'Instructions for getting newsletter-ready URLs',
+      initialValue: `JAK UŻYWAĆ ZDJĘĆ W NEWSLETTERZE:
 
-1. UPLOAD GRAFIK:
-   - Dodaj obrazy w odpowiednich sekcjach powyżej
-   - Sanity automatycznie je przetworzy i zoptymalizuje
+1. UPLOAD ZDJĘĆ:
+   - Dodaj zdjęcia powyżej w sekcji "Newsletter Images"
+   - Możesz dodać kilka banerów/headerów
 
-2. POBIERANIE LINKÓW:
-   - Kliknij prawym na obraz → "Copy image URL"
-   - Otrzymasz link: https://cdn.sanity.io/images/pofl8c47/production/abc123...
-   
-3. LINK DO NEWSLETTERA:
-   - Zamień "https://cdn.sanity.io/images/pofl8c47/production/" na "https://sigeon.pl/images/"
-   - Przykład: https://sigeon.pl/images/abc123-500x300.jpg
+2. POBIERANIE LINKU:
+   - Kliknij prawym na zdjęcie → "Copy image URL"
+   - Otrzymasz: https://cdn.sanity.io/images/pofl8c47/production/abc123...
 
-4. OPTYMALIZACJA:
-   - Dodaj ?w=500&h=300 na końcu dla automatycznego resize
-   - Przykład: https://sigeon.pl/images/abc123.jpg?w=500&h=300
+3. ZAMIEŃ NA WŁASNĄ DOMENĘ:
+   - Zamień: "https://cdn.sanity.io/images/pofl8c47/production/"
+   - Na: "https://sigeon.vercel.app/images/"
+   - Wynik: https://sigeon.vercel.app/images/abc123.jpg
 
-5. NAJLEPSZE PRAKTYKI:
-   - Logo: maksymalnie 200px wysokości
-   - Header: 600px szerokości
-   - Social icons: 32x32px lub 48x48px
-   - Zdjęcia: nie większe niż 800px szerokości`,
-      rows: 20,
+4. AUTOMATYCZNY RESIZE (opcjonalnie):
+   - Dodaj ?w=600&h=300 dla konkretnego rozmiaru
+   - Przykład: https://sigeon.vercel.app/images/abc123.jpg?w=600&h=200
+
+GOTOWE! Wklej link do newslettera 📧`,
+      rows: 15,
       readOnly: true,
     }),
   ],
   preview: {
     prepare() {
       return {
-        title: 'Newsletter Assets',
-        subtitle: 'Graphics and images for email marketing',
+        title: 'Newsletter Images',
+        subtitle: 'Upload images and get links for newsletters',
       }
     },
   },
