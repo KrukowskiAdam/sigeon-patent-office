@@ -411,7 +411,7 @@ export interface Publication {
   }
   excerpt?: LocalizedTextNews
   content?: LocalizedRichTextNews
-  mainImage?: {
+  featuredImage?: {
     asset: {
       _id: string
       url: string

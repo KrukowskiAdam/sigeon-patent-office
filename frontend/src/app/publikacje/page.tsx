@@ -105,11 +105,11 @@ export default function PublikacjePage() {
                 <Card key={publication._id} className="overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-gray-50 border-gray-200 flex flex-col h-full">
                   <div className="flex flex-col md:flex-row">
                     {/* Image on the left */}
-                    {publication.mainImage ? (
+                    {publication.featuredImage ? (
                       <div className="md:w-1/3 flex items-center justify-center bg-gray-50 p-8">
                         <div className="relative w-[80%] aspect-video overflow-hidden">
                           <Image
-                            src={urlFor(publication.mainImage).width(400).url()}
+                            src={urlFor(publication.featuredImage).width(400).url()}
                             alt={getLocalizedText(publication.title, currentLanguage)}
                             fill
                             sizes="(max-width: 768px) 100vw, 33vw"
@@ -131,7 +131,7 @@ export default function PublikacjePage() {
                     )}
                     
                     {/* Content on the right */}
-                    <div className={`${publication.mainImage ? 'md:w-2/3' : 'w-full'} flex flex-col`}>
+                    <div className={`${publication.featuredImage ? 'md:w-2/3' : 'w-full'} flex flex-col`}>
                       <CardHeader className="text-gray-900 pt-8">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">

@@ -8,6 +8,18 @@ export const publications = defineType({
   icon: DocumentTextIcon,
   fields: [
     defineField({
+      name: 'showPl',
+      title: 'Show on Polish site (PL)',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'showEn',
+      title: 'Show on English site (EN)',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'localizedStringNews',
@@ -36,19 +48,12 @@ export const publications = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'mainImage',
-      title: 'Main image',
+      name: 'featuredImage',
+      title: 'Featured Image',
       type: 'image',
       options: {
         hotspot: true,
       },
-      fields: [
-        defineField({
-          name: 'alt',
-          type: 'localizedStringNews',
-          title: 'Alternative Text',
-        }),
-      ],
     }),
 
     defineField({
@@ -74,20 +79,6 @@ export const publications = defineType({
       type: 'boolean',
       description: 'Mark as featured to show prominently on homepage',
       initialValue: false,
-    }),
-    defineField({
-      name: 'showPl',
-      title: 'Show in Polish',
-      type: 'boolean',
-      description: 'Show this publication in Polish version of the site',
-      initialValue: true,
-    }),
-    defineField({
-      name: 'showEn',
-      title: 'Show in English', 
-      type: 'boolean',
-      description: 'Show this publication in English version of the site',
-      initialValue: true,
     }),
     defineField({
       name: 'tags',
@@ -116,14 +107,15 @@ export const publications = defineType({
   preview: {
     select: {
       title: 'title.pl',
-      author: 'authors.0.name',
-      media: 'mainImage',
+      subtitle: 'category',
+      media: 'featuredImage',
+      publishedAt: 'publishedAt',
     },
-    prepare(selection) {
-      const {author, media} = selection
+    prepare({title, subtitle, media, publishedAt}) {
+      const formattedDate = publishedAt ? new Date(publishedAt).toLocaleDateString('pl-PL') : 'No date'
       return {
-        title: selection.title,
-        subtitle: author ? `by ${author}` : 'Publication',
+        title: title || 'Untitled',
+        subtitle: `${subtitle || 'Uncategorized'} • ${formattedDate}`,
         media,
       }
     },
