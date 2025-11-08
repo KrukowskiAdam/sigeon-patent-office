@@ -8,7 +8,7 @@ import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import { navigationTranslations } from '@/lib/i18n'
 import { getLocalizedText } from '@/lib/i18n'
 import { getLocalizedLink } from '@/lib/localizedLinks'
-import { getNavigation } from '@/lib/queries'
+import { getCachedNavigation } from '@/lib/navigationCache'
 import { Navigation } from '@/types/sanity'
 import { Button } from '@/components/ui/button'
 
@@ -16,7 +16,6 @@ export function Header() {
   const { currentLanguage } = useLanguage()
   const nav = navigationTranslations[currentLanguage]
   const [navigation, setNavigation] = useState<Navigation | null>(null)
-  const [navigationLoaded, setNavigationLoaded] = useState(false)
   const [isScrolled, setIsScrolled] = useState(() => {
     // Initialize with current scroll position to prevent flash
     if (typeof window !== 'undefined') {
@@ -48,12 +47,10 @@ export function Header() {
   useEffect(() => {
     const loadNavigation = async () => {
       try {
-        const navData = await getNavigation()
+        const navData = await getCachedNavigation()
         setNavigation(navData)
-        setNavigationLoaded(true)
       } catch (error) {
         console.error('Error loading navigation:', error)
-        setNavigationLoaded(true) // Show fallback even on error
       }
     }
     
@@ -69,7 +66,7 @@ export function Header() {
             <div className="flex items-center space-x-6">
               {/* Secondary Navigation */}
               <nav className="hidden sm:flex items-center space-x-4 md:space-x-6">
-                {navigationLoaded && navigation?.secondaryMenuItems && navigation.secondaryMenuItems.length > 0 ? (
+                {navigation?.secondaryMenuItems && navigation.secondaryMenuItems.length > 0 ? (
                   navigation.secondaryMenuItems
                     .filter(item => item.showInNavigation !== false)
                     .sort((a, b) => (a.order || 0) - (b.order || 0))
@@ -84,8 +81,8 @@ export function Header() {
                       {getLocalizedText(item.label, currentLanguage)}
                     </Link>
                   ))
-                ) : navigationLoaded ? (
-                  // Fallback menu items if no CMS data
+                ) : (
+                  // Fallback menu items - always show
                   <>
                     <Link href="/team" className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal">
                       {nav.team}
@@ -100,7 +97,7 @@ export function Header() {
                       Publikacje
                     </Link>
                   </>
-                ) : null}
+                )}
               </nav>
 
               {/* Language Switcher */}
@@ -131,7 +128,7 @@ export function Header() {
             <div className="flex items-center">
               {/* Primary Desktop Navigation */}
               <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-              {navigationLoaded && navigation?.menuItems && navigation.menuItems.length > 0 ? (
+              {navigation?.menuItems && navigation.menuItems.length > 0 ? (
                 navigation.menuItems
                   .filter(item => item.showInNavigation !== false)
                   .sort((a, b) => (a.order || 0) - (b.order || 0))
@@ -146,8 +143,8 @@ export function Header() {
                     {getLocalizedText(item.label, currentLanguage)}
                   </Link>
                 ))
-              ) : navigationLoaded ? (
-                // Fallback menu items if no CMS data
+              ) : (
+                // Fallback menu items - always show
                 <>
                   <Link href="/rzecznicy-patentowi" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
                     {nav.patentAttorneys}
@@ -162,7 +159,7 @@ export function Header() {
                     {nav.biomed}
                   </Link>
                 </>
-              ) : null}
+              )}
             </nav>
 
               {/* Mobile menu button */}
