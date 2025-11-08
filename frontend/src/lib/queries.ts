@@ -1,5 +1,5 @@
 import {client} from './sanity'
-import {NewsArticle, NewsPage, TeamPage, Page, TeamMember, Homepage, Navigation, Footer} from '@/types/sanity'
+import {NewsArticle, NewsPage, TeamPage, Page, TeamMember, Homepage, Navigation, Footer, Publication, PublicationsPage} from '@/types/sanity'
 
 // Get homepage content
 export async function getNavigation(): Promise<Navigation | null> {
@@ -360,6 +360,101 @@ export async function getFooter(): Promise<Footer | null> {
       copyrightText
     }
   `)
+}
+
+// Publications queries
+export async function getPublications(): Promise<Publication[]> {
+  return client.fetch(`
+    *[_type == "publications"] | order(publishedAt desc) {
+      _id,
+      title,
+      slug,
+      publishedAt,
+      excerpt,
+      mainImage {
+        asset-> {
+          _id,
+          url
+        },
+        alt,
+        hotspot,
+        crop
+      },
+      authors[]-> {
+        name,
+        position
+      },
+      tags,
+      featured,
+      externalLink
+    }
+  `)
+}
+
+export async function getPublicationsPage(): Promise<PublicationsPage | null> {
+  return client.fetch(`
+    *[_type == "publicationsPage"][0] {
+      _id,
+      title,
+      description,
+      featuredPublications[]-> {
+        _id,
+        title,
+        slug,
+        excerpt,
+        publishedAt,
+        mainImage {
+          asset-> {
+            _id,
+            url
+          },
+          alt
+        },
+        authors[]-> {
+          name,
+          position
+        }
+      },
+      socialSharing,
+      seo
+    }
+  `)
+}
+
+export async function getPublicationBySlug(slug: string): Promise<Publication | null> {
+  return client.fetch(`
+    *[_type == "publications" && slug.current == $slug][0] {
+      _id,
+      title,
+      slug,
+      content,
+      excerpt,
+      mainImage {
+        asset-> {
+          _id,
+          url
+        },
+        alt,
+        hotspot,
+        crop
+      },
+      authors[]-> {
+        _id,
+        name,
+        position,
+        image {
+          asset-> {
+            _id,
+            url
+          }
+        }
+      },
+      publishedAt,
+      tags,
+      externalLink,
+      seo
+    }
+  `, { slug })
 }
 
 // Get redirect page by slug

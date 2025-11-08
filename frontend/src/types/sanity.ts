@@ -386,3 +386,72 @@ export interface Footer {
   column4: FooterColumn
   copyrightText?: LocalizedString
 }
+
+// Publications types (using PL/EN only locale)
+export interface LocalizedStringNews {
+  pl: string
+  en?: string
+}
+
+export interface LocalizedTextNews {
+  pl: string
+  en?: string
+}
+
+export interface LocalizedRichTextNews {
+  pl: unknown[]
+  en?: unknown[]
+}
+
+export interface Publication {
+  _id: string
+  title: LocalizedStringNews
+  slug: {
+    current: string
+  }
+  excerpt?: LocalizedTextNews
+  content?: LocalizedRichTextNews
+  mainImage?: {
+    asset: {
+      _id: string
+      url: string
+    }
+    alt?: LocalizedStringNews
+    hotspot?: boolean
+    crop?: unknown
+  }
+  authors?: Array<{
+    _id: string
+    name: string
+    position: LocalizedString
+    image?: {
+      asset: {
+        _id: string
+        url: string
+      }
+    }
+  }>
+  publishedAt: string
+  featured?: boolean
+  tags?: string[]
+  externalLink?: string
+  seo?: SEO
+}
+
+export interface PublicationsPage {
+  _id: string
+  title: LocalizedStringNews
+  description?: LocalizedTextNews
+  featuredPublications?: Publication[]
+  socialSharing?: {
+    enableSharing?: boolean
+    platforms?: {
+      linkedin?: boolean
+      facebook?: boolean
+      twitter?: boolean
+      email?: boolean
+    }
+    shareText?: LocalizedStringNews
+  }
+  seo?: SEO
+}
