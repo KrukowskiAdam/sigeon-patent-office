@@ -26,29 +26,20 @@ export default function Home() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        console.log('🔄 Starting data load...')
+        const [homepageData, newsData] = await Promise.all([
+          getHomepage(),
+          getFeaturedNews()
+        ])
         
-        // Load homepage data
-        console.log('📄 Loading homepage...')
-        const homepageData = await getHomepage()
-        console.log('✅ Homepage loaded:', homepageData ? 'Found' : 'Not found')
-        
-        console.log('📰 Loading news...')
-        const newsData = await getFeaturedNews()
-        console.log('✅ News loaded:', newsData?.length || 0, 'articles')
-        
-        console.log(' Setting state...')
         setHomepage(homepageData)
         setFeaturedNews(newsData)
-        console.log('✅ State updated successfully')
       } catch (error) {
-        console.error('❌ Error loading data:', error)
-        console.error('❌ Error details:', error instanceof Error ? error.message : 'Unknown error')
+        console.error('Error loading data:', error)
       } finally {
         setLoading(false)
       }
     }
-
+    
     loadData()
   }, [])
 

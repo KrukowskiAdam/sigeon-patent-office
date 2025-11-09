@@ -27,12 +27,14 @@ interface LanguageProviderProps {
 export function LanguageProvider({ children }: LanguageProviderProps) {
   // Always start with 'pl' on both server and client for consistent hydration
   const [currentLanguage, setCurrentLanguage] = useState<Language>('pl')
-
   // After hydration, sync with localStorage
   useEffect(() => {
     const saved = localStorage.getItem('language') as Language | null
     if (saved && (saved === 'pl' || saved === 'en' || saved === 'zh' || saved === 'ko' || saved === 'ja' || saved === 'ru')) {
-      setCurrentLanguage(saved)
+      // Use requestAnimationFrame to prevent hydration flash
+      requestAnimationFrame(() => {
+        setCurrentLanguage(saved)
+      })
     }
   }, [])
 

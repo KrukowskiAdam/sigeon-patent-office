@@ -82,3 +82,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Smooth page transitions */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.2s;
+  }
+}

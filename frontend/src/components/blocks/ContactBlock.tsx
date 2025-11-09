@@ -230,7 +230,7 @@ export function ContactBlock({ language }: ContactBlockProps) {
   }
 
   if (!contactSettings) {
-    return <div>Loading contact information...</div>
+    return null
   }
 
   return (

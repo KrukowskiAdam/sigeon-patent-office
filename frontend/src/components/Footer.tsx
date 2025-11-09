@@ -28,13 +28,7 @@ export function Footer() {
   }, [])
 
   if (loading) {
-    return (
-      <footer className="bg-[#0abaee] text-white py-6 mt-auto">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center">Ładowanie...</div>
-        </div>
-      </footer>
-    )
+    return null
   }
 
   if (!footer) {

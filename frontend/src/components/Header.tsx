@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
-import { navigationTranslations } from '@/lib/i18n'
 import { getLocalizedText } from '@/lib/i18n'
 import { getLocalizedLink } from '@/lib/localizedLinks'
 import { getCachedNavigation } from '@/lib/navigationCache'
@@ -14,47 +13,40 @@ import { Button } from '@/components/ui/button'
 
 export function Header() {
   const { currentLanguage } = useLanguage()
-  const nav = navigationTranslations[currentLanguage]
   const [navigation, setNavigation] = useState<Navigation | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isHydrated, setIsHydrated] = useState(false)
-
-  // Hydration fix - set initial state after client renders
-  useEffect(() => {
-    setIsHydrated(true)
-    setIsScrolled(window.scrollY > 50)
-  }, [])
 
   useEffect(() => {
-    if (!isHydrated) return
-    
-    let ticking = false
-    
     const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 50)
-          ticking = false
-        })
-        ticking = true
+      const scrolled = window.scrollY > 20
+      if (scrolled !== isScrolled) {
+        setIsScrolled(scrolled)
       }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [isHydrated])
+  }, [isScrolled])
 
   useEffect(() => {
+    let isMounted = true
+    
     const loadNavigation = async () => {
       try {
         const navData = await getCachedNavigation()
-        setNavigation(navData)
+        if (isMounted && navData) {
+          setNavigation(navData)
+        }
       } catch (error) {
         console.error('Error loading navigation:', error)
       }
     }
     
     loadNavigation()
+    
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   return (
@@ -66,7 +58,7 @@ export function Header() {
             <div className="flex items-center space-x-6">
               {/* Secondary Navigation */}
               <nav className="hidden sm:flex items-center space-x-4 md:space-x-6">
-                {navigation?.secondaryMenuItems && navigation.secondaryMenuItems.length > 0 ? (
+                {navigation?.secondaryMenuItems && navigation.secondaryMenuItems.length > 0 && (
                   navigation.secondaryMenuItems
                     .filter(item => item.showInNavigation !== false)
                     .sort((a, b) => (a.order || 0) - (b.order || 0))
@@ -75,28 +67,13 @@ export function Header() {
                       key={index}
                       href={getLocalizedLink(item)} 
                       className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal"
+                      prefetch={true}
                       target={item.isExternal ? '_blank' : undefined}
                       rel={item.isExternal ? 'noopener noreferrer' : undefined}
                     >
                       {getLocalizedText(item.label, currentLanguage)}
                     </Link>
                   ))
-                ) : (
-                  // Fallback menu items - always show
-                  <>
-                    <Link href="/team" className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal">
-                      {nav.team}
-                    </Link>
-                    <Link href="/news" className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal">
-                      {nav.news}
-                    </Link>
-                    <Link href="/contact" className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal">
-                      {nav.contact}
-                    </Link>
-                    <Link href="/publikacje" className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal">
-                      Publikacje
-                    </Link>
-                  </>
                 )}
               </nav>
 
@@ -109,17 +86,17 @@ export function Header() {
         </div>
 
       {/* Main Navigation Bar */}
-      <div className="text-slate-800 shadow-sm border-b border-gray-200 transition-all duration-300" style={{backgroundColor: '#d3dae4'}}>
-        <div className={`max-w-7xl mx-auto px-6 transition-all duration-300 ${isHydrated && isScrolled ? 'py-6' : 'py-4'}`}>
+      <div className={`text-slate-800 shadow-sm border-b border-gray-200 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`} style={{backgroundColor: '#d3dae4'}}>
+        <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="hover:opacity-80 transition-opacity">
+            <Link href="/" className="hover:opacity-80 transition-opacity" prefetch={true}>
               <Image
                 src="/SigeonIP.png"
                 alt="Sigeon IP"
                 width={120}
                 height={40}
-                className={`w-auto transition-all duration-300 ${isHydrated && isScrolled ? 'h-10' : 'h-8'}`}
+                className={`w-auto transition-all duration-300 ${isScrolled ? 'h-6' : 'h-8'}`}
                 priority
               />
             </Link>
@@ -128,7 +105,7 @@ export function Header() {
             <div className="flex items-center">
               {/* Primary Desktop Navigation */}
               <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-              {navigation?.menuItems && navigation.menuItems.length > 0 ? (
+              {navigation?.menuItems && navigation.menuItems.length > 0 && (
                 navigation.menuItems
                   .filter(item => item.showInNavigation !== false)
                   .sort((a, b) => (a.order || 0) - (b.order || 0))
@@ -136,29 +113,14 @@ export function Header() {
                   <Link 
                     key={index}
                     href={getLocalizedLink(item)} 
-                    className={`hover:text-slate-600 transition-all duration-300 font-medium ${isHydrated && isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}
+                    className="hover:text-slate-600 transition-colors font-medium text-sm"
+                    prefetch={true}
                     target={item.isExternal ? '_blank' : undefined}
                     rel={item.isExternal ? 'noopener noreferrer' : undefined}
                   >
                     {getLocalizedText(item.label, currentLanguage)}
                   </Link>
                 ))
-              ) : (
-                // Fallback menu items - always show
-                <>
-                  <Link href="/rzecznicy-patentowi" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isHydrated && isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
-                    {nav.patentAttorneys}
-                  </Link>
-                  <Link href="/uslugi-prawne" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isHydrated && isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
-                    {nav.legalServices}
-                  </Link>
-                  <Link href="/doradztwo-biznesowe-ip" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isHydrated && isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
-                    {nav.businessConsulting}
-                  </Link>
-                  <Link href="/biomed" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isHydrated && isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
-                    {nav.biomed}
-                  </Link>
-                </>
               )}
             </nav>
 
