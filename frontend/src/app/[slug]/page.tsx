@@ -1,15 +1,24 @@
 'use client'
 
 import { useEffect, useState, use } from 'react'
-import Link from 'next/link'
 import { useLanguage } from '@/context/LanguageContext'
-import { getPage } from '@/lib/queries'
-import { Page } from '@/types/sanity'
+import { getCMSPageBySlug } from '@/lib/queries'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { ContentBlock } from '@/components/blocks'
 import { notFound } from 'next/navigation'
-import { navigationTranslations, getLocalizedText } from '@/lib/i18n'
+import { 
+  NewsPageComponent, 
+  PublicationsPageComponent, 
+  TeamPageComponent, 
+  RegularPageComponent 
+} from '@/components/pages'
+import { 
+  CMSPage,
+  isNewsPage, 
+  isPublicationsPage, 
+  isTeamPage, 
+  isRegularPage 
+} from '@/lib/pageTypes'
 
 interface PageProps {
   params: Promise<{
@@ -19,7 +28,7 @@ interface PageProps {
 
 export default function DynamicPage({ params }: PageProps) {
   const { currentLanguage } = useLanguage()
-  const [page, setPage] = useState<Page | null>(null)
+  const [page, setPage] = useState<CMSPage | null>(null)
   const [loading, setLoading] = useState(true)
   
   // Unwrap params Promise with React.use()
@@ -28,7 +37,7 @@ export default function DynamicPage({ params }: PageProps) {
   useEffect(() => {
     const loadPage = async () => {
       try {
-        const pageData = await getPage(resolvedParams.slug)
+        const pageData = await getCMSPageBySlug(resolvedParams.slug)
         if (!pageData) {
           notFound()
           return
@@ -60,50 +69,36 @@ export default function DynamicPage({ params }: PageProps) {
     return notFound()
   }
 
+  // Render appropriate component based on page type
+  const renderPageContent = () => {
+    if (isNewsPage(page)) {
+      return <NewsPageComponent page={page} currentLanguage={currentLanguage} />
+    }
+    
+    if (isPublicationsPage(page)) {
+      return <PublicationsPageComponent page={page} currentLanguage={currentLanguage} />
+    }
+    
+    if (isTeamPage(page)) {
+      return <TeamPageComponent page={page} currentLanguage={currentLanguage} />
+    }
+    
+    if (isRegularPage(page)) {
+      return <RegularPageComponent page={page} currentLanguage={currentLanguage} />
+    }
+
+    // Fallback - should never reach here
+    return <div>Unknown page type</div>
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       
       <main className="pt-0 flex-grow">
-        {/* Content Blocks */}
-        {page.content && page.content.length > 0 && (
-          <div>
-            {page.content.map((block) => (
-              <ContentBlock 
-                key={block._key} 
-                block={block} 
-                language={currentLanguage} 
-              />
-            ))}
-          </div>
-        )}
-
+        {renderPageContent()}
       </main>
 
-      {/* Navigation Section */}
-      <section className="py-8">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center pt-8 border-t border-gray-200">
-            <Link
-              href="/"
-              className="inline-block text-white font-medium py-3 px-8 rounded-lg transition-colors"
-              style={{ backgroundColor: '#0abaee' }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#0891b2'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#0abaee'
-              }}
-            >
-              {page?.buttons?.backToHome
-                ? getLocalizedText(page.buttons.backToHome, currentLanguage)
-                : navigationTranslations[currentLanguage].home}
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
       <Footer />
     </div>
   )

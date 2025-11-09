@@ -7,6 +7,31 @@ export const publicationsPage = defineType({
   icon: () => '📚',
   fields: [
     defineField({
+      name: 'slug',
+      title: 'URL Slug',
+      type: 'slug',
+      options: {
+        source: (doc: any) => doc.title?.pl || 'publications',
+        maxLength: 96,
+      },
+      validation: Rule => Rule.required(),
+      description: 'URL path for this page (e.g., "publications", "publikacje")',
+      initialValue: {
+        current: 'publikacje'
+      }
+    }),
+    defineField({
+      name: 'title',
+      title: 'Page Title',
+      type: 'localizedString',
+      validation: Rule => Rule.required(),
+      description: 'Main title for the publications page',
+      initialValue: {
+        pl: 'Publikacje',
+        en: 'Publications'
+      }
+    }),
+    defineField({
       name: 'buttons',
       title: 'Buttons / Labels',
       type: 'object',

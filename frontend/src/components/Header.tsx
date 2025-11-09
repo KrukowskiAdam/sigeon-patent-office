@@ -16,15 +16,18 @@ export function Header() {
   const { currentLanguage } = useLanguage()
   const nav = navigationTranslations[currentLanguage]
   const [navigation, setNavigation] = useState<Navigation | null>(null)
-  const [isScrolled, setIsScrolled] = useState(() => {
-    // Initialize with current scroll position to prevent flash
-    if (typeof window !== 'undefined') {
-      return window.scrollY > 50
-    }
-    return false
-  })
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isHydrated, setIsHydrated] = useState(false)
+
+  // Hydration fix - set initial state after client renders
+  useEffect(() => {
+    setIsHydrated(true)
+    setIsScrolled(window.scrollY > 50)
+  }, [])
 
   useEffect(() => {
+    if (!isHydrated) return
+    
     let ticking = false
     
     const handleScroll = () => {
@@ -36,13 +39,10 @@ export function Header() {
         ticking = true
       }
     }
-    
-    // Set initial state immediately
-    setIsScrolled(window.scrollY > 50)
-    
+
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [isHydrated])
 
   useEffect(() => {
     const loadNavigation = async () => {
@@ -73,7 +73,7 @@ export function Header() {
                     .map((item, index) => (
                     <Link 
                       key={index}
-                      href={getLocalizedLink(item, currentLanguage)} 
+                      href={getLocalizedLink(item)} 
                       className="hover:text-gray-700 transition-colors text-xs md:text-sm font-normal"
                       target={item.isExternal ? '_blank' : undefined}
                       rel={item.isExternal ? 'noopener noreferrer' : undefined}
@@ -110,7 +110,7 @@ export function Header() {
 
       {/* Main Navigation Bar */}
       <div className="text-slate-800 shadow-sm border-b border-gray-200 transition-all duration-300" style={{backgroundColor: '#d3dae4'}}>
-        <div className={`max-w-7xl mx-auto px-6 transition-all duration-300 ${isScrolled ? 'py-6' : 'py-4'}`}>
+        <div className={`max-w-7xl mx-auto px-6 transition-all duration-300 ${isHydrated && isScrolled ? 'py-6' : 'py-4'}`}>
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="hover:opacity-80 transition-opacity">
@@ -119,7 +119,7 @@ export function Header() {
                 alt="Sigeon IP"
                 width={120}
                 height={40}
-                className={`w-auto transition-all duration-300 ${isScrolled ? 'h-10' : 'h-8'}`}
+                className={`w-auto transition-all duration-300 ${isHydrated && isScrolled ? 'h-10' : 'h-8'}`}
                 priority
               />
             </Link>
@@ -135,8 +135,8 @@ export function Header() {
                   .map((item, index) => (
                   <Link 
                     key={index}
-                    href={getLocalizedLink(item, currentLanguage)} 
-                    className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}
+                    href={getLocalizedLink(item)} 
+                    className={`hover:text-slate-600 transition-all duration-300 font-medium ${isHydrated && isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}
                     target={item.isExternal ? '_blank' : undefined}
                     rel={item.isExternal ? 'noopener noreferrer' : undefined}
                   >
@@ -146,16 +146,16 @@ export function Header() {
               ) : (
                 // Fallback menu items - always show
                 <>
-                  <Link href="/rzecznicy-patentowi" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
+                  <Link href="/rzecznicy-patentowi" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isHydrated && isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
                     {nav.patentAttorneys}
                   </Link>
-                  <Link href="/uslugi-prawne" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
+                  <Link href="/uslugi-prawne" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isHydrated && isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
                     {nav.legalServices}
                   </Link>
-                  <Link href="/doradztwo-biznesowe-ip" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
+                  <Link href="/doradztwo-biznesowe-ip" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isHydrated && isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
                     {nav.businessConsulting}
                   </Link>
-                  <Link href="/biomed" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
+                  <Link href="/biomed" className={`hover:text-slate-600 transition-all duration-300 font-medium ${isHydrated && isScrolled ? 'text-sm lg:text-base' : 'text-xs md:text-sm'}`}>
                     {nav.biomed}
                   </Link>
                 </>

@@ -72,9 +72,9 @@ export default function NewsArticlePage({ params }: Props) {
       <div className="bg-gray-50 py-4">
         <div className="max-w-7xl mx-auto px-4">
           <nav className="text-sm text-gray-600">
-            <Link href="/" className="hover:text-[#0abaee]">Home</Link>
+            <Link href="/" prefetch={true} className="hover:text-[#0abaee]">Home</Link>
             <span className="mx-2">→</span>
-            <Link href="/news" className="hover:text-[#0abaee]">Aktualności</Link>
+            <Link href="/news" prefetch={true} className="hover:text-[#0abaee]">Aktualności</Link>
             <span className="mx-2">→</span>
             <span className="text-gray-900">{getLocalizedText(article.title, currentLanguage)}</span>
           </nav>

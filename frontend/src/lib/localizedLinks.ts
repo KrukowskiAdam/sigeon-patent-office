@@ -1,21 +1,11 @@
-import { Language } from '@/context/LanguageContext'
 import { MenuItem } from '@/types/sanity'
 
 /**
- * Get the appropriate link for a menu item based on current language
- * Falls back to default link if language-specific link is not provided
+ * Get the link for a menu item
+ * Always returns the default link as all languages use the same URLs
  */
-export function getLocalizedLink(menuItem: MenuItem, currentLanguage: Language): string {
-  // If no language-specific links are configured, use default link
-  if (!menuItem.languageSpecificLinks) {
-    return menuItem.link
-  }
-
-  // Get language-specific link if available
-  const languageLink = menuItem.languageSpecificLinks[currentLanguage]
-  
-  // Return language-specific link if exists, otherwise fallback to default
-  return languageLink || menuItem.link
+export function getLocalizedLink(menuItem: MenuItem): string {
+  return menuItem.link
 }
 
 /**

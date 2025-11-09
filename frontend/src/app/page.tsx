@@ -10,11 +10,12 @@ import { Badge } from '@/components/ui/badge'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { useLanguage } from '@/context/LanguageContext'
-import { getLocalizedText } from '@/lib/i18n'
+import { getLocalizedText, getLocalizedNewsText } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
 import { ContentBlock } from '@/components/blocks/ContentBlock'
 import { getLinkHref, shouldOpenInNewTab } from '@/utils/linkUtils'
 import { hasBlockTranslation } from '@/lib/hasTranslation'
+import { HomepageNewsSkeleton } from '@/components/ui/news-skeleton'
 
 export default function Home() {
   const { currentLanguage } = useLanguage()
@@ -55,11 +56,20 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen flex flex-col">
         <Header />
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <div className="text-xl">Ładowanie...</div>
-        </div>
+        <section id="news" className="py-12">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex items-stretch gap-4 mb-12">
+              <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
+              <h2 className="text-2xl font-bold text-gray-900 leading-none">
+                Najważniejsze aktualności
+              </h2>
+            </div>
+            <HomepageNewsSkeleton />
+          </div>
+        </section>
+        <Footer />
       </div>
     )
   }
@@ -106,14 +116,15 @@ export default function Home() {
                     {/* Image on the left */}
                     {article.featuredImage ? (
                       <div className="md:w-1/3 flex items-center justify-center bg-gray-50 p-8">
-                        <div className="relative w-[80%] aspect-video overflow-hidden">
+                        <div className="relative w-[64%] aspect-video overflow-hidden">
                           <Image
-                            src={urlFor(article.featuredImage).width(400).url()}
-                            alt={getLocalizedText(article.title, currentLanguage)}
+                            src={urlFor(article.featuredImage).width(256).height(144).quality(85).url()}
+                            alt={getLocalizedNewsText(article.title, currentLanguage)}
                             fill
-                            sizes="(max-width: 768px) 100vw, 33vw"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 20vw"
                             className="object-cover"
                             priority={index === 0}
+                            loading={index === 0 ? 'eager' : 'lazy'}
                           />
                         </div>
                       </div>
@@ -138,8 +149,8 @@ export default function Home() {
                                 <Badge variant="default" className="bg-[#0abaee] text-white text-xs">Wyróżnione</Badge>
                               </div>
                             )}
-                            <CardTitle className="text-xl md:text-2xl text-gray-900 leading-tight">
-                              {getLocalizedText(article.title, currentLanguage)}
+                            <CardTitle className="text-lg md:text-xl text-gray-900 leading-tight">
+                              {getLocalizedNewsText(article.title, currentLanguage)}
                             </CardTitle>
                           </div>
                         </div>
@@ -150,12 +161,13 @@ export default function Home() {
                       <CardContent className="flex flex-col flex-1">
                         {article.excerpt && (
                           <p className="text-gray-600 mb-2 text-sm">
-                            {getLocalizedText(article.excerpt, currentLanguage)}
+                            {getLocalizedNewsText(article.excerpt, currentLanguage) || 'Brak treści...'}
                           </p>
                         )}
                         <div className="mt-4">
                           <Link 
                             href={`/news/${article.slug.current}`}
+                            prefetch={true}
                             className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
                           >
                             {homepage?.newsSection?.readMoreLabel

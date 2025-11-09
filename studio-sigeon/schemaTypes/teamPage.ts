@@ -4,7 +4,33 @@ export const teamPage = defineType({
   name: 'teamPage',
   title: 'Team Page Settings',
   type: 'document',
+  icon: () => '👥',
   fields: [
+    defineField({
+      name: 'slug',
+      title: 'URL Slug',
+      type: 'slug',
+      options: {
+        source: (doc: any) => doc.title?.pl || 'team',
+        maxLength: 96,
+      },
+      validation: Rule => Rule.required(),
+      description: 'URL path for this page (e.g., "team", "zespol")',
+      initialValue: {
+        current: 'team'
+      }
+    }),
+    defineField({
+      name: 'title',
+      title: 'Page Title',
+      type: 'localizedString',
+      validation: Rule => Rule.required(),
+      description: 'Main title for the team page',
+      initialValue: {
+        pl: 'Zespół',
+        en: 'Team'
+      }
+    }),
     defineField({
       name: 'blocks',
       title: 'Page Content',

@@ -7,6 +7,31 @@ export const newsPage = defineType({
   icon: () => '📰',
   fields: [
     defineField({
+      name: 'slug',
+      title: 'URL Slug',
+      type: 'slug',
+      options: {
+        source: (doc: any) => doc.title?.pl || 'news',
+        maxLength: 96,
+      },
+      validation: Rule => Rule.required(),
+      description: 'URL path for this page (e.g., "news", "aktualnosci")',
+      initialValue: {
+        current: 'news'
+      }
+    }),
+    defineField({
+      name: 'title',
+      title: 'Page Title',
+      type: 'localizedString',
+      validation: Rule => Rule.required(),
+      description: 'Main title for the news page',
+      initialValue: {
+        pl: 'Aktualności',
+        en: 'News'
+      }
+    }),
+    defineField({
       name: 'buttons',
       title: 'Buttons / Labels',
       type: 'object',

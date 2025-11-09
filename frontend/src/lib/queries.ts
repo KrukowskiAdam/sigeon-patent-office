@@ -100,6 +100,8 @@ export async function getNewsPage(): Promise<NewsPage | null> {
   return client.fetch(`
     *[_type == "newsPage"][0] {
       _id,
+      slug,
+      title,
       buttons,
       blocks[] {
         _type,
@@ -124,6 +126,8 @@ export async function getTeamPage(): Promise<TeamPage | null> {
   return client.fetch(`
     *[_type == "teamPage"][0] {
       _id,
+      slug,
+      title,
       blocks[] {
         _type,
         _key,
@@ -137,14 +141,7 @@ export async function getTeamPage(): Promise<TeamPage | null> {
           }
         }
       },
-      teamSection {
-        title,
-        subtitle,
-        showTeam
-      },
-      buttons {
-        backToHome
-      },
+      teamSection,
       seo
     }
   `)
@@ -397,8 +394,10 @@ export async function getPublicationsPage(): Promise<PublicationsPage | null> {
   return client.fetch(`
     *[_type == "publicationsPage"][0] {
       _id,
+      slug,
       title,
       description,
+      buttons,
       featuredPublications[]-> {
         _id,
         title,
@@ -509,4 +508,66 @@ export async function getRedirectPage(slug: string): Promise<{
       isActive
     }
   `, { slug })
+}
+
+// Get any CMS page by slug - unified query for all page types
+export async function getCMSPageBySlug(slug: string) {
+  // First try to find by slug in page settings
+  const queries = [
+    // News Page
+    `*[_type == "newsPage" && slug.current == $slug][0] {
+      _type,
+      _id,
+      slug,
+      title,
+      blocks,
+      buttons,
+      seo
+    }`,
+    
+    // Team Page  
+    `*[_type == "teamPage" && slug.current == $slug][0] {
+      _type,
+      _id,
+      slug,
+      title,
+      blocks,
+      teamSection,
+      seo
+    }`,
+    
+    // Publications Page
+    `*[_type == "publicationsPage" && slug.current == $slug][0] {
+      _type,
+      _id,
+      slug,
+      title,
+      description,
+      blocks,
+      buttons,
+      socialSharing,
+      seo
+    }`,
+    
+    // Regular Page (existing)
+    `*[_type == "page" && slug.current == $slug][0] {
+      _type,
+      _id,
+      title,
+      slug,
+      content,
+      buttons,
+      seo
+    }`
+  ]
+
+  // Try each query until we find a page
+  for (const query of queries) {
+    const result = await client.fetch(query, { slug })
+    if (result) {
+      return result
+    }
+  }
+  
+  return null
 }

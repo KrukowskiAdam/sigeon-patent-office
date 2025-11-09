@@ -74,7 +74,12 @@ export interface NewsArticle {
 }
 
 export interface NewsPage {
+  _type: 'newsPage'
   _id: string
+  slug: {
+    current: string
+  }
+  title: LocalizedString
   blocks?: ContentBlock[]
   buttons?: {
     readMore?: LocalizedString
@@ -84,7 +89,12 @@ export interface NewsPage {
 }
 
 export interface TeamPage {
+  _type: 'teamPage'
   _id: string
+  slug: {
+    current: string
+  }
+  title: LocalizedString
   blocks?: ContentBlock[]
   teamSection?: {
     showTeam?: boolean
@@ -283,6 +293,7 @@ export interface FooterBlock {
 export type ContentBlock = TextBlock | TextImageBlock | TextImageCarouselBlock | TwoColumnTextBlock | HeroBlock | ServicesBlock | BannerBlock | CodeBlock | ContactBlock | FooterBlock
 
 export interface Page {
+  _type: 'page'
   _id: string
   internalTitle: string
   slug: {
@@ -325,14 +336,6 @@ export interface TeamMember {
 export interface MenuItem {
   label: LocalizedString
   link: string
-  languageSpecificLinks?: {
-    pl?: string
-    en?: string
-    zh?: string
-    ko?: string
-    ja?: string
-    ru?: string
-  }
   isExternal?: boolean
   showInNavigation?: boolean
   order?: number
@@ -441,8 +444,12 @@ export interface Publication {
 }
 
 export interface PublicationsPage {
+  _type: 'publicationsPage'
   _id: string
-  title: LocalizedStringNews
+  slug: {
+    current: string
+  }
+  title: LocalizedString
   description?: LocalizedTextNews
   blocks?: ContentBlock[]
   buttons?: {

@@ -1,46 +1,30 @@
-'use client'
-
-import { getNews, getNewsPage } from '@/lib/queries'
-import type { NewsArticle, NewsPage } from '@/types/sanity'
+import { NewsPage, NewsArticle } from '@/types/sanity'
+import { Language } from '@/context/LanguageContext'
+import { ContentBlock } from '@/components/blocks'
+import { getLocalizedText, getLocalizedNewsText } from '@/lib/i18n'
+import { getNews } from '@/lib/queries'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
-import { useLanguage } from '@/context/LanguageContext'
-import { getLocalizedText } from '@/lib/i18n'
-import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ContentBlock } from '@/components/blocks'
 import { NewsSkeleton } from '@/components/ui/news-skeleton'
 
-export default function NewsPage() {
-  const { currentLanguage, setLanguage } = useLanguage()
-  const [news, setNews] = useState<NewsArticle[]>([])
-  const [newsPage, setNewsPage] = useState<NewsPage | null>(null)
-  const [loading, setLoading] = useState(true)
+interface NewsPageComponentProps {
+  page: NewsPage
+  currentLanguage: Language
+}
 
-  // Check for language parameter in URL
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const langParam = urlParams.get('lang')
-    
-    if (langParam && ['en', 'pl', 'zh', 'ko', 'ja', 'ru'].includes(langParam)) {
-      setLanguage(langParam as 'en' | 'pl' | 'zh' | 'ko' | 'ja' | 'ru')
-    }
-  }, [setLanguage])
+export function NewsPageComponent({ page, currentLanguage }: NewsPageComponentProps) {
+  const [news, setNews] = useState<NewsArticle[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const loadNews = async () => {
       try {
-        const [newsData, pageData] = await Promise.all([
-          getNews(),
-          getNewsPage()
-        ])
-
+        const newsData = await getNews()
         setNews(newsData)
-        setNewsPage(pageData)
       } catch (error) {
         console.error('Error loading news:', error)
       } finally {
@@ -53,39 +37,44 @@ export default function NewsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-grow">
-          <section className="py-12">
+      <div>
+        {/* Page Title */}
+        {page.title && (
+          <div className="bg-gray-50 py-12">
             <div className="max-w-7xl mx-auto px-4">
-              <div className="flex items-stretch gap-4 mb-12">
-                <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
-                <h1 className="text-2xl font-bold text-gray-900 leading-none">Aktualności</h1>
-              </div>
-              <NewsSkeleton />
+              <h1 className="text-4xl font-bold text-gray-900 text-center">
+                {getLocalizedText(page.title, currentLanguage)}
+              </h1>
             </div>
-          </section>
-        </main>
-        <Footer />
+          </div>
+        )}
+        
+        <section className="py-12">
+          <div className="max-w-7xl mx-auto px-4">
+            <NewsSkeleton />
+          </div>
+        </section>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-
-      {/* Page Content Blocks */}
-      {newsPage && newsPage.blocks && newsPage.blocks.length > 0 && (
+    <div>
+      {/* Content Blocks */}
+      {page.blocks && page.blocks.length > 0 && (
         <div>
-          {newsPage.blocks.map((block) => (
-            <ContentBlock key={block._key} block={block} language={currentLanguage} />
+          {page.blocks.map((block) => (
+            <ContentBlock 
+              key={block._key} 
+              block={block} 
+              language={currentLanguage} 
+            />
           ))}
         </div>
       )}
 
-      {/* Content */}
-      <main className="py-16 flex-grow">
+      {/* News Content */}
+      <main className="py-16">
         <div className="max-w-7xl mx-auto px-4">
           {news.length === 0 ? (
             <Card className="max-w-md mx-auto">
@@ -97,14 +86,6 @@ export default function NewsPage() {
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Brak aktualności</h3>
                   <p>Aktualności będą wyświetlane po dodaniu ich do systemu CMS.</p>
                 </div>
-                <a 
-                  href="http://localhost:3333" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
-                >
-                  Przejdź do CMS
-                </a>
               </CardContent>
             </Card>
           ) : (
@@ -120,13 +101,13 @@ export default function NewsPage() {
                         <div className="relative w-[80%] aspect-video overflow-hidden">
                           <Image
                             src={urlFor(article.featuredImage).width(320).height(180).quality(85).url()}
-                            alt={getLocalizedText(article.title, currentLanguage)}
+                            alt={getLocalizedNewsText(article.title, currentLanguage)}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
                             className="object-cover"
                             priority={index === 0}
                             loading={index === 0 ? 'eager' : 'lazy'}
-                            onError={() => console.error('Error loading image for article:', getLocalizedText(article.title, currentLanguage))}
+                            onError={() => console.error('Error loading image for article:', getLocalizedNewsText(article.title, currentLanguage))}
                           />
                         </div>
                       </div>
@@ -152,7 +133,7 @@ export default function NewsPage() {
                               </div>
                             )}
                             <CardTitle className="text-lg md:text-xl text-gray-900 leading-tight">
-                              {getLocalizedText(article.title, currentLanguage)}
+                              {getLocalizedNewsText(article.title, currentLanguage)}
                             </CardTitle>
                           </div>
                         </div>
@@ -164,7 +145,7 @@ export default function NewsPage() {
                       <CardContent className="text-gray-700 flex-1 flex flex-col">
                         {article.excerpt && (
                           <p className="text-gray-600 mb-2 line-clamp-3">
-                            {getLocalizedText(article.excerpt, currentLanguage)}
+                            {getLocalizedNewsText(article.excerpt, currentLanguage)}
                           </p>
                         )}
                         
@@ -174,8 +155,8 @@ export default function NewsPage() {
                             prefetch={true}
                             className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
                           >
-                            {newsPage?.buttons?.readMore
-                              ? getLocalizedText(newsPage.buttons.readMore, currentLanguage)
+                            {page?.buttons?.readMore
+                              ? getLocalizedText(page.buttons.readMore, currentLanguage)
                               : 'Czytaj więcej'}
                           </Link>
                         </div>
@@ -189,24 +170,21 @@ export default function NewsPage() {
         </div>
       </main>
 
-      {/* Navigation */}
+      {/* Navigation Section */}
       <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mt-12 pt-8 border-t border-gray-200">
-            <Link 
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center pt-8 border-t border-gray-200">
+            <Link
               href="/"
-              className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
+              className="inline-block text-white font-medium py-3 px-8 rounded-lg transition-colors bg-[#0abaee] hover:bg-[#0891b2]"
             >
-              {newsPage?.buttons?.backToHome
-                ? getLocalizedText(newsPage.buttons.backToHome, currentLanguage)
+              {page?.buttons?.backToHome
+                ? getLocalizedText(page.buttons.backToHome, currentLanguage)
                 : 'Strona główna'}
             </Link>
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <Footer />
     </div>
   )
 }
