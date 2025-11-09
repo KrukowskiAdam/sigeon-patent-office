@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { PortableText } from '@/components/ui/PortableText'
 import { getLocalizedPortableText } from '@/lib/portableText'
+import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 export default function TeamPage() {
   const { currentLanguage } = useLanguage()
@@ -58,9 +59,7 @@ export default function TeamPage() {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <div className="text-xl">Ładowanie...</div>
-        </div>
+        <LoadingSpinner />
       </div>
     )
   }

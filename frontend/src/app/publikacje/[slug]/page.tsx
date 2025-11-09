@@ -9,6 +9,7 @@ import { urlFor } from '@/lib/sanity'
 import { use, useEffect, useState } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
 import { getLocalizedText } from '@/lib/i18n'
+import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 interface Props {
   params: Promise<{
@@ -43,9 +44,7 @@ export default function PublicationPage({ params }: Props) {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <div className="text-xl">Ładowanie...</div>
-        </div>
+        <LoadingSpinner />
       </div>
     )
   }

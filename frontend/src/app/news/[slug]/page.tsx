@@ -11,6 +11,7 @@ import { use, useEffect, useState } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
 import { getLocalizedText } from '@/lib/i18n'
 import { getLocalizedPortableText } from '@/lib/portableText'
+import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 interface Props {
   params: Promise<{
@@ -43,11 +44,10 @@ export default function NewsArticlePage({ params }: Props) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen">
         <Header />
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <div className="text-xl">Ładowanie...</div>
-        </div>
+        <LoadingSpinner />
+        <Footer />
       </div>
     )
   }

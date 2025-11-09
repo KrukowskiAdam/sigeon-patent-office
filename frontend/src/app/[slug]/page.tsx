@@ -12,6 +12,7 @@ import {
   TeamPageComponent, 
   RegularPageComponent 
 } from '@/components/pages'
+import { LoadingSpinner } from '@/components/ui/loading-spinner'
 import { 
   CMSPage,
   isNewsPage, 
@@ -58,9 +59,7 @@ export default function DynamicPage({ params }: PageProps) {
     return (
       <div className="min-h-screen">
         <Header />
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <div className="text-xl">Ładowanie...</div>
-        </div>
+        <LoadingSpinner />
       </div>
     )
   }
