@@ -1,4 +1,3 @@
-import { Language } from '@/context/LanguageContext'
 import { NewsPage, TeamPage, PublicationsPage, Page } from '@/types/sanity'
 
 // Union type for all CMS pages
@@ -19,14 +18,6 @@ export function isPublicationsPage(page: CMSPage): page is PublicationsPage {
 
 export function isRegularPage(page: CMSPage): page is Page {
   return '_type' in page && page._type === 'page'
-}
-
-// Get page title based on type
-export function getPageTitle(page: CMSPage, language: Language): string {
-  if ('title' in page && page.title) {
-    return page.title[language] || page.title.pl || ''
-  }
-  return ''
 }
 
 // Page type mapping for easier identification

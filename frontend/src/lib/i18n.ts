@@ -1,7 +1,23 @@
 import { Language } from '@/context/LanguageContext'
 import { LocalizedString, LocalizedText, LocalizedTextNews, LocalizedStringNews } from '@/types/sanity'
 
-// Helper function for News types (pl/en only)
+// Helper function for Publications types (pl/en only)
+export function getLocalizedPublicationsText(
+  text: { pl: string; en?: string } | undefined,
+  currentLanguage: Language = 'pl'
+): string {
+  if (!text) return ''
+  
+  // Publications logic: PL only for Polish, EN for all other languages
+  if (currentLanguage === 'pl') {
+    // Polish users get Polish version (with EN fallback)
+    return text.pl || text.en || ''
+  } else {
+    // All other languages (en, zh, ko, ja, ru) get English version only
+    return text.en || ''
+  }
+}
+
 // Helper function for News types (pl/en only)
 export function getLocalizedNewsText(
   text: LocalizedTextNews | LocalizedStringNews | undefined,
@@ -14,10 +30,27 @@ export function getLocalizedNewsText(
     // Polish users get Polish version (with EN fallback)
     return text.pl || text.en || ''
   } else {
-    // All other languages (en, zh, ko, ja, ru) get English version (with PL fallback)
-    return text.en || text.pl || ''
+    // All other languages (en, zh, ko, ja, ru) get English version only
+    return text.en || ''
   }
 }
+
+// Helper function for Team Members (pl/en only)
+export function getLocalizedTeamText(
+  text: { pl: string; en?: string } | undefined,
+  currentLanguage: Language = 'pl'
+): string {
+  if (!text) return ''
+  
+  // Team logic: PL only for Polish, EN for all other languages
+  if (currentLanguage === 'pl') {
+    return text.pl || text.en || ''
+  } else {
+    // All other languages (en, zh, ko, ja, ru) get English version only
+    return text.en || ''
+  }
+}
+
 // Helper function to get text in current language with fallback
 export function getLocalizedText(
   text: LocalizedString | LocalizedText | undefined,

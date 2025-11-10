@@ -43,6 +43,28 @@ export default function Home() {
     loadData()
   }, [])
 
+  // Update document title and meta description based on language
+  useEffect(() => {
+    if (homepage) {
+      const title = homepage.siteTitle 
+        ? getLocalizedText(homepage.siteTitle, currentLanguage)
+        : 'Sigeon IP - Kancelaria Patentowa'
+      
+      const description = homepage.siteDescription
+        ? getLocalizedText(homepage.siteDescription, currentLanguage)
+        : 'Profesjonalna kancelaria patentowa - patenty, znaki towarowe, wzory przemysłowe'
+      
+      document.title = title
+      
+      let metaDescription = document.querySelector('meta[name="description"]')
+      if (!metaDescription) {
+        metaDescription = document.createElement('meta')
+        metaDescription.setAttribute('name', 'description')
+        document.head.appendChild(metaDescription)
+      }
+      metaDescription.setAttribute('content', description)
+    }
+  }, [homepage, currentLanguage])
 
 
   if (loading) {
@@ -150,9 +172,9 @@ export default function Home() {
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="flex flex-col flex-1">
-                        {article.excerpt && (
+                        {article.excerpt && getLocalizedNewsText(article.excerpt, currentLanguage) && (
                           <p className="text-gray-600 mb-2 text-sm">
-                            {getLocalizedNewsText(article.excerpt, currentLanguage) || 'Brak treści...'}
+                            {getLocalizedNewsText(article.excerpt, currentLanguage)}
                           </p>
                         )}
                         <div className="mt-4">

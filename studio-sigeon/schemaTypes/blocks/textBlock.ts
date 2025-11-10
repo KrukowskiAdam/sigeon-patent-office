@@ -15,7 +15,6 @@ export const textBlock = defineType({
       name: 'content',
       title: 'Content',
       type: 'localizedRichText',
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'alignment',

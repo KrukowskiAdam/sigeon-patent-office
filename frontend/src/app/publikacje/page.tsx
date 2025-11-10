@@ -8,7 +8,7 @@ import { urlFor } from '@/lib/sanity'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { useLanguage } from '@/context/LanguageContext'
-import { getLocalizedText } from '@/lib/i18n'
+import { getLocalizedText, getLocalizedPublicationsText } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -50,6 +50,28 @@ export default function PublikacjePage() {
 
     loadPublications()
   }, [])
+
+  // Update document title and meta tags when publications page loads
+  useEffect(() => {
+    if (publicationsPage) {
+      // Update title
+      document.title = publicationsPage.seo?.metaTitle 
+        ? getLocalizedText(publicationsPage.seo.metaTitle, currentLanguage)
+        : 'Publikacje | Sigeon'
+      
+      // Update meta description
+      if (publicationsPage.seo?.metaDescription) {
+        const description = getLocalizedText(publicationsPage.seo.metaDescription, currentLanguage)
+        let metaDescription = document.querySelector('meta[name="description"]')
+        if (!metaDescription) {
+          metaDescription = document.createElement('meta')
+          metaDescription.setAttribute('name', 'description')
+          document.head.appendChild(metaDescription)
+        }
+        metaDescription.setAttribute('content', description || '')
+      }
+    }
+  }, [publicationsPage, currentLanguage])
 
   if (loading) {
     return (
@@ -120,13 +142,13 @@ export default function PublikacjePage() {
                         <div className="relative w-[80%] aspect-video overflow-hidden">
                           <Image
                             src={urlFor(publication.featuredImage).width(320).height(180).quality(85).url()}
-                            alt={getLocalizedText(publication.title, currentLanguage)}
+                            alt={getLocalizedPublicationsText(publication.title, currentLanguage)}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
                             className="object-cover"
                             priority={index === 0}
                             loading={index === 0 ? 'eager' : 'lazy'}
-                            onError={() => console.error('Error loading image for publication:', getLocalizedText(publication.title, currentLanguage))}
+                            onError={() => console.error('Error loading image for publication:', getLocalizedPublicationsText(publication.title, currentLanguage))}
                           />
                         </div>
                       </div>
@@ -152,7 +174,7 @@ export default function PublikacjePage() {
                               </div>
                             )}
                             <CardTitle className="text-lg md:text-xl text-gray-900 leading-tight">
-                              {getLocalizedText(publication.title, currentLanguage)}
+                              {getLocalizedPublicationsText(publication.title, currentLanguage)}
                             </CardTitle>
                           </div>
                         </div>
@@ -162,9 +184,9 @@ export default function PublikacjePage() {
                       </CardHeader>
                       
                       <CardContent className="text-gray-700 flex-1 flex flex-col">
-                        {publication.excerpt && (
+                        {publication.excerpt && getLocalizedPublicationsText(publication.excerpt, currentLanguage) && (
                           <p className="text-gray-600 mb-2 line-clamp-3">
-                            {getLocalizedText(publication.excerpt, currentLanguage)}
+                            {getLocalizedPublicationsText(publication.excerpt, currentLanguage)}
                           </p>
                         )}
                         

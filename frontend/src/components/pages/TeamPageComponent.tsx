@@ -1,7 +1,6 @@
 import { TeamPage } from '@/types/sanity'
 import { Language } from '@/context/LanguageContext'
 import { ContentBlock } from '@/components/blocks'
-import { getLocalizedText } from '@/lib/i18n'
 import Link from 'next/link'
 
 interface TeamPageComponentProps {
@@ -12,17 +11,6 @@ interface TeamPageComponentProps {
 export function TeamPageComponent({ page, currentLanguage }: TeamPageComponentProps) {
   return (
     <div>
-      {/* Page Title */}
-      {page.title && (
-        <div className="bg-gray-50 py-12">
-          <div className="max-w-7xl mx-auto px-4">
-            <h1 className="text-4xl font-bold text-gray-900 text-center">
-              {getLocalizedText(page.title, currentLanguage)}
-            </h1>
-          </div>
-        </div>
-      )}
-
       {/* Content Blocks */}
       {page.blocks && page.blocks.length > 0 && (
         <div>

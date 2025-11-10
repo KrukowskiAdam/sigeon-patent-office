@@ -11,24 +11,13 @@ export const publicationsPage = defineType({
       title: 'URL Slug',
       type: 'slug',
       options: {
-        source: (doc: any) => doc.title?.pl || 'publications',
+        source: () => 'publications',
         maxLength: 96,
       },
       validation: Rule => Rule.required(),
       description: 'URL path for this page (e.g., "publications", "publikacje")',
       initialValue: {
         current: 'publikacje'
-      }
-    }),
-    defineField({
-      name: 'title',
-      title: 'Page Title',
-      type: 'localizedString',
-      validation: Rule => Rule.required(),
-      description: 'Main title for the publications page',
-      initialValue: {
-        pl: 'Publikacje',
-        en: 'Publications'
       }
     }),
     defineField({
@@ -43,6 +32,16 @@ export const publicationsPage = defineType({
           initialValue: {
             pl: 'Czytaj więcej',
             en: 'Read more'
+          }
+        }),
+        defineField({
+          name: 'backToPublications',
+          title: 'Back to Publications Button',
+          type: 'localizedStringPublications',
+          description: 'Button text to return to publications list from article page',
+          initialValue: {
+            pl: 'Powrót do publikacji',
+            en: 'Back to Publications'
           }
         }),
         defineField({
@@ -76,7 +75,7 @@ export const publicationsPage = defineType({
         defineField({
           name: 'shareTitle',
           title: 'Share Section Title',
-          type: 'localizedStringNews',
+          type: 'localizedStringPublications',
           description: 'Title above the sharing buttons',
           initialValue: {
             pl: 'Udostępnij',

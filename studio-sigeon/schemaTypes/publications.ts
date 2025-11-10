@@ -22,7 +22,7 @@ export const publications = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'localizedStringNews',
+      type: 'localizedStringPublications',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -38,13 +38,13 @@ export const publications = defineType({
     defineField({
       name: 'excerpt',
       title: 'Excerpt',
-      type: 'localizedTextNews',
+      type: 'localizedTextPublications',
       description: 'Short description of the publication',
     }),
     defineField({
       name: 'content',
       title: 'Content',
-      type: 'localizedRichTextNews',
+      type: 'localizedRichTextPublications',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -100,7 +100,7 @@ export const publications = defineType({
     defineField({
       name: 'seo',
       title: 'SEO',
-      type: 'seo',
+      type: 'seoPublications',
     }),
   ],
 

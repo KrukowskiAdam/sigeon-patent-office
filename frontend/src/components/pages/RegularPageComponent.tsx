@@ -1,6 +1,8 @@
 import { Page } from '@/types/sanity'
 import { Language } from '@/context/LanguageContext'
 import { ContentBlock } from '@/components/blocks'
+import { getLocalizedText } from '@/lib/i18n'
+import Link from 'next/link'
 
 interface RegularPageComponentProps {
   page: Page
@@ -10,17 +12,6 @@ interface RegularPageComponentProps {
 export function RegularPageComponent({ page, currentLanguage }: RegularPageComponentProps) {
   return (
     <div>
-      {/* Page Title */}
-      {page.internalTitle && (
-        <div className="bg-gray-50 py-12">
-          <div className="max-w-7xl mx-auto px-4">
-            <h1 className="text-4xl font-bold text-gray-900 text-center">
-              {page.internalTitle}
-            </h1>
-          </div>
-        </div>
-      )}
-
       {/* Content Blocks */}
       {page.content && page.content.length > 0 && (
         <div>
@@ -32,6 +23,22 @@ export function RegularPageComponent({ page, currentLanguage }: RegularPageCompo
             />
           ))}
         </div>
+      )}
+
+      {/* Back to Home Button */}
+      {page.buttons?.backToHome && (
+        <section className="py-8">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center mt-12 pt-8 border-t border-gray-200">
+              <Link 
+                href="/"
+                className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
+              >
+                {getLocalizedText(page.buttons.backToHome, currentLanguage)}
+              </Link>
+            </div>
+          </div>
+        </section>
       )}
     </div>
   )

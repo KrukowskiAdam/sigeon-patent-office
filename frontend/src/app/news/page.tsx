@@ -8,7 +8,7 @@ import { urlFor } from '@/lib/sanity'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { useLanguage } from '@/context/LanguageContext'
-import { getLocalizedText } from '@/lib/i18n'
+import { getLocalizedText, getLocalizedNewsText } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -50,6 +50,28 @@ export default function NewsPage() {
 
     loadNews()
   }, [])
+
+  // Update document title and meta tags when news page loads
+  useEffect(() => {
+    if (newsPage) {
+      // Update title
+      document.title = newsPage.seo?.metaTitle 
+        ? getLocalizedText(newsPage.seo.metaTitle, currentLanguage)
+        : 'Aktualności | Sigeon'
+      
+      // Update meta description
+      if (newsPage.seo?.metaDescription) {
+        const description = getLocalizedText(newsPage.seo.metaDescription, currentLanguage)
+        let metaDescription = document.querySelector('meta[name="description"]')
+        if (!metaDescription) {
+          metaDescription = document.createElement('meta')
+          metaDescription.setAttribute('name', 'description')
+          document.head.appendChild(metaDescription)
+        }
+        metaDescription.setAttribute('content', description || '')
+      }
+    }
+  }, [newsPage, currentLanguage])
 
   if (loading) {
     return (
@@ -120,13 +142,13 @@ export default function NewsPage() {
                         <div className="relative w-[80%] aspect-video overflow-hidden">
                           <Image
                             src={urlFor(article.featuredImage).width(320).height(180).quality(85).url()}
-                            alt={getLocalizedText(article.title, currentLanguage)}
+                            alt={getLocalizedNewsText(article.title, currentLanguage)}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
                             className="object-cover"
                             priority={index === 0}
                             loading={index === 0 ? 'eager' : 'lazy'}
-                            onError={() => console.error('Error loading image for article:', getLocalizedText(article.title, currentLanguage))}
+                            onError={() => console.error('Error loading image for article:', getLocalizedNewsText(article.title, currentLanguage))}
                           />
                         </div>
                       </div>
@@ -152,7 +174,7 @@ export default function NewsPage() {
                               </div>
                             )}
                             <CardTitle className="text-lg md:text-xl text-gray-900 leading-tight">
-                              {getLocalizedText(article.title, currentLanguage)}
+                              {getLocalizedNewsText(article.title, currentLanguage)}
                             </CardTitle>
                           </div>
                         </div>
@@ -162,9 +184,9 @@ export default function NewsPage() {
                       </CardHeader>
                       
                       <CardContent className="text-gray-700 flex-1 flex flex-col">
-                        {article.excerpt && (
+                        {article.excerpt && getLocalizedNewsText(article.excerpt, currentLanguage) && (
                           <p className="text-gray-600 mb-2 line-clamp-3">
-                            {getLocalizedText(article.excerpt, currentLanguage)}
+                            {getLocalizedNewsText(article.excerpt, currentLanguage)}
                           </p>
                         )}
                         

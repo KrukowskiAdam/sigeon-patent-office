@@ -1,3 +1,5 @@
+import { TypedObject } from '@portabletext/types'
+
 export interface LocalizedString {
   pl: string
   en?: string
@@ -52,14 +54,14 @@ export interface SEO {
 
 export interface NewsArticle {
   _id: string
-  title: LocalizedString
+  title: LocalizedStringNews
   slug: {
     current: string
   }
   publishedAt: string
   showPl?: boolean
   showEn?: boolean
-  excerpt?: LocalizedText
+  excerpt?: LocalizedTextNews
   featuredImage?: {
     asset: {
       _ref: string
@@ -67,7 +69,7 @@ export interface NewsArticle {
     }
     alt?: string
   }
-  content?: LocalizedRichText
+  content?: { pl: TypedObject[]; en?: TypedObject[] }
   tags?: string[]
   featured?: boolean
   seo?: SEO
@@ -79,7 +81,6 @@ export interface NewsPage {
   slug: {
     current: string
   }
-  title: LocalizedString
   blocks?: ContentBlock[]
   buttons?: {
     readMore?: LocalizedString
@@ -94,7 +95,6 @@ export interface TeamPage {
   slug: {
     current: string
   }
-  title: LocalizedString
   blocks?: ContentBlock[]
   teamSection?: {
     showTeam?: boolean
@@ -144,6 +144,8 @@ export interface TextImageBlock {
   imageAlt?: LocalizedString
   layout: 'text-left' | 'image-left'
   imageSize?: 'small' | 'medium' | 'large'
+  expandButtonLabel?: LocalizedString
+  collapseButtonLabel?: LocalizedString
   link?: LinkField
 }
 
@@ -318,8 +320,8 @@ export interface Page {
 export interface TeamMember {
   _id: string
   name: string
-  position: LocalizedString
-  description?: LocalizedRichText
+  position: { pl: string; en?: string }
+  description?: { pl: TypedObject[]; en?: TypedObject[] }
   photo?: {
     asset: {
       _ref: string
@@ -408,18 +410,30 @@ export interface LocalizedRichTextNews {
 
 export interface Publication {
   _id: string
-  title: LocalizedStringNews
+  title: {
+    pl: string
+    en?: string
+  }
   slug: {
     current: string
   }
-  excerpt?: LocalizedTextNews
-  content?: LocalizedRichTextNews
+  excerpt?: {
+    pl: string
+    en?: string
+  }
+  content?: {
+    pl: TypedObject[]
+    en?: TypedObject[]
+  }
   featuredImage?: {
     asset: {
       _id: string
       url: string
     }
-    alt?: LocalizedStringNews
+    alt?: {
+      pl: string
+      en?: string
+    }
     hotspot?: boolean
     crop?: unknown
   }
@@ -449,11 +463,17 @@ export interface PublicationsPage {
   slug: {
     current: string
   }
-  title: LocalizedString
-  description?: LocalizedTextNews
+  description?: {
+    pl: string
+    en?: string
+  }
   blocks?: ContentBlock[]
   buttons?: {
     readMore?: LocalizedString
+    backToPublications?: {
+      pl: string
+      en?: string
+    }
     backToHome?: LocalizedString
   }
   featuredPublications?: Publication[]
@@ -465,7 +485,10 @@ export interface PublicationsPage {
       twitter?: boolean
       email?: boolean
     }
-    shareText?: LocalizedStringNews
+    shareText?: {
+      pl: string
+      en?: string
+    }
   }
   seo?: SEO
 }

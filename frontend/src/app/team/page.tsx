@@ -9,11 +9,11 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { ContentBlock } from '@/components/blocks'
 import { useLanguage } from '@/context/LanguageContext'
-import { getLocalizedText, navigationTranslations } from '@/lib/i18n'
+import { getLocalizedText, getLocalizedTeamText, navigationTranslations } from '@/lib/i18n'
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { PortableText } from '@/components/ui/PortableText'
-import { getLocalizedPortableText } from '@/lib/portableText'
+import { getLocalizedTeamPortableText } from '@/lib/portableText'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 export default function TeamPage() {
@@ -144,7 +144,7 @@ export default function TeamPage() {
                           {member.name}
                         </CardTitle>
                         <CardDescription className="text-base">
-                          {getLocalizedText(member.position, currentLanguage)}
+                          {getLocalizedTeamText(member.position, currentLanguage)}
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
@@ -155,11 +155,11 @@ export default function TeamPage() {
                           >
                             {expandedMembers.has(member._id) ? (
                               <>
-                                {currentLanguage === 'en' ? 'Show less' : 'Zwiń'} <span className="text-xs">▲</span>
+                                {currentLanguage === 'pl' ? 'Zwiń' : 'Show less'} <span className="text-xs">▲</span>
                               </>
                             ) : (
                               <>
-                                {currentLanguage === 'en' ? 'Read more' : 'Czytaj więcej'} <span className="text-xs">▼</span>
+                                {currentLanguage === 'pl' ? 'Czytaj więcej' : 'Read more'} <span className="text-xs">▼</span>
                               </>
                             )}
                           </button>
@@ -168,7 +168,7 @@ export default function TeamPage() {
                               {member.description && (
                                 <div className="mb-4">
                                   <PortableText 
-                                    value={getLocalizedPortableText(
+                                    value={getLocalizedTeamPortableText(
                                       member.description, 
                                       currentLanguage
                                     )} 

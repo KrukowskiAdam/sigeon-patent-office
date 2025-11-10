@@ -38,17 +38,6 @@ export function PublicationsPageComponent({ page, currentLanguage }: Publication
   if (loading) {
     return (
       <div>
-        {/* Page Title */}
-        {page.title && (
-          <div className="bg-gray-50 py-12">
-            <div className="max-w-7xl mx-auto px-4">
-              <h1 className="text-4xl font-bold text-gray-900 text-center">
-                {getLocalizedText(page.title, currentLanguage)}
-              </h1>
-            </div>
-          </div>
-        )}
-        
         <section className="py-12">
           <div className="max-w-7xl mx-auto px-4">
             <NewsSkeleton />
@@ -143,7 +132,7 @@ export function PublicationsPageComponent({ page, currentLanguage }: Publication
                       </CardHeader>
                       
                       <CardContent className="text-gray-700 flex-1 flex flex-col">
-                        {publication.excerpt && (
+                        {publication.excerpt && getLocalizedNewsText(publication.excerpt, currentLanguage) && (
                           <p className="text-gray-600 mb-2 line-clamp-3">
                             {getLocalizedNewsText(publication.excerpt, currentLanguage)}
                           </p>

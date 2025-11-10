@@ -101,7 +101,6 @@ export async function getNewsPage(): Promise<NewsPage | null> {
     *[_type == "newsPage"][0] {
       _id,
       slug,
-      title,
       buttons,
       blocks[] {
         _type,
@@ -127,7 +126,6 @@ export async function getTeamPage(): Promise<TeamPage | null> {
     *[_type == "teamPage"][0] {
       _id,
       slug,
-      title,
       blocks[] {
         _type,
         _key,
@@ -299,6 +297,12 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
 
 // Get news page settings
 export async function getNewsPageSettings(): Promise<{
+  buttons?: {
+    backToNews?: {
+      pl: string
+      en?: string
+    }
+  }
   socialSharing?: {
     showSocialButtons?: boolean
     shareTitle?: {
@@ -313,6 +317,9 @@ export async function getNewsPageSettings(): Promise<{
 } | null> {
   return client.fetch(`
     *[_type == "newsPage"][0] {
+      buttons {
+        backToNews
+      },
       socialSharing {
         showSocialButtons,
         shareTitle,
@@ -457,9 +464,9 @@ export async function getPublicationBySlug(slug: string): Promise<Publication | 
       tags,
       externalLink,
       seo {
-        title,
-        description,
-        image {
+        metaTitle,
+        metaDescription,
+        openGraphImage {
           asset->{
             url
           }
@@ -471,6 +478,12 @@ export async function getPublicationBySlug(slug: string): Promise<Publication | 
 }
 
 export async function getPublicationsPageSettings(): Promise<{
+  buttons?: {
+    backToPublications?: {
+      pl: string
+      en?: string
+    }
+  }
   socialSharing?: {
     showSocialButtons?: boolean
     shareTitle?: {
@@ -484,6 +497,9 @@ export async function getPublicationsPageSettings(): Promise<{
 } | null> {
   return client.fetch(`
     *[_type == "publicationsPage"][0] {
+      buttons {
+        backToPublications
+      },
       socialSharing {
         showSocialButtons,
         shareTitle,
@@ -519,7 +535,6 @@ export async function getCMSPageBySlug(slug: string) {
       _type,
       _id,
       slug,
-      title,
       blocks,
       buttons,
       seo
@@ -530,7 +545,6 @@ export async function getCMSPageBySlug(slug: string) {
       _type,
       _id,
       slug,
-      title,
       blocks,
       teamSection,
       seo
@@ -541,7 +555,6 @@ export async function getCMSPageBySlug(slug: string) {
       _type,
       _id,
       slug,
-      title,
       description,
       blocks,
       buttons,
@@ -553,7 +566,7 @@ export async function getCMSPageBySlug(slug: string) {
     `*[_type == "page" && slug.current == $slug][0] {
       _type,
       _id,
-      title,
+      internalTitle,
       slug,
       content,
       buttons,

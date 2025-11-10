@@ -20,6 +20,7 @@ import {
   isTeamPage, 
   isRegularPage 
 } from '@/lib/pageTypes'
+import { getLocalizedText } from '@/lib/i18n'
 
 interface PageProps {
   params: Promise<{
@@ -54,6 +55,31 @@ export default function DynamicPage({ params }: PageProps) {
 
     loadPage()
   }, [resolvedParams.slug])
+
+  // Update document title and meta tags when page loads
+  useEffect(() => {
+    if (page && isRegularPage(page)) {
+      const description = page.seo?.metaDescription 
+        ? getLocalizedText(page.seo.metaDescription, currentLanguage)
+        : ''
+      
+      // Update title
+      document.title = page.seo?.metaTitle 
+        ? getLocalizedText(page.seo.metaTitle, currentLanguage)
+        : `${page.internalTitle} | Sigeon`
+      
+      // Update meta description
+      if (description) {
+        let metaDescription = document.querySelector('meta[name="description"]')
+        if (!metaDescription) {
+          metaDescription = document.createElement('meta')
+          metaDescription.setAttribute('name', 'description')
+          document.head.appendChild(metaDescription)
+        }
+        metaDescription.setAttribute('content', description)
+      }
+    }
+  }, [page, currentLanguage])
 
   if (loading) {
     return (

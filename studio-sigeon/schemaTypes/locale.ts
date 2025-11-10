@@ -24,12 +24,6 @@ export const localizedString = defineType({
       title: lang.title,
       name: lang.id,
       type: 'string',
-      validation: (Rule) => {
-        if (lang.isDefault) {
-          return Rule.required()
-        }
-        return Rule
-      },
     })
   ),
   preview: {
@@ -50,12 +44,6 @@ export const localizedText = defineType({
       name: lang.id,
       type: 'text',
       rows: 4,
-      validation: (Rule) => {
-        if (lang.isDefault) {
-          return Rule.required()
-        }
-        return Rule
-      },
     })
   ),
   preview: {
@@ -156,12 +144,6 @@ export const localizedRichText = defineType({
           },
         },
       ],
-      validation: (Rule) => {
-        if (lang.isDefault) {
-          return Rule.required()
-        }
-        return Rule
-      },
     })
   ),
   preview: {

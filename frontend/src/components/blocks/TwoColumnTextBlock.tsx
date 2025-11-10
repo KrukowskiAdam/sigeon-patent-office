@@ -1,8 +1,7 @@
 'use client'
 
-import { TwoColumnTextBlock, LocalizedRichText } from '@/types/sanity'
+import { TwoColumnTextBlock, LocalizedRichText, LocalizedString } from '@/types/sanity'
 import { PortableText } from '../ui/PortableText'
-import { getLocalizedText } from '@/lib/i18n'
 import { getLocalizedPortableText } from '@/lib/portableText'
 import { Language } from '@/context/LanguageContext'
 
@@ -29,6 +28,14 @@ export default function TwoColumnTextBlockComponent({ block, language }: TwoColu
     return content && content[lang] !== undefined && Array.isArray(content[lang]) && (content[lang] as unknown[]).length > 0
   }
 
+  // Helper function to check if title exists in current language
+  const getTitleInLanguage = (title: LocalizedString | undefined): string | null => {
+    if (!title) return null
+    const lang = language as keyof LocalizedString
+    // Only return title if it exists in current language, no fallback
+    return title[lang] || null
+  }
+
   // Filter items that have content in current language
   const filteredLeftColumn = block.leftColumn.filter(item => hasContentInLanguage(item.content))
   const filteredRightColumn = block.rightColumn.filter(item => hasContentInLanguage(item.content))
@@ -47,13 +54,14 @@ export default function TwoColumnTextBlockComponent({ block, language }: TwoColu
           <div className="space-y-0">
             {filteredLeftColumn.map((item) => {
               const itemBg = item.backgroundColor === 'gray' ? 'bg-gray-100' : 'bg-white'
+              const titleText = getTitleInLanguage(item.title)
               return (
                 <div key={item._key} className={`${itemBg} p-8 space-y-4`}>
-                  {item.title && (
+                  {titleText && (
                     <div className="flex items-stretch gap-4">
                       <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
                       <h3 className="text-xl font-bold text-gray-900 leading-none">
-                        {getLocalizedText(item.title, language as Language)}
+                        {titleText}
                       </h3>
                     </div>
                   )}
@@ -71,13 +79,14 @@ export default function TwoColumnTextBlockComponent({ block, language }: TwoColu
           <div className="space-y-0">
             {filteredRightColumn.map((item) => {
               const itemBg = item.backgroundColor === 'gray' ? 'bg-gray-100' : 'bg-white'
+              const titleText = getTitleInLanguage(item.title)
               return (
                 <div key={item._key} className={`${itemBg} p-8 space-y-4`}>
-                  {item.title && (
+                  {titleText && (
                     <div className="flex items-stretch gap-4">
                       <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
                       <h3 className="text-xl font-bold text-gray-900 leading-none">
-                        {getLocalizedText(item.title, language as Language)}
+                        {titleText}
                       </h3>
                     </div>
                   )}

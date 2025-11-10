@@ -11,24 +11,13 @@ export const newsPage = defineType({
       title: 'URL Slug',
       type: 'slug',
       options: {
-        source: (doc: any) => doc.title?.pl || 'news',
+        source: () => 'news',
         maxLength: 96,
       },
       validation: Rule => Rule.required(),
       description: 'URL path for this page (e.g., "news", "aktualnosci")',
       initialValue: {
         current: 'news'
-      }
-    }),
-    defineField({
-      name: 'title',
-      title: 'Page Title',
-      type: 'localizedString',
-      validation: Rule => Rule.required(),
-      description: 'Main title for the news page',
-      initialValue: {
-        pl: 'Aktualności',
-        en: 'News'
       }
     }),
     defineField({
@@ -46,6 +35,16 @@ export const newsPage = defineType({
           }
         }),
         defineField({
+          name: 'backToNews',
+          title: 'Back to News label',
+          type: 'localizedStringNews',
+          description: 'Button text to return to news list from article page',
+          initialValue: {
+            pl: 'Powrót do aktualności',
+            en: 'Back to News'
+          }
+        }),
+        defineField({
           name: 'backToHome',
           title: 'Back to Home label',
           type: 'localizedString',
@@ -55,7 +54,7 @@ export const newsPage = defineType({
             zh: '首页',
             ko: '홈',
             ja: 'ホーム',
-            ru: 'Главna'
+            ru: 'Главна'
           }
         })
       ]

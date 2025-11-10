@@ -8,7 +8,9 @@ import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
 import { use, useEffect, useState } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
-import { getLocalizedText } from '@/lib/i18n'
+import { getLocalizedText, getLocalizedPublicationsText } from '@/lib/i18n'
+import { getLocalizedPublicationsPortableText } from '@/lib/portableText'
+import { PortableText } from '@portabletext/react'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 interface Props {
@@ -39,6 +41,30 @@ export default function PublicationPage({ params }: Props) {
     }
     load()
   }, [resolvedParams.slug])
+
+  // Update document title and meta tags when publication loads
+  useEffect(() => {
+    if (publication) {
+      const title = getLocalizedPublicationsText(publication.title, currentLanguage)
+      const description = publication.seo?.metaDescription 
+        ? getLocalizedPublicationsText(publication.seo.metaDescription, currentLanguage)
+        : getLocalizedPublicationsText(publication.excerpt, currentLanguage)
+      
+      // Update title
+      document.title = publication.seo?.metaTitle 
+        ? getLocalizedPublicationsText(publication.seo.metaTitle, currentLanguage)
+        : `${title} | Sigeon`
+      
+      // Update meta description
+      let metaDescription = document.querySelector('meta[name="description"]')
+      if (!metaDescription) {
+        metaDescription = document.createElement('meta')
+        metaDescription.setAttribute('name', 'description')
+        document.head.appendChild(metaDescription)
+      }
+      metaDescription.setAttribute('content', description || '')
+    }
+  }, [publication, currentLanguage])
 
   if (loading) {
     return (
@@ -73,7 +99,7 @@ export default function PublicationPage({ params }: Props) {
             <span className="mx-2">→</span>
             <Link href="/publikacje" prefetch={true} className="hover:text-[#0abaee]">Publikacje</Link>
             <span className="mx-2">→</span>
-            <span className="text-gray-900">{getLocalizedText(publication.title, currentLanguage)}</span>
+            <span className="text-gray-900">{getLocalizedPublicationsText(publication.title, currentLanguage)}</span>
           </nav>
         </div>
       </div>
@@ -92,7 +118,7 @@ export default function PublicationPage({ params }: Props) {
             )}
             
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              {getLocalizedText(publication.title, currentLanguage)}
+              {getLocalizedPublicationsText(publication.title, currentLanguage)}
             </h1>
             
             <div className="flex items-center text-gray-600 mb-6">
@@ -107,7 +133,7 @@ export default function PublicationPage({ params }: Props) {
 
             {publication.excerpt && (
               <div className="text-xl text-gray-600 leading-relaxed mb-8 border-l-4 border-[#0abaee] pl-6">
-                {getLocalizedText(publication.excerpt, currentLanguage)}
+                {getLocalizedPublicationsText(publication.excerpt, currentLanguage)}
               </div>
             )}
           </header>
@@ -125,6 +151,13 @@ export default function PublicationPage({ params }: Props) {
                   className="object-cover"
                 />
               </div>
+            </div>
+          )}
+
+          {/* Content */}
+          {publication.content && (
+            <div className="prose prose-lg max-w-none text-gray-700">
+              <PortableText value={getLocalizedPublicationsPortableText(publication.content, currentLanguage)} />
             </div>
           )}
 
@@ -219,7 +252,9 @@ export default function PublicationPage({ params }: Props) {
               href="/publikacje"
               className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
             >
-              Powrót do publikacji
+              {publicationsSettings?.buttons?.backToPublications 
+                ? getLocalizedPublicationsText(publicationsSettings.buttons.backToPublications, currentLanguage)
+                : 'Powrót do publikacji'}
             </Link>
           </div>
         </div>

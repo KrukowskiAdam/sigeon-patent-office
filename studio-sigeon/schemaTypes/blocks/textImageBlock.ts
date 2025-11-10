@@ -58,6 +58,26 @@ export const textImageBlock = defineType({
       },
       initialValue: 'medium',
     }),
+    defineField({
+      name: 'expandButtonLabel',
+      title: 'Expand Button Label',
+      type: 'localizedString',
+      description: 'Label for "Read more" button',
+      initialValue: {
+        pl: 'Czytaj więcej',
+        en: 'Read more'
+      }
+    }),
+    defineField({
+      name: 'collapseButtonLabel',
+      title: 'Collapse Button Label',
+      type: 'localizedString',
+      description: 'Label for "Show less" button',
+      initialValue: {
+        pl: 'Zwiń',
+        en: 'Show less'
+      }
+    }),
     linkField(),
   ],
   preview: {

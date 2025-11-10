@@ -14,13 +14,13 @@ export const teamMember = defineType({
     defineField({
       name: 'position',
       title: 'Position/Title',
-      type: 'localizedString',
+      type: 'localizedStringPLEN',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'localizedRichText',
+      type: 'localizedRichTextPLEN',
       description: 'General description of the person',
     }),
     defineField({

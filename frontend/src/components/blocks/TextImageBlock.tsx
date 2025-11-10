@@ -27,6 +27,19 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
     }
   }, [block.title, language])
 
+  // Check if content exists in current language
+  const hasContentInLanguage = () => {
+    if (!block.content) return false
+    const lang = language as keyof typeof block.content
+    const content = block.content[lang]
+    return content !== undefined && Array.isArray(content) && content.length > 0
+  }
+
+  // If no content in current language, don't render this block
+  if (!hasContentInLanguage()) {
+    return null
+  }
+
   // If no image is provided, don't render this block
   if (!block.image) {
     return null
@@ -88,11 +101,11 @@ export function TextImageBlock({ block, language }: TextImageBlockProps) {
               >
                 {isExpanded ? (
                   <>
-                    {language === 'en' ? 'Show less' : 'Zwiń'} <span className="text-xs">▲</span>
+                    {getLocalizedText(block.collapseButtonLabel, language as Language) || (language === 'en' ? 'Show less' : 'Zwiń')} <span className="text-xs">▲</span>
                   </>
                 ) : (
                   <>
-                    {language === 'en' ? 'Read more' : 'Czytaj więcej'} <span className="text-xs">▼</span>
+                    {getLocalizedText(block.expandButtonLabel, language as Language) || (language === 'en' ? 'Read more' : 'Czytaj więcej')} <span className="text-xs">▼</span>
                   </>
                 )}
               </button>

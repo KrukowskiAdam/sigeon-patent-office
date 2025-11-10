@@ -9,8 +9,8 @@ import { urlFor } from '@/lib/sanity'
 import { PortableText } from '@portabletext/react'
 import { use, useEffect, useState } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
-import { getLocalizedText } from '@/lib/i18n'
-import { getLocalizedPortableText } from '@/lib/portableText'
+import { getLocalizedText, getLocalizedNewsText } from '@/lib/i18n'
+import { getLocalizedNewsPortableText } from '@/lib/portableText'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 interface Props {
@@ -41,6 +41,30 @@ export default function NewsArticlePage({ params }: Props) {
     }
     load()
   }, [resolvedParams.slug])
+
+  // Update document title and meta tags when article loads
+  useEffect(() => {
+    if (article) {
+      const title = getLocalizedNewsText(article.title, currentLanguage)
+      const description = article.seo?.metaDescription 
+        ? getLocalizedNewsText(article.seo.metaDescription, currentLanguage)
+        : getLocalizedNewsText(article.excerpt, currentLanguage)
+      
+      // Update title
+      document.title = article.seo?.metaTitle 
+        ? getLocalizedNewsText(article.seo.metaTitle, currentLanguage)
+        : `${title} | Sigeon`
+      
+      // Update meta description
+      let metaDescription = document.querySelector('meta[name="description"]')
+      if (!metaDescription) {
+        metaDescription = document.createElement('meta')
+        metaDescription.setAttribute('name', 'description')
+        document.head.appendChild(metaDescription)
+      }
+      metaDescription.setAttribute('content', description || '')
+    }
+  }, [article, currentLanguage])
 
   if (loading) {
     return (
@@ -76,7 +100,7 @@ export default function NewsArticlePage({ params }: Props) {
             <span className="mx-2">→</span>
             <Link href="/news" prefetch={true} className="hover:text-[#0abaee]">Aktualności</Link>
             <span className="mx-2">→</span>
-            <span className="text-gray-900">{getLocalizedText(article.title, currentLanguage)}</span>
+            <span className="text-gray-900">{getLocalizedNewsText(article.title, currentLanguage)}</span>
           </nav>
         </div>
       </div>
@@ -94,8 +118,8 @@ export default function NewsArticlePage({ params }: Props) {
               </div>
             )}
             
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              {getLocalizedText(article.title, currentLanguage)}
+                        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+              {getLocalizedNewsText(article.title, currentLanguage)}
             </h1>
             
             <div className="flex items-center text-gray-600 mb-6">
@@ -108,10 +132,10 @@ export default function NewsArticlePage({ params }: Props) {
               </time>
             </div>
 
-            {article.excerpt && (
-              <div className="text-xl text-gray-600 leading-relaxed mb-8 border-l-4 border-[#0abaee] pl-6">
-                {getLocalizedText(article.excerpt, currentLanguage)}
-              </div>
+                        {article.excerpt && (
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                {getLocalizedNewsText(article.excerpt, currentLanguage)}
+              </p>
             )}
           </header>
 
@@ -134,7 +158,7 @@ export default function NewsArticlePage({ params }: Props) {
           {/* Content */}
           {article.content && (
             <div className="prose prose-lg max-w-none">
-              <PortableText value={getLocalizedPortableText(article.content, currentLanguage) as never} />
+              <PortableText value={getLocalizedNewsPortableText(article.content, currentLanguage) as never} />
             </div>
           )}
 
@@ -176,7 +200,7 @@ export default function NewsArticlePage({ params }: Props) {
                 )}
                 {newsSettings.socialSharing.showTwitter && (
                   <a
-                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`${newsSettings.socialSharing.customShareUrl || 'https://sigeon.vercel.app'}/news/${article.slug.current}`)}&text=${encodeURIComponent(getLocalizedText(article.title, currentLanguage))}`}
+                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`${newsSettings.socialSharing.customShareUrl || 'https://sigeon.vercel.app'}/news/${article.slug.current}`)}&text=${encodeURIComponent(getLocalizedNewsText(article.title, currentLanguage))}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 bg-[#1DA1F2] hover:bg-[#0d8bd9] text-white font-medium rounded-lg transition-colors"
@@ -219,7 +243,9 @@ export default function NewsArticlePage({ params }: Props) {
               href="/news"
               className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
             >
-              Powrót do aktualności
+              {newsSettings?.buttons?.backToNews 
+                ? getLocalizedNewsText(newsSettings.buttons.backToNews, currentLanguage)
+                : 'Powrót do aktualności'}
             </Link>
           </div>
         </div>

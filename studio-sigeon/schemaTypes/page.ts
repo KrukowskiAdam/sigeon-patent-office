@@ -54,12 +54,7 @@ export const page = defineType({
       title: 'Show in Navigation',
       type: 'boolean',
       initialValue: true,
-    }),
-    defineField({
-      name: 'navigationOrder',
-      title: 'Navigation Order',
-      type: 'number',
-      description: 'Order in navigation menu (lower numbers first)',
+      description: 'Whether this page appears in navigation. Order is controlled in Main Navigation settings.',
     }),
     defineField({
       name: 'buttons',
@@ -88,11 +83,4 @@ export const page = defineType({
       media: 'featuredImage',
     },
   },
-  orderings: [
-    {
-      title: 'Navigation Order',
-      name: 'navigationOrderAsc',
-      by: [{field: 'navigationOrder', direction: 'asc'}],
-    },
-  ],
 })
