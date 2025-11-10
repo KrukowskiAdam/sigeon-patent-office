@@ -192,7 +192,7 @@ export default function PublikacjePage() {
                         
                         <div className="mt-4">
                           <Link 
-                            href={`/publikacje/${publication.slug.current}`}
+                            href={`/publications/${publication.slug.current}`}
                             prefetch={true}
                             className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
                           >

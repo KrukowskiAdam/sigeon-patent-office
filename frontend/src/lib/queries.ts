@@ -402,8 +402,20 @@ export async function getPublicationsPage(): Promise<PublicationsPage | null> {
     *[_type == "publicationsPage"][0] {
       _id,
       slug,
-      title,
       description,
+      blocks[] {
+        _type,
+        _key,
+        ...,
+        link {
+          ...,
+          internalLink-> {
+            _type,
+            slug,
+            title
+          }
+        }
+      },
       buttons,
       featuredPublications[]-> {
         _id,

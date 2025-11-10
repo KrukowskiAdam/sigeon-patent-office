@@ -97,7 +97,7 @@ export default function PublicationPage({ params }: Props) {
           <nav className="text-sm text-gray-600">
             <Link href="/" prefetch={true} className="hover:text-[#0abaee]">Home</Link>
             <span className="mx-2">→</span>
-            <Link href="/publikacje" prefetch={true} className="hover:text-[#0abaee]">Publikacje</Link>
+            <Link href="/publications" prefetch={true} className="hover:text-[#0abaee]">Publications</Link>
             <span className="mx-2">→</span>
             <span className="text-gray-900">{getLocalizedPublicationsText(publication.title, currentLanguage)}</span>
           </nav>
@@ -183,7 +183,7 @@ export default function PublicationPage({ params }: Props) {
               <div className="flex gap-3">
                 {publicationsSettings.socialSharing.showLinkedIn && (
                   <a
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://sigeon.vercel.app/publikacje/${publication.slug.current}`)}`}
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://sigeon.vercel.app/publications/${publication.slug.current}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 bg-[#0077B5] hover:bg-[#006399] text-white font-medium rounded-lg transition-colors"
@@ -196,7 +196,7 @@ export default function PublicationPage({ params }: Props) {
                 )}
                 {publicationsSettings.socialSharing.showFacebook && (
                   <a
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://sigeon.vercel.app/publikacje/${publication.slug.current}`)}`}
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://sigeon.vercel.app/publications/${publication.slug.current}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 bg-[#1877F2] hover:bg-[#145dbf] text-white font-medium rounded-lg transition-colors"
@@ -209,7 +209,7 @@ export default function PublicationPage({ params }: Props) {
                 )}
                 {publicationsSettings.socialSharing.showTwitter && (
                   <a
-                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://sigeon.vercel.app/publikacje/${publication.slug.current}`)}&text=${encodeURIComponent(getLocalizedText(publication.title, currentLanguage))}`}
+                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://sigeon.vercel.app/publications/${publication.slug.current}`)}&text=${encodeURIComponent(getLocalizedText(publication.title, currentLanguage))}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 bg-[#1DA1F2] hover:bg-[#0d8bd9] text-white font-medium rounded-lg transition-colors"
@@ -249,12 +249,12 @@ export default function PublicationPage({ params }: Props) {
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mt-12 pt-8 border-t border-gray-200">
             <Link 
-              href="/publikacje"
+              href="/publications"
               className="inline-flex items-center gap-2 px-6 py-2 bg-[#0abaee] text-white font-medium rounded-lg hover:bg-[#0891b2] transition-colors duration-200"
             >
               {publicationsSettings?.buttons?.backToPublications 
                 ? getLocalizedPublicationsText(publicationsSettings.buttons.backToPublications, currentLanguage)
-                : 'Powrót do publikacji'}
+                : 'Back to publications'}
             </Link>
           </div>
         </div>

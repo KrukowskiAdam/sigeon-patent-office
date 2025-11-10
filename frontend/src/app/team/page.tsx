@@ -55,6 +55,28 @@ export default function TeamPage() {
     loadData()
   }, [])
 
+  // Update document title and meta tags when team page loads
+  useEffect(() => {
+    if (teamPage) {
+      // Update title
+      document.title = teamPage.seo?.metaTitle 
+        ? getLocalizedText(teamPage.seo.metaTitle, currentLanguage)
+        : 'Zespół | Sigeon'
+      
+      // Update meta description
+      if (teamPage.seo?.metaDescription) {
+        const description = getLocalizedText(teamPage.seo.metaDescription, currentLanguage)
+        let metaDescription = document.querySelector('meta[name="description"]')
+        if (!metaDescription) {
+          metaDescription = document.createElement('meta')
+          metaDescription.setAttribute('name', 'description')
+          document.head.appendChild(metaDescription)
+        }
+        metaDescription.setAttribute('content', description || '')
+      }
+    }
+  }, [teamPage, currentLanguage])
+
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
