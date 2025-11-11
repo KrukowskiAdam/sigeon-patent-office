@@ -3,7 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   transpilePackages: ['@portabletext/react', '@sanity/client', 'sanity'],
   experimental: {
-    esmExternals: false,
     optimizePackageImports: ['@sanity/client', 'sanity'],
   },
   webpack: (config) => {

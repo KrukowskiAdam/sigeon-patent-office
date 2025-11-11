@@ -15,7 +15,6 @@ import { useEffect, useState } from 'react'
 import { ContentBlock } from '@/components/blocks/ContentBlock'
 import { getLinkHref, shouldOpenInNewTab } from '@/utils/linkUtils'
 import { hasBlockTranslation } from '@/lib/hasTranslation'
-import { HomepageNewsSkeleton } from '@/components/ui/news-skeleton'
 
 export default function Home() {
   const { currentLanguage } = useLanguage()
@@ -71,17 +70,7 @@ export default function Home() {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <section id="news" className="py-12">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="flex items-stretch gap-4 mb-12">
-              <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
-              <h2 className="text-2xl font-bold text-gray-900 leading-none">
-                Najważniejsze aktualności
-              </h2>
-            </div>
-            <HomepageNewsSkeleton />
-          </div>
-        </section>
+        <div className="flex-grow"></div>
         <Footer />
       </div>
     )
