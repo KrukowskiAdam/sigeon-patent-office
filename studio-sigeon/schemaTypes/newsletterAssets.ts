@@ -1,6 +1,7 @@
 import {defineField, defineType} from 'sanity'
 import {EnvelopeIcon} from '@sanity/icons'
 import { FilenameInput } from '../components/FilenameInput'
+import { NewsletterUrlInput } from '../components/NewsletterUrlInput'
 
 export const newsletterAssets = defineType({
   name: 'newsletterAssets',
@@ -8,6 +9,22 @@ export const newsletterAssets = defineType({
   type: 'document',
   icon: EnvelopeIcon,
   fields: [
+    defineField({
+      name: 'domain',
+      title: '🌐 Newsletter URL Domain',
+      type: 'string',
+      description: 'Your website domain for newsletter image links (without https://). Change when switching from Vercel to custom domain.',
+      placeholder: 'sigeon.vercel.app',
+      initialValue: 'sigeon.vercel.app',
+      validation: (Rule) => Rule.required().custom((domain) => {
+        if (!domain) return 'Domain is required'
+        const cleanDomain = domain.replace(/^https?:\/\//, '').replace(/\/$/, '')
+        if (cleanDomain !== domain) {
+          return 'Enter domain without https:// (e.g., sigeon.pl)'
+        }
+        return true
+      })
+    }),
     defineField({
       name: 'images',
       title: 'Newsletter Images',
@@ -43,13 +60,11 @@ export const newsletterAssets = defineType({
             }),
             defineField({
               name: 'newsletterUrl',
-              title: '🔗 Newsletter URL (copy this)',
+              title: '🔗 Newsletter URL (auto-generated from filename)',
               type: 'string',
-              description: 'This is your final URL for newsletters - copy and paste it',
-              readOnly: true,
-              initialValue: (parent: any, context: any) => {
-                const filename = parent?.originalFilename || 'your-image.jpg'
-                return `https://sigeon.vercel.app/images/${filename}`
+              description: 'Copy this URL for your newsletters. Updates automatically when you change filename.',
+              components: {
+                input: NewsletterUrlInput
               }
             }),
 
