@@ -124,11 +124,6 @@ interface ContactSettings {
   }
 }
 
-interface EmailSettings {
-  recipientEmail?: string
-  isActive?: boolean
-}
-
 async function getContactSettings(): Promise<ContactSettings | null> {
   try {
     const settings = await client.fetch(`
@@ -148,25 +143,9 @@ async function getContactSettings(): Promise<ContactSettings | null> {
   }
 }
 
-async function getEmailSettings(): Promise<EmailSettings | null> {
-  try {
-    const settings = await client.fetch(`
-      *[_type == "emailSettings" && isActive == true][0] {
-        recipientEmail,
-        isActive
-      }
-    `)
-    return settings
-  } catch (error) {
-    console.error('Error fetching email settings:', error)
-    return null
-  }
-}
-
 export function ContactBlock({ language }: ContactBlockProps) {
   // Block parameter is unused since we fetch settings from contactSettings singleton
   const [contactSettings, setContactSettings] = useState<ContactSettings | null>(null)
-  const [emailSettings, setEmailSettings] = useState<EmailSettings | null>(null)
   const [formData, setFormData] = useState({
     temat: '',
     email: '',
@@ -176,14 +155,7 @@ export function ContactBlock({ language }: ContactBlockProps) {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   useEffect(() => {
-    // Fetch both settings in parallel
-    Promise.all([
-      getContactSettings(),
-      getEmailSettings()
-    ]).then(([contact, email]) => {
-      setContactSettings(contact)
-      setEmailSettings(email)
-    })
+    getContactSettings().then(setContactSettings)
   }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -196,26 +168,28 @@ export function ContactBlock({ language }: ContactBlockProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!emailSettings?.recipientEmail) return
     
     setIsSubmitting(true)
     setSubmitStatus('idle')
 
     try {
-      const response = await fetch('/api/send-email', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          temat: formData.temat,
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+          name: formData.email, // Sender's email as name
           email: formData.email,
+          subject: formData.temat,
           message: formData.message,
-          to: emailSettings.recipientEmail,
         }),
       })
 
-      if (response.ok) {
+      const result = await response.json()
+
+      if (result.success) {
         setSubmitStatus('success')
         setFormData({ temat: '', email: '', message: '' }) // Reset form
       } else {

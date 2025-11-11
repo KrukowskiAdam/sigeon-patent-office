@@ -86,7 +86,7 @@ export function Header() {
         </div>
 
       {/* Main Navigation Bar */}
-      <div className={`text-slate-800 shadow-sm border-b border-gray-200 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`} style={{backgroundColor: '#d3dae4'}}>
+      <div className={`text-slate-800 shadow-sm border-b border-gray-200 transition-all duration-300 ${isScrolled ? 'py-4' : 'py-2'}`} style={{backgroundColor: '#d3dae4'}}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -96,7 +96,7 @@ export function Header() {
                 alt="Sigeon IP"
                 width={120}
                 height={40}
-                className={`w-auto transition-all duration-300 ${isScrolled ? 'h-6' : 'h-8'}`}
+                className={`w-auto transition-all duration-300 ${isScrolled ? 'h-8' : 'h-6'}`}
                 priority
               />
             </Link>
