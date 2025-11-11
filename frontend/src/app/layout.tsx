@@ -3,6 +3,9 @@ import "./globals.css";
 import { LanguageProvider } from '@/context/LanguageContext';
 import { Nunito_Sans, Work_Sans } from 'next/font/google';
 import { getHomepage } from '@/lib/queries';
+import Script from 'next/script';
+import { GA_MEASUREMENT_ID } from '@/lib/gtag';
+import { GoogleAnalytics } from '@/components/GoogleAnalytics';
 
 const nunitoSans = Nunito_Sans({
   subsets: ['latin', 'latin-ext'],
@@ -32,9 +35,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl">
+      <head>
+        {/* Google Analytics */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
+      </head>
       <body
         className={`${nunitoSans.variable} ${workSans.variable} font-sans antialiased`}
       >
+        <GoogleAnalytics />
         <LanguageProvider>
           {children}
         </LanguageProvider>
