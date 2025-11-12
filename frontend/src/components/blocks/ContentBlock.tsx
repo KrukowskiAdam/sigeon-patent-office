@@ -22,13 +22,20 @@ interface ContentBlockProps {
 
 // Inline TextBlock component
 function TextBlock({ block, language }: { block: TextBlockType; language: string }) {
-  const title = block.title ? getLocalizedText(block.title, language as Language) : ''
-  const content = block.content ? getLocalizedPortableText(block.content, language as Language) : null
+  const lang = language as Language
+  
+  // Check if content exists in current language (without fallback)
+  const titleInCurrentLang = block.title?.[lang] || ''
+  const contentInCurrentLang = block.content?.[lang] || null
   
   // Hide block if no content in current language
-  if (!title && (!content || content.length === 0)) {
+  if (!titleInCurrentLang && (!contentInCurrentLang || contentInCurrentLang.length === 0)) {
     return null
   }
+  
+  // Get localized content (with fallback for rendering)
+  const title = block.title ? getLocalizedText(block.title, lang) : ''
+  const content = block.content ? getLocalizedPortableText(block.content, lang) : null
 
   const alignmentClass = {
     left: 'text-left',
