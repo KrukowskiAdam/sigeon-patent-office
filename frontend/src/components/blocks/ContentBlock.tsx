@@ -22,6 +22,14 @@ interface ContentBlockProps {
 
 // Inline TextBlock component
 function TextBlock({ block, language }: { block: TextBlockType; language: string }) {
+  const title = block.title ? getLocalizedText(block.title, language as Language) : ''
+  const content = block.content ? getLocalizedPortableText(block.content, language as Language) : null
+  
+  // Hide block if no content in current language
+  if (!title && (!content || content.length === 0)) {
+    return null
+  }
+
   const alignmentClass = {
     left: 'text-left',
     center: 'text-center',
@@ -32,17 +40,19 @@ function TextBlock({ block, language }: { block: TextBlockType; language: string
     <section className="py-8">
       <div className="max-w-7xl mx-auto px-4">
         <div className={`prose max-w-none ${alignmentClass}`}>
-          {block.title && (
+          {title && (
             <div className="flex items-stretch gap-4 mb-8">
               <div className="w-1 bg-[#0abaee] flex-shrink-0"></div>
               <h2 className="text-2xl font-semibold text-gray-800 leading-none">
-                {getLocalizedText(block.title, language as Language)}
+                {title}
               </h2>
             </div>
           )}
-          <div className="text-gray-700">
-            <PortableText value={getLocalizedPortableText(block.content, language as Language)} />
-          </div>
+          {content && (
+            <div className="text-gray-700">
+              <PortableText value={content} />
+            </div>
+          )}
           
           {block.link && block.link.text && (
             <div className={`mt-8 ${alignmentClass}`}>
