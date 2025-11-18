@@ -173,17 +173,21 @@ export function ContactBlock({ language }: ContactBlockProps) {
     setSubmitStatus('idle')
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      // Get recipient email from contact settings
+      const recipientEmail = await client.fetch(`
+        *[_type == "emailSettings" && isActive == true][0].recipientEmail
+      `)
+
+      const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
-          name: formData.email, // Sender's email as name
+          temat: formData.temat,
           email: formData.email,
-          subject: formData.temat,
           message: formData.message,
+          to: recipientEmail || 'webpagemail@sigeon.pl', // fallback email
         }),
       })
 
