@@ -15,6 +15,7 @@ export function Header() {
   const { currentLanguage } = useLanguage()
   const [navigation, setNavigation] = useState<Navigation | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -129,11 +130,70 @@ export function Header() {
                 variant="ghost" 
                 className="md:hidden text-slate-800 hover:text-slate-600"
                 size="sm"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
-                Menu
+                {isMobileMenuOpen ? (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
               </Button>
             </div>
           </div>
+
+          {/* Mobile Menu Dropdown */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden mt-4 pb-4 border-t border-gray-300">
+              <nav className="flex flex-col space-y-3 pt-4">
+                {/* Primary Navigation */}
+                {navigation?.menuItems && navigation.menuItems.length > 0 && (
+                  navigation.menuItems
+                    .filter(item => item.showInNavigation !== false)
+                    .sort((a, b) => (a.order || 0) - (b.order || 0))
+                    .map((item, index) => (
+                    <Link 
+                      key={index}
+                      href={getLocalizedLink(item)} 
+                      className="hover:text-slate-600 transition-colors font-medium text-sm px-2 py-1"
+                      prefetch={true}
+                      target={item.isExternal ? '_blank' : undefined}
+                      rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {getLocalizedText(item.label, currentLanguage)}
+                    </Link>
+                  ))
+                )}
+                
+                {/* Divider */}
+                <div className="border-t border-gray-300 my-2"></div>
+                
+                {/* Secondary Navigation */}
+                {navigation?.secondaryMenuItems && navigation.secondaryMenuItems.length > 0 && (
+                  navigation.secondaryMenuItems
+                    .filter(item => item.showInNavigation !== false)
+                    .sort((a, b) => (a.order || 0) - (b.order || 0))
+                    .map((item, index) => (
+                    <Link 
+                      key={index}
+                      href={getLocalizedLink(item)} 
+                      className="hover:text-slate-600 transition-colors text-sm px-2 py-1 font-normal"
+                      prefetch={true}
+                      target={item.isExternal ? '_blank' : undefined}
+                      rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {getLocalizedText(item.label, currentLanguage)}
+                    </Link>
+                  ))
+                )}
+              </nav>
+            </div>
+          )}
         </div>
       </div>
     </header>
