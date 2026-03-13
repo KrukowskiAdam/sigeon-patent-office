@@ -1,6 +1,47 @@
 import { Language } from '@/context/LanguageContext'
 import { LocalizedString, LocalizedText, LocalizedTextNews, LocalizedStringNews } from '@/types/sanity'
 
+const LANGUAGE_KEYS: Language[] = ['pl', 'en', 'zh', 'ko', 'ja', 'ru']
+
+function extractTextValue(value: unknown, preferredKeys: string[] = [], depth = 0): string {
+  if (value == null) return ''
+  if (typeof value === 'string') return value
+  if (typeof value === 'number' || typeof value === 'boolean') return String(value)
+  if (depth > 4) return ''
+
+  if (Array.isArray(value)) {
+    for (const entry of value) {
+      const resolved = extractTextValue(entry, preferredKeys, depth + 1)
+      if (resolved) return resolved
+    }
+    return ''
+  }
+
+  if (typeof value === 'object') {
+    const obj = value as Record<string, unknown>
+
+    // Try preferred language keys first.
+    for (const key of preferredKeys) {
+      const resolved = extractTextValue(obj[key], preferredKeys, depth + 1)
+      if (resolved) return resolved
+    }
+
+    // Then try known language keys.
+    for (const key of LANGUAGE_KEYS) {
+      const resolved = extractTextValue(obj[key], preferredKeys, depth + 1)
+      if (resolved) return resolved
+    }
+
+    // Finally try any field that can be converted to a string.
+    for (const nested of Object.values(obj)) {
+      const resolved = extractTextValue(nested, preferredKeys, depth + 1)
+      if (resolved) return resolved
+    }
+  }
+
+  return ''
+}
+
 // Helper function for Publications types (pl/en only)
 export function getLocalizedPublicationsText(
   text: { pl: string; en?: string } | undefined,
@@ -40,20 +81,12 @@ export function getLocalizedTeamText(
   text: { pl?: string; en?: string } | string | undefined,
   currentLanguage: Language = 'pl'
 ): string {
-  if (!text) return ''
-
-  // Backward compatibility: some documents may still have plain string values.
-  if (typeof text === 'string') {
-    return text
-  }
-  
-  // Team logic: PL only for Polish, EN for all other languages
   if (currentLanguage === 'pl') {
-    return text.pl || text.en || ''
-  } else {
-    // All other languages (en, zh, ko, ja, ru) get English version only
-    return text.en || ''
+    return extractTextValue(text, ['pl', 'en'])
   }
+
+  // Team logic: EN for all non-PL languages
+  return extractTextValue(text, ['en', 'pl'])
 }
 
 // Helper function to get text in current language with fallback
@@ -62,27 +95,7 @@ export function getLocalizedText(
   currentLanguage: Language,
   fallbackLanguage: Language = 'pl'
 ): string {
-  if (!text) return ''
-  
-  // Try current language
-  if (text[currentLanguage]) {
-    return text[currentLanguage]
-  }
-  
-  // Fall back to fallback language (usually Polish)
-  if (text[fallbackLanguage]) {
-    return text[fallbackLanguage]
-  }
-  
-  // Fall back to any available language
-  const availableLanguages = Object.keys(text) as Language[]
-  for (const lang of availableLanguages) {
-    if (text[lang]) {
-      return text[lang]
-    }
-  }
-  
-  return ''
+  return extractTextValue(text, [currentLanguage, fallbackLanguage])
 }
 
 // Navigation translations

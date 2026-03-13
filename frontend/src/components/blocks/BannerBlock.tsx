@@ -8,6 +8,9 @@ import { PortableText } from '@portabletext/react'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { BannerBlock as BannerBlockProps } from '@/types/sanity'
+import { getLocalizedText } from '@/lib/i18n'
+import { getLocalizedPortableText } from '@/lib/portableText'
+import { Language } from '@/context/LanguageContext'
 
 export function BannerBlock(props: BannerBlockProps) {
   const { 
@@ -70,7 +73,7 @@ export function BannerBlock(props: BannerBlockProps) {
                 .crop('center')
                 .quality(90)
                 .url()}
-              alt={item.image?.alt || (item.title?.[currentLanguage] || item.title?.pl) || ''}
+              alt={item.image?.alt || getLocalizedText(item.title, currentLanguage as Language) || ''}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
               className="object-cover object-center"
@@ -92,14 +95,14 @@ export function BannerBlock(props: BannerBlockProps) {
               <div className="bg-white p-6 md:p-8 shadow-2xl max-w-2xl">
                 {item.title && (
                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight text-gray-800">
-                    {item.title[currentLanguage] || item.title.pl}
+                    {getLocalizedText(item.title, currentLanguage as Language)}
                   </h2>
                 )}
                 
                 {item.content && (
                   <div className="text-base md:text-lg mb-6 leading-relaxed text-gray-700">
                     <PortableText 
-                      value={item.content.pl as never} 
+                      value={getLocalizedPortableText(item.content, currentLanguage as Language) as never} 
                     />
                   </div>
                 )}
@@ -111,7 +114,7 @@ export function BannerBlock(props: BannerBlockProps) {
                     asChild
                   >
                     <a href={item.buttonLink}>
-                      {item.buttonText?.[currentLanguage] || item.buttonText?.pl}
+                      {getLocalizedText(item.buttonText, currentLanguage as Language)}
                     </a>
                   </Button>
                 )}
