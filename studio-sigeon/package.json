@@ -23,7 +23,7 @@
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
-    "@sanity/cli": "^6.1.2",
+    "@sanity/cli": "^4.22.0",
     "@sanity/eslint-config-studio": "^5.0.2",
     "@types/react": "^18.3.26",
     "cheerio": "^1.1.2",
