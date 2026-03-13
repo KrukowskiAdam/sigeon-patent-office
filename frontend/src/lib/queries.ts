@@ -281,10 +281,12 @@ export async function getPage(slug: string): Promise<Page | null> {
 // Get all team members
 export async function getTeamMembers(): Promise<TeamMember[]> {
   return client.fetch(`
-    *[_type == "teamMember"] | order(displayOrder asc) {
+    *[_type == "teamMember" && coalesce(showOnWebsite, true) == true] | order(displayOrder asc) {
       _id,
-      name,
-      position,
+      "name": coalesce(name.pl, name.en, name, ""),
+      "nameLocalized": select(defined(name.pl) || defined(name.en) => name, null),
+      "position": coalesce(position.pl, position.en, position, ""),
+      "positionLocalized": select(defined(position.pl) || defined(position.en) => position, null),
       description,
       photo,
       email,

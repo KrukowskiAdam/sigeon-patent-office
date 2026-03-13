@@ -143,7 +143,11 @@ export default function TeamPage() {
             </Card>
           ) : (
             <div className="space-y-8">
-              {team.map((member: TeamMember) => (
+              {team.map((member: TeamMember) => {
+                const memberName = member.nameLocalized ?? member.name
+                const memberPosition = member.positionLocalized ?? member.position
+
+                return (
                 <Card key={member._id} className="overflow-hidden hover:shadow-lg transition-shadow pb-0">
                   <div className="flex flex-col md:flex-row">
                     {/* Zdjęcie po lewej - proporcje 3:2 */}
@@ -151,7 +155,7 @@ export default function TeamPage() {
                       <div className="md:w-64 h-44 relative flex-shrink-0">
                         <Image
                           src={urlFor(member.photo).width(320).height(216).url()}
-                          alt={getLocalizedTeamText(member.name, currentLanguage)}
+                          alt={getLocalizedTeamText(memberName, currentLanguage)}
                           fill
                           sizes="(max-width: 768px) 100vw, 256px"
                           className="object-cover"
@@ -163,10 +167,10 @@ export default function TeamPage() {
                     <div className="flex-1">
                       <CardHeader>
                         <CardTitle className="text-2xl">
-                          {getLocalizedTeamText(member.name, currentLanguage)}
+                          {getLocalizedTeamText(memberName, currentLanguage)}
                         </CardTitle>
                         <CardDescription className="text-base">
-                          {getLocalizedTeamText(member.position, currentLanguage)}
+                          {getLocalizedTeamText(memberPosition, currentLanguage)}
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
@@ -224,7 +228,8 @@ export default function TeamPage() {
                     </div>
                   </div>
                 </Card>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>

@@ -319,8 +319,10 @@ export interface Page {
 
 export interface TeamMember {
   _id: string
-  name: { pl: string; en?: string } | string
-  position: { pl: string; en?: string }
+  name: string
+  nameLocalized?: { pl?: string; en?: string } | null
+  position: string
+  positionLocalized?: { pl?: string; en?: string } | null
   description?: { pl: TypedObject[]; en?: TypedObject[] }
   photo?: {
     asset: {
