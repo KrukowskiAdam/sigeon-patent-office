@@ -5,12 +5,14 @@ interface PortableTextProps {
   value?: TypedObject | TypedObject[] | null
   className?: string
   blockquoteClassName?: string
+  headAsBlockquote?: boolean
 }
 
 export function PortableText({
   value,
   className = '',
   blockquoteClassName = 'border-l-4 border-[rgb(10,186,238)] pl-4 my-6 italic text-black bg-gray-50 py-4',
+  headAsBlockquote = false,
 }: PortableTextProps) {
   if (!value) return null
   
@@ -21,12 +23,15 @@ export function PortableText({
         components={{
           block: {
             normal: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
-            head: ({children}) => (
-              <div className="flex items-start gap-3 mb-4 mt-6">
-                <div className="w-1 bg-[#0abaee] flex-shrink-0 h-6 mt-1"></div>
-                <h3 className="text-lg font-bold leading-relaxed">{children}</h3>
-              </div>
-            ),
+            head: ({children}) =>
+              headAsBlockquote ? (
+                <blockquote className={blockquoteClassName}>{children}</blockquote>
+              ) : (
+                <div className="flex items-start gap-3 mb-4 mt-6">
+                  <div className="w-1 bg-[#0abaee] flex-shrink-0 h-6 mt-1"></div>
+                  <h3 className="text-lg font-bold leading-relaxed">{children}</h3>
+                </div>
+              ),
             h1: ({children}) => <h1 className="text-3xl font-bold mb-6 mt-8">{children}</h1>,
             h2: ({children}) => <h2 className="text-2xl font-semibold mb-4 mt-6">{children}</h2>,
             h3: ({children}) => <h3 className="text-xl font-medium mb-3 mt-5">{children}</h3>,

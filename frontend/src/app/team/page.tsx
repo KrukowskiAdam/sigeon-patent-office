@@ -198,7 +198,8 @@ export default function TeamPage() {
                                       member.description, 
                                       currentLanguage
                                     )}
-                                    blockquoteClassName="border-l-4 border-[rgb(10,186,238)] pl-4 my-6 text-black bg-gray-50 py-3 [&_strong]:text-[20px]"
+                                    blockquoteClassName="border-l-4 border-[rgb(10,186,238)] pl-4 my-6 text-black bg-gray-50 py-3 font-bold [&_strong]:text-[20px] [&_strong]:font-bold"
+                                    headAsBlockquote
                                   />
                                 </div>
                               )}
