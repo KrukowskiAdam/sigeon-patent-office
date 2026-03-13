@@ -37,10 +37,15 @@ export function getLocalizedNewsText(
 
 // Helper function for Team Members (pl/en only)
 export function getLocalizedTeamText(
-  text: { pl: string; en?: string } | undefined,
+  text: { pl?: string; en?: string } | string | undefined,
   currentLanguage: Language = 'pl'
 ): string {
   if (!text) return ''
+
+  // Backward compatibility: some documents may still have plain string values.
+  if (typeof text === 'string') {
+    return text
+  }
   
   // Team logic: PL only for Polish, EN for all other languages
   if (currentLanguage === 'pl') {

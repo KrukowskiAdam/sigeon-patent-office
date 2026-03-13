@@ -12,7 +12,8 @@ async function getEmailSettings() {
       smtpSecure,
       smtpUser,
       smtpPass,
-      senderName
+      senderName,
+      recipientEmail
     }
   `)
   
@@ -25,7 +26,8 @@ async function getEmailSettings() {
         smtpSecure,
         smtpUser,
         smtpPass,
-        senderName
+        senderName,
+        recipientEmail
       }
     `)
   }
@@ -35,10 +37,10 @@ async function getEmailSettings() {
 
 export async function POST(request: NextRequest) {
   try {
-    const { temat, email, message, to } = await request.json()
+    const { temat, email, message } = await request.json()
 
     // Validate required fields
-    if (!temat || !email || !message || !to) {
+    if (!temat || !email || !message) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -55,6 +57,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const recipientEmail = emailConfig.recipientEmail || 'webpagemail@sigeon.pl'
+
     // Create transporter with Sanity configuration
     const transporter = nodemailer.createTransport({
       host: emailConfig.smtpHost,
@@ -69,7 +73,7 @@ export async function POST(request: NextRequest) {
     // Email options
     const mailOptions = {
       from: `"${emailConfig.senderName}" <${emailConfig.smtpUser}>`, // sender address
-      to: to, // recipient email from CMS
+      to: recipientEmail,
       replyTo: email, // user's email for easy replies
       subject: `Nowa wiadomość z formularza: ${temat}`,
       html: `

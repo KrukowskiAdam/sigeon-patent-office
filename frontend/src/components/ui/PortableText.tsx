@@ -4,9 +4,14 @@ import type { TypedObject } from '@portabletext/types'
 interface PortableTextProps {
   value?: TypedObject | TypedObject[] | null
   className?: string
+  blockquoteClassName?: string
 }
 
-export function PortableText({ value, className = '' }: PortableTextProps) {
+export function PortableText({
+  value,
+  className = '',
+  blockquoteClassName = 'border-l-4 border-[rgb(10,186,238)] pl-4 my-6 italic text-black bg-gray-50 py-4',
+}: PortableTextProps) {
   if (!value) return null
   
   return (
@@ -29,7 +34,7 @@ export function PortableText({ value, className = '' }: PortableTextProps) {
             h5: ({children}) => <h5 className="text-base font-medium mb-2 mt-3">{children}</h5>,
             h6: ({children}) => <h6 className="text-sm font-medium mb-2 mt-3">{children}</h6>,
             blockquote: ({children}) => (
-              <blockquote className="border-l-4 border-blue-500 pl-4 my-6 italic text-gray-600 bg-gray-50 py-4">
+              <blockquote className={blockquoteClassName}>
                 {children}
               </blockquote>
             ),

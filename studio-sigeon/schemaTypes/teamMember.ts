@@ -8,7 +8,7 @@ export const teamMember = defineType({
     defineField({
       name: 'name',
       title: 'Full Name',
-      type: 'string',
+      type: 'localizedStringPLEN',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -56,7 +56,7 @@ export const teamMember = defineType({
   ],
   preview: {
     select: {
-      title: 'name',
+      title: 'name.pl',
       subtitle: 'position.pl',
       media: 'photo',
     },
@@ -70,7 +70,7 @@ export const teamMember = defineType({
     {
       title: 'Name',
       name: 'nameAsc',
-      by: [{field: 'name', direction: 'asc'}],
+      by: [{field: 'name.pl', direction: 'asc'}],
     },
   ],
 })

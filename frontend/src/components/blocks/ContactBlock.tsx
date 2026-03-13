@@ -3,7 +3,6 @@ import { getLocalizedText } from '@/lib/i18n'
 import { Language } from '@/context/LanguageContext'
 import { PortableText, PortableTextComponents } from '@portabletext/react'
 import { getLocalizedPortableText } from '@/lib/portableText'
-import { client } from '@/lib/sanity'
 
 // Custom components for PortableText with icons
 const contactPortableTextComponents: PortableTextComponents = {
@@ -126,16 +125,12 @@ interface ContactSettings {
 
 async function getContactSettings(): Promise<ContactSettings | null> {
   try {
-    const settings = await client.fetch(`
-      *[_type == "contactSettings" && _id == "contact-settings"][0] {
-        leftColumnTop,
-        socialMedia,
-        leftColumnBottom,
-        contactForm,
-        mapEmbedCode,
-        mapTitle
-      }
-    `)
+    const response = await fetch('/api/contact-settings')
+    if (!response.ok) {
+      throw new Error('Failed to fetch contact settings')
+    }
+
+    const settings = await response.json()
     return settings
   } catch (error) {
     console.error('Error fetching contact settings:', error)
@@ -173,11 +168,6 @@ export function ContactBlock({ language }: ContactBlockProps) {
     setSubmitStatus('idle')
 
     try {
-      // Get recipient email from contact settings
-      const recipientEmail = await client.fetch(`
-        *[_type == "emailSettings" && isActive == true][0].recipientEmail
-      `)
-
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
@@ -187,7 +177,6 @@ export function ContactBlock({ language }: ContactBlockProps) {
           temat: formData.temat,
           email: formData.email,
           message: formData.message,
-          to: recipientEmail || 'webpagemail@sigeon.pl', // fallback email
         }),
       })
 

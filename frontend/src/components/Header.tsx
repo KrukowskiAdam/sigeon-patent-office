@@ -7,7 +7,6 @@ import { useLanguage } from '@/context/LanguageContext'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import { getLocalizedText } from '@/lib/i18n'
 import { getLocalizedLink } from '@/lib/localizedLinks'
-import { getCachedNavigation } from '@/lib/navigationCache'
 import { Navigation } from '@/types/sanity'
 import { Button } from '@/components/ui/button'
 
@@ -34,7 +33,12 @@ export function Header() {
     
     const loadNavigation = async () => {
       try {
-        const navData = await getCachedNavigation()
+        const response = await fetch('/api/navigation')
+        if (!response.ok) {
+          throw new Error('Failed to fetch navigation data')
+        }
+
+        const navData: Navigation | null = await response.json()
         if (isMounted && navData) {
           setNavigation(navData)
         }

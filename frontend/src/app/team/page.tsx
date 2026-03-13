@@ -151,7 +151,7 @@ export default function TeamPage() {
                       <div className="md:w-64 h-44 relative flex-shrink-0">
                         <Image
                           src={urlFor(member.photo).width(320).height(216).url()}
-                          alt={member.name}
+                          alt={getLocalizedTeamText(member.name, currentLanguage)}
                           fill
                           sizes="(max-width: 768px) 100vw, 256px"
                           className="object-cover"
@@ -163,7 +163,7 @@ export default function TeamPage() {
                     <div className="flex-1">
                       <CardHeader>
                         <CardTitle className="text-2xl">
-                          {member.name}
+                          {getLocalizedTeamText(member.name, currentLanguage)}
                         </CardTitle>
                         <CardDescription className="text-base">
                           {getLocalizedTeamText(member.position, currentLanguage)}
@@ -193,7 +193,8 @@ export default function TeamPage() {
                                     value={getLocalizedTeamPortableText(
                                       member.description, 
                                       currentLanguage
-                                    )} 
+                                    )}
+                                    blockquoteClassName="border-l-4 border-[rgb(10,186,238)] pl-4 my-6 text-black bg-gray-50 py-3 [&_strong]:text-[20px]"
                                   />
                                 </div>
                               )}

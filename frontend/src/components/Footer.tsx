@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { Footer as FooterType } from '@/types/sanity'
-import { getFooter } from '@/lib/queries'
 import { useLanguage } from '@/context/LanguageContext'
 import { getLocalizedText } from '@/lib/i18n'
 import Link from 'next/link'
@@ -13,18 +12,36 @@ export function Footer() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let isMounted = true
+
     const loadFooter = async () => {
       try {
-        const footerData = await getFooter()
-        setFooter(footerData)
+        const response = await fetch('/api/footer')
+        if (!response.ok) {
+          throw new Error('Failed to fetch footer data')
+        }
+
+        const footerData: FooterType | null = await response.json()
+        if (isMounted) {
+          setFooter(footerData)
+        }
       } catch (error) {
         console.error('Error loading footer:', error)
+        if (isMounted) {
+          setFooter(null)
+        }
       } finally {
-        setLoading(false)
+        if (isMounted) {
+          setLoading(false)
+        }
       }
     }
 
     loadFooter()
+
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   if (loading) {
